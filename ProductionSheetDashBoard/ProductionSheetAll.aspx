@@ -163,8 +163,8 @@
                                 Text="PCA InterState"  Width="220px" Visible="true" OnClick="btnPCA_Click"   />
 
 
-                                <asp:Button ID="btnHRPS" runat="server" CssClass="button" BackColor="Green" ForeColor="#ffffff"
-                                Text="HR MultiBrand"  Width="220px" Visible="true" OnClick="btnHRMultiBrand_Click"   />
+                                <%--<asp:Button ID="btnHRPS" runat="server" CssClass="button" BackColor="Green" ForeColor="#ffffff"
+                                Text="HR MultiBrand"  Width="220px" Visible="false" OnClick="btnHRMultiBrand_Click"   />--%>
                              
                              
                            <%--   <asp:Button ID="btnRenault" runat="server" CssClass="button" BackColor="Green" ForeColor="#ffffff"
