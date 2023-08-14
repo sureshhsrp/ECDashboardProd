@@ -36,7 +36,7 @@ namespace ProductionSheetDashBoard
 
             //if (Request.QueryString["UID"] == null)
             //{
-            //    userId = "4098";
+            //    userId = "42021";
             //}
 
             //if (Request.QueryString["UID"] == null)
@@ -221,6 +221,8 @@ namespace ProductionSheetDashBoard
             else
             {
                 stateECQuery = "select distinct a.HSRP_StateID, (select HSRPStateName from hsrpstate c where c.hsrp_stateid=a.hsrp_stateid) as HSRPStateName,(select HSRPStateShortName from hsrpstate d where d.hsrp_stateid=a.hsrp_stateid) as HSRPStateShortName, navembcode from hsrprecords a with(nolock),rtolocation b where a.HSRP_StateID ='" + ddlStateName.SelectedValue + "' and   b.Navembcode not like '%CODO%'    and a.rtolocationid=b.rtolocationid and NewPdfRunningNo is null and erpassigndate is not null and OrderStatus='New Order' and   b.navembcode like  '%'+(select HSRPStateShortName from hsrpstate d where d.hsrp_stateid=a.hsrp_stateid)+'%'  and b.NAVEMBID='" + Navembid + "'    order by  a.HSRP_StateID";
+
+               // stateECQuery = "select distinct a.HSRP_StateID, (select HSRPStateName from hsrpstate c where c.hsrp_stateid=a.hsrp_stateid) as HSRPStateName,(select HSRPStateShortName from hsrpstate d where d.hsrp_stateid=a.hsrp_stateid) as HSRPStateShortName, navembcode from hsrprecords a with(nolock),rtolocation b where a.HSRP_StateID ='" + ddlStateName.SelectedValue + "' and   b.Navembcode  like '%CODO%'    and a.rtolocationid=b.rtolocationid and NewPdfRunningNo is null and erpassigndate is not null and OrderStatus='New Order' and   b.navembcode like  '%'+(select HSRPStateShortName from hsrpstate d where d.hsrp_stateid=a.hsrp_stateid)+'%'  and b.NAVEMBID='" + Navembid + "'    order by  a.HSRP_StateID";
 
             }
 
@@ -1493,7 +1495,7 @@ namespace ProductionSheetDashBoard
 
                     string dir = dirPath + DateTime.Now.ToString("yyyy-MM-dd") + "\\" + HSRPStateShortName + "\\";
                     //string dir = dirPath + "/" + DateTime.Now.ToString("yyyy-MM-dd") + "/" + HSRPStateShortName + "/";
-                    string fileName = "TVS" + "-" + filePrefix + "-" + Navembcode + ".pdf";
+                    string fileName = "HALLP" + "-" + filePrefix + "-" + Navembcode + ".pdf";
                     string filePath = dir + fileName;
 
                     //string folderpath = ConfigurationManager.AppSettings["InvoiceFolder"].ToString() + "/" + FinYear + "/" + oemid + "/" + HSRPStateID + "/";
@@ -1646,7 +1648,7 @@ namespace ProductionSheetDashBoard
                                             "</tr>" +
                                             "<tr style='border: 0px;'>" +
                                                 "<td colspan='12' style='border: 0px;'>" +
-                                                    "<div style='text-align:center;font-size:26px;'><b>TVS Production Sheet : -</b> Rosmerta Safety System</div>" +
+                                                    "<div style='text-align:center;font-size:26px;'><b>HALLP Production Sheet : -</b> Rosmerta Safety System</div>" +
                                                 "</td>" +
                                             "</tr>" +
                                             "<tr style='border: 0px;'>" +
