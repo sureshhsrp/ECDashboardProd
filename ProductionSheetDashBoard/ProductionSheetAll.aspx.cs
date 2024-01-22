@@ -36,11 +36,11 @@ namespace ProductionSheetDashBoard
 
             ////if (Request.QueryString["UID"] == null)
             ////{
-            ////    userId = "66552";//Request.QueryString["UID"];
+            ////    userId = "32575";//Request.QueryString["UID"];
             ////}
             //if (Request.QueryString["UID"] == null)
             //{
-            //    userId = "58224";
+            //    userId = "69373";
             //}
 
 
@@ -9109,7 +9109,7 @@ namespace ProductionSheetDashBoard
                     string fileAppoinmentDate = string.Empty;
                     string maxAppointmentdate = "select distinct  Convert(varchar(10),max(SlotBookingDate),105) as MaxAppointmentdate  " +
                     " from	HSRPrecords H with(nolock) join DealerAffixationCenter d  with(nolock) on H.HSRP_StateID=d.StateID and H.Affix_Id=d.DealerAffixationID  join BookMyHSRPAppointment B on H.orderno=B.orderno  " +
-                   " where   Navembid='" + Navembcode + "'  and Navembid not like '%CODO%'     and  NewPdfRunningNo is null and erpassigndate is not null and  h.OrderStatus='New Order' and  IsBookMyHsrpRecord='Y' and  h.affix_id is not NULL  and   d.TypeofDelivery='Home'  and B.IsFrame='Y'";
+                   " where   Navembid='" + Navembcode + "'  and Navembid not like '%CODO%'     and  NewPdfRunningNo is null and erpassigndate is not null and  h.OrderStatus='New Order' and  IsBookMyHsrpRecord='Y' and  h.affix_id is not NULL  and   d.TypeofDelivery in('Home','RWA')   and B.IsFrame='Y'";
                     DataTable dtmax = Utils.Utils.GetDataTable(maxAppointmentdate, CnnString);
 
                     if (dtmax.Rows.Count > 0)
@@ -9123,7 +9123,7 @@ namespace ProductionSheetDashBoard
 
                     oemDealerQuery = "select distinct d.oemid as oemid, (select name  from oemmaster where oemid=d.oemid) as oemname,d.dealerid as dealerid,d.DealerAffixationcenterName as Dealername,  d.DealerAffixationCenterAddress as Address, " +
                      "d.DealerAffixationID as SubDealerId, H.dealerid AS ParentDealerId,SlotBookingDate from	HSRPrecords H with(nolock) join DealerAffixationCenter d  with(nolock) on H.HSRP_StateID=d.StateID and H.Affix_Id=d.DealerAffixationID  join BookMyHSRPAppointment B on H.orderno=B.orderno  " +
-                    " where   Navembid='" + Navembcode + "'  and Navembid not like '%CODO%'     and  NewPdfRunningNo is null and erpassigndate is not null and  h.OrderStatus='New Order' and  IsBookMyHsrpRecord='Y' and  B.IsFrame='Y' and  h.affix_id is not NULL   and d.TypeofDelivery='Home' ";
+                    " where   Navembid='" + Navembcode + "'  and Navembid not like '%CODO%'     and  NewPdfRunningNo is null and erpassigndate is not null and  h.OrderStatus='New Order' and  IsBookMyHsrpRecord='Y' and  B.IsFrame='Y' and  h.affix_id is not NULL   and d.TypeofDelivery in('Home','RWA')  ";
 
                     #region
                     DataTable dtOD = Utils.Utils.GetDataTable(oemDealerQuery, CnnString);
@@ -12642,7 +12642,7 @@ namespace ProductionSheetDashBoard
                     string fileAppoinmentDate = string.Empty;
                     string maxAppointmentdate = "select distinct  Convert(varchar(10),max(SlotBookingDate),105) as MaxAppointmentdate  " +
                     " from	HSRPrecords H with(nolock) join DealerAffixationCenter d  with(nolock) on H.HSRP_StateID=d.StateID and H.Affix_Id=d.DealerAffixationID  join BookMyHSRPAppointment B on H.orderno=B.orderno  " +
-                   " where   Navembid='" + Navembcode + "'  and Navembid not like '%CODO%'     and  NewPdfRunningNo is null and erpassigndate is not null and  h.OrderStatus='New Order' and  IsBookMyHsrpRecord='Y' and  h.affix_id is not NULL  and   d.TypeofDelivery='Home' and  ((b.IsFrame is null) or (b.IsFrame='N')) ";
+                   " where   Navembid='" + Navembcode + "'  and Navembid not like '%CODO%'     and  NewPdfRunningNo is null and erpassigndate is not null and  h.OrderStatus='New Order' and  IsBookMyHsrpRecord='Y' and  h.affix_id is not NULL  and   d.TypeofDelivery in('Home','RWA')  and  ((b.IsFrame is null) or (b.IsFrame='N')) ";
                     DataTable dtmax = Utils.Utils.GetDataTable(maxAppointmentdate, CnnString);
 
                     if (dtmax.Rows.Count > 0)
@@ -12656,7 +12656,7 @@ namespace ProductionSheetDashBoard
 
                     oemDealerQuery = "select distinct d.oemid as oemid, (select name  from oemmaster where oemid=d.oemid) as oemname,d.dealerid as dealerid,d.DealerAffixationcenterName as Dealername,  d.DealerAffixationCenterAddress as Address, " +
                      "d.DealerAffixationID as SubDealerId, H.dealerid AS ParentDealerId,SlotBookingDate from	HSRPrecords H with(nolock) join DealerAffixationCenter d  with(nolock) on H.HSRP_StateID=d.StateID and H.Affix_Id=d.DealerAffixationID  join BookMyHSRPAppointment B on H.orderno=B.orderno  " +
-                    " where   Navembid='" + Navembcode + "'  and Navembid not like '%CODO%'     and  NewPdfRunningNo is null and erpassigndate is not null and  h.OrderStatus='New Order' and  IsBookMyHsrpRecord='Y' and  h.affix_id is not NULL   and d.TypeofDelivery='Home' and  ((b.IsFrame is null) or (b.IsFrame='N')) ";
+                    " where   Navembid='" + Navembcode + "'  and Navembid not like '%CODO%'     and  NewPdfRunningNo is null and erpassigndate is not null and  h.OrderStatus='New Order' and  IsBookMyHsrpRecord='Y' and  h.affix_id is not NULL   and d.TypeofDelivery in('Home','RWA')  and  ((b.IsFrame is null) or (b.IsFrame='N')) ";
 
                     #region
                     DataTable dtOD = Utils.Utils.GetDataTable(oemDealerQuery, CnnString);
