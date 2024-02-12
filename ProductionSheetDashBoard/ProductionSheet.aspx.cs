@@ -36,7 +36,7 @@ namespace ProductionSheetDashBoard
 
             //if (Request.QueryString["UID"] == null)
             //{
-            //    userId = "69373";
+            //    userId = "19916"; 
             //}
 
             //if (Request.QueryString["UID"] == null)
@@ -4016,7 +4016,7 @@ namespace ProductionSheetDashBoard
             // string HSRPStateShortName = dtECName.Rows[0]["HSRPStateShortName"].ToString();
 
             //stateECQuery = "select distinct a.HSRP_StateID, (select HSRPStateName from hsrpstate c where c.hsrp_stateid=a.hsrp_stateid) as HSRPStateName,(select HSRPStateShortName from hsrpstate d with(nolock) where d.hsrp_stateid='" + ddlStateName.SelectedValue + "') as HSRPStateShortName,   a.Navembid AS  navembcode from hsrprecords a with(nolock) where  left(a.Navembid,4) = '" + ShortECname + "'  and  NewPdfRunningNo is null and erpassigndate is not null  and (IsBookMyHsrpRecord='Y')  and OrderStatus='New Order' and a.NAVEMBID='" + Navembid + "' and     Navembid not like '%CODO%'  order by  a.HSRP_StateID";
-            if (ddlStateName.SelectedValue == "17")
+            if ((ddlStateName.SelectedValue == "17") ||(ddlStateName.SelectedValue == "10"))
             {
 
 
