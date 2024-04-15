@@ -29,15 +29,15 @@ namespace ProductionSheetDashBoard
         protected void Page_Load(object sender, EventArgs e)
         {
 
-            if (Request.QueryString["UID"] != null)
-            {
-                userId = Request.QueryString["UID"];
-            }
-
-            //if (Request.QueryString["UID"] == null)
+            //if (Request.QueryString["UID"] != null)
             //{
-            //    userId = "19916"; 
+            //    userId = Request.QueryString["UID"];
             //}
+
+            if (Request.QueryString["UID"] == null)
+            {
+                userId = "46266";
+            }
 
             //if (Request.QueryString["UID"] == null)
             //{
