@@ -1,201 +1,62 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="ProductionSheet.aspx.cs" Inherits="ProductionSheetDashBoard.ProductionSheet" %>
 
+
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
-<%--<head runat="server">
-    <title></title>
 
- <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"/>
-  <link rel="stylesheet" href="/resources/demos/style.css"/>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Production Sheet</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
 
-  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="Scripts/jquery-3.4.1.js"></script>
-    <script src="Scripts/jquery-ui-1.12.1.js"></script>
-   
-   <script>
-       $(function () {
-           $("#txtDate").datepicker({ dateFormat: 'dd/mm/yy' }).val();
-       });
-   </script>
-    <style type="text/css">
-        .button {}
-        .auto-style1 {
-            height: 29px;
-        }
-    </style>
-</head>--%>
 <body>
     <form id="form1" runat="server">
-    <div>
-       &nbsp;&nbsp;&nbsp;
-       <table>
-                    <tr>
-                        <td><h2 style="color:#000000">Production Sheet Generation</h2></td>
-                    </tr>
-                    <tr>
-                       <%-- <td>
-                             <asp:Label ID="Label3" runat="server" Font-Names="Arial" Font-Size="10pt" Text="Select OEM"   style="margin-right:20px;"/>
-                             <asp:DropDownList runat="server" Font-Names="Arial" Font-Size="10pt"  TabIndex="4" ID="ddlOemType" >
-                                 <asp:ListItem Value="All">All </asp:ListItem>
-                                 <asp:ListItem Value="TVS">TVS</asp:ListItem>
-                                 <asp:ListItem Value="JCB">JCB</asp:ListItem>
-                             </asp:DropDownList>
-                                
-                      
-                        </td> --%>
-                        <td class="auto-style1">
-                             <asp:Label ID="Label2" runat="server" Font-Names="Arial" Font-Size="10pt" Text="Select State"   style="margin-right:20px;"/>
-                             <asp:DropDownList TabIndex="5" ID="ddlStateName"  
-                                runat="server" DataTextField="HSRPStateName" DataValueField="HSRP_StateID" >
-                            <%--   <asp:ListItem Value="37">DL</asp:ListItem>--%>
-                                
-                            </asp:DropDownList>
-                        </td> 
-                        <td class="auto-style1">
-                         
-                             
-                        <%--    Appointment Date--%>
-
-                            EC Name:
-
-                        </td> 
-                        <td class="auto-style1">
-                          
-<asp:TextBox ID="txtDate" runat="server"  autocomplete="off" EnableViewState="False" Visible="true"></asp:TextBox>
-                            </td>
-                    </td>
-
-                      
-                        <td class="auto-style1">
-                          
-                        </td>
-                         <td class="auto-style1">
-                          
-                        </td>
-                    </tr>
-
-                    <tr>
-                       
-                        <td>
-                            
-                            &nbsp;</td> 
-                        <td>
-                         
-                             
-                        </td> 
-                        <td style="padding-left:40px;" >
-                      
-                             
-                            
-                            
-                        </td>  
-                      
-                        <td>
-                          
-                        </td>
-                    </tr>
-
-            <tr>
-                       
-                        <td>
-                            
-                        </td> 
-                        <td>
-                         
-                             
-                        </td> 
-                        <td style="padding-left:40px;" >
-                      
-                             
-                             
-
-                        
-                            
-                        &nbsp;
-                      
-                             
-                              
-
-                        
-                            
-                        </td>  
-                      
-                        <td>
-                          
-                        </td>
-                    </tr>
-             </table>
-        <table>
-                    <tr>
-
-                        <td colspan="8" style="padding-left:40px;"">
-                           &nbsp;
-<asp:Button ID="btnPreview" runat="server" CssClass="button" BackColor="Green" ForeColor="#ffffff"
-                                Text="Generate Production Sheet" OnClick="Search_Click" Width="180px" />
-                             <asp:Button ID="btnHero" runat="server" CssClass="button" BackColor="Green" ForeColor="#ffffff"
-                                Text="Hero Production Sheet" Width="230px" OnClick="btnHero_Click" />
-
-     
-
-
-                             <asp:Button ID="btnBMHSRPPSSheet" runat="server" CssClass="button" BackColor="Green" ForeColor="#ffffff"
-                                Text="BMHSRP Production Sheet" Width="230px" OnClick="btnBMHSRPPSSheet_Click" />
-
-                                  <asp:Button ID="btnDelivery" runat="server" CssClass="button" BackColor="Green" ForeColor="#ffffff"
-                                Text=" BookMYHSRP Home Delivery PS With Frames "   Width="300px" OnClick="btnDelivery_Click" />
-
-                            <asp:Button ID="BtnMulti" runat="server" CssClass="button" BackColor="Green" ForeColor="#ffffff"
-                                Text="Multi Brand" OnClick="BtnMulti_Click" />
-
-                            <asp:Button ID="btnHRPS" runat="server" CssClass="button" BackColor="Green" ForeColor="#ffffff"
-                                Text="HR MultiBrand"  Visible="true" OnClick="btnHRMultiBrand_Click"   />
-
-                        <asp:Button ID="btnDeliveryWFrame" runat="server" CssClass="button" BackColor="Green" ForeColor="#ffffff"
-                                Text=" BookMYHSRP Home Delivery PS Without Frames "   Width="320px" OnClick="btnDeliveryWFrame_Click" />
-
-
-                            <asp:Button ID="btnOLA" runat="server" CssClass="button" BackColor="Green" ForeColor="#ffffff"
-                                Text="OLA Production Sheet"  Width="220px" OnClick="btnOLA_Click"  />
-
-                                  <asp:Button ID="btnTwenty" runat="server" CssClass="button" BackColor="Green" ForeColor="#ffffff"
-                                Text="Twenty Two Motors"  Width="220px" OnClick="btnTwenty_Click"   />
-
-                                <asp:Button ID="btnPCA" runat="server" CssClass="button" BackColor="Green" ForeColor="#ffffff"
-                                Text="PCA InterState"  Width="220px" Visible="true" OnClick="btnPCA_Click"   />
-                             
-                             
-                           <%--   <asp:Button ID="btnRenault" runat="server" CssClass="button" BackColor="Green" ForeColor="#ffffff"
-                                Text="Generate Production Sheet Renault Kerala" OnClick="btnRenault_Click" Width="270px" />
-                            <asp:Button ID="btnTVSProductionsheet" runat="server" CssClass="button" BackColor="Green" ForeColor="#ffffff"
-                                Text="TVS Production Sheet" OnClick="btnTVS_Click"  Width="180px" />
-
-
-                               <asp:Button ID="btnJCBProductionSheet" runat="server" CssClass="button" BackColor="Green" ForeColor="#ffffff"
-                                Text="JCB Production Sheet" OnClick="btnJCB_Click"  Width="220px" />
-
-                           
-                            
-
-                            
-                             <asp:Button ID="btnExternal" runat="server" CssClass="button" BackColor="Green" ForeColor="#ffffff"
-                                Text="External Production Sheet"  Width="220px" OnClick="btnExternal_Click" />
-                              <asp:Button ID="btnHero" runat="server" CssClass="button" BackColor="Green" ForeColor="#ffffff"
-                                Text="Hero Production Sheet" OnClick="btnHero_Click"  Width="220px" />--%>
-
-                        
- 
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <asp:Label ID="Label1" runat="server" Text=""></asp:Label>
-                            <asp:Label ID="lblErrMess" ForeColor="Red" Font-Size="18px" runat="server"></asp:Label>
-                        </td> 
-                    </tr>
-                </table>
-    </div>
+        <div class="container">
+            <div class="row mt-3">
+                <div class="col-md-12">
+                    <h2>Production Sheet Generation</h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <label for="ddlStateName" class="form-label">Select State</label>
+                    <asp:DropDownList ID="ddlStateName" runat="server" CssClass="form-control" DataTextField="HSRPStateName" DataValueField="HSRP_StateID"></asp:DropDownList>
+                </div>
+                <div class="col-md-6">
+                    <label for="txtDate" class="form-label">EC Name</label>
+                    <asp:TextBox ID="txtDate" runat="server" CssClass="form-control" autocomplete="off" EnableViewState="False" Visible="true"></asp:TextBox>
+                </div>
+            </div>
+            
+            <div class="row mt-3">
+                <div class="col-md-6">
+                    <span style="margin-bottom:20px;font-weight:bold;display:block;" >OEM Production Sheet</span>
+                    <asp:Button ID="btnPreview" runat="server" CssClass="btn btn-success btn-block" Text="Generate Production Sheet" OnClick="Search_Click" Width="100%" />
+                    <asp:Button ID="btnHero" runat="server" CssClass="btn btn-success btn-block" Text="Hero Production Sheet" OnClick="btnHero_Click" Width="100%" />
+                    <asp:Button ID="BtnMulti" runat="server" CssClass="btn btn-success btn-block" Text="Multi Brand" OnClick="BtnMulti_Click" Width="100%" />
+                    <asp:Button ID="btnHRPS" runat="server" CssClass="btn btn-success btn-block" Text="HR MultiBrand" Visible="true" OnClick="btnHRMultiBrand_Click" Width="100%" />
+                    <asp:Button ID="btnOLA" runat="server" CssClass="btn btn-success btn-block" Text="OLA Production Sheet" OnClick="btnOLA_Click" Width="100%" />
+                    <asp:Button ID="btnTwenty" runat="server" CssClass="btn btn-success btn-block" Text="Twenty Two Motors" OnClick="btnTwenty_Click" Width="100%" />
+                    <asp:Button ID="btnPCA" runat="server" CssClass="btn btn-success btn-block" Text="PCA InterState" Visible="true" OnClick="btnPCA_Click" Width="100%" />
+                </div>
+                <div class="col-md-6">
+                    <span style="margin-bottom:20px;font-weight:bold;display:block;"> BMHSRP Production Sheet</span>
+                    <asp:Button ID="btnBMHSRPPSSheet" runat="server" CssClass="btn btn-success btn-block" Text="BMHSRP Production Sheet" OnClick="btnBMHSRPPSSheet_Click" Width="100%" />
+                    <asp:Button ID="btnDelivery" runat="server" CssClass="btn btn-success btn-block" Text="BookMYHSRP Home Delivery PS With Frames" OnClick="btnDelivery_Click" Width="100%" />
+                    <asp:Button ID="btnDeliveryWFrame" runat="server" CssClass="btn btn-success btn-block" Text="BookMYHSRP Home Delivery PS Without Frames" OnClick="btnDeliveryWFrame_Click" Width="100%" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <asp:Label ID="Label1" runat="server" Text=""></asp:Label>
+                    <asp:Label ID="lblErrMess" ForeColor="Red" Font-Size="18px" runat="server"></asp:Label>
+                </div>
+            </div>
+        </div>
     </form>
 </body>
+
 </html>

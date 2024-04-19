@@ -166,8 +166,8 @@
     <Content Include="Account\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="Account\fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Account\Web.config" />
-    <None Include="Properties\PublishProfiles\Profile1.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="ProductionSheet1.aspx" />
     <Content Include="ProductionSheet.aspx" />
     <Content Include="ProductionSheetAll.aspx" />
     <Content Include="Scripts\bootstrap.js" />
@@ -290,6 +290,13 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="ProductionSheet1.aspx.cs">
+      <DependentUpon>ProductionSheet1.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ProductionSheet1.aspx.designer.cs">
+      <DependentUpon>ProductionSheet1.aspx</DependentUpon>
+    </Compile>
     <Compile Include="ProductionSheet.aspx.cs">
       <DependentUpon>ProductionSheet.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

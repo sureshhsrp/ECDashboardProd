@@ -14,7 +14,7 @@ using System.Text;
 
 namespace ProductionSheetDashBoard
 {
-    public partial class ProductionSheet : System.Web.UI.Page
+    public partial class ProductionSheet1 : System.Web.UI.Page
     {
         //Test
         string filePrefix = string.Empty;
@@ -33,14 +33,6 @@ namespace ProductionSheetDashBoard
             {
                 userId = Request.QueryString["UID"];
             }
-
-            //if (Request.QueryString["UID"] == null)
-            //{
-            //    //userId = "32650"; //Dealer
-            //    userId = "53164";
-
-            //}
-
 
             ////if (Request.QueryString["UID"] == null)
             ////{
@@ -4024,7 +4016,7 @@ namespace ProductionSheetDashBoard
             // string HSRPStateShortName = dtECName.Rows[0]["HSRPStateShortName"].ToString();
 
             //stateECQuery = "select distinct a.HSRP_StateID, (select HSRPStateName from hsrpstate c where c.hsrp_stateid=a.hsrp_stateid) as HSRPStateName,(select HSRPStateShortName from hsrpstate d with(nolock) where d.hsrp_stateid='" + ddlStateName.SelectedValue + "') as HSRPStateShortName,   a.Navembid AS  navembcode from hsrprecords a with(nolock) where  left(a.Navembid,4) = '" + ShortECname + "'  and  NewPdfRunningNo is null and erpassigndate is not null  and (IsBookMyHsrpRecord='Y')  and OrderStatus='New Order' and a.NAVEMBID='" + Navembid + "' and     Navembid not like '%CODO%'  order by  a.HSRP_StateID";
-            if ((ddlStateName.SelectedValue == "17") || (ddlStateName.SelectedValue == "10"))
+            if ((ddlStateName.SelectedValue == "17") ||(ddlStateName.SelectedValue == "10"))
             {
 
 
@@ -4049,14 +4041,16 @@ namespace ProductionSheetDashBoard
                     string HSRP_StateID = dr["HSRP_StateID"].ToString().Trim();
                     string HSRPStateName = dr["HSRPStateName"].ToString().Trim();
                     string HSRPStateShortName = dr["HSRPStateShortName"].ToString().Trim();
-
+                    //string RTOLocationID = dr["RTOLocationID"].ToString().Trim();
+                    //string RTOLocationName = dr["RTOLocationName"].ToString().Trim();
+                    //string NAVEMBID = dr["NAVEMBID"].ToString().Trim();
                     string Navembcode = dr["Navembcode"].ToString().Trim();
 
                     string dir = dirPath + DateTime.Now.ToString("yyyy-MM-dd") + "\\" + HSRPStateShortName + "\\";
 
                     string fileName = string.Empty;
                     string filePath = string.Empty;
-
+                    // string fileName = filePrefix + "-" + Navembcode + ".pdf";
 
 
                     StringBuilder html = new StringBuilder();
@@ -4067,56 +4061,52 @@ namespace ProductionSheetDashBoard
 
 
 
+                    /*
+                    *  Start body & HTMl Tag
+                    */
+                    #region
                     html.Append(
-                    "<!DOCTYPE html>" +
-                    "<html>" +
-                    "<head>" +
-                        "<meta charset='UTF-8'><title>Title</title>" +
-                        "<style>" +
-                            "@page {" +
-                                /* headers*/
-                                "@top-left {" +
-                                    "content: 'Left header';" +
+                        "<!DOCTYPE html>" +
+                        "<html>" +
+                        "<head>" +
+                            "<meta charset='UTF-8'><title>Title</title>" +
+                            "<style>" +
+                                "@page {" +
+                                    /* headers*/
+                                    "@top-left {" +
+                                        "content: 'Left header';" +
+                                    "}" +
+                                    "@top-right {" +
+                                        "content: 'Right header';" +
+                                    "}" +
+
+                                    /* footers */
+                                    "@bottom-left {" +
+                                        "content: 'Lorem ipsum';" +
+                                    "} " +
+                                    "@bottom-right {" +
+                                        "content: 'Page ' counter(page) ' of ' counter(pages);" +
+                                    "}" +
+                                    "@bottom-center  {" +
+                                        "content:element(footer);" +
+                                    "}" +
                                 "}" +
-                                "@top-right {" +
-                                    "content: 'Right header';" +
+                                 "#footer {" +
+                                    "position: running(footer);" +
+                                "}" +
+                                "table {" +
+                                  "border-collapse: collapse;" +
                                 "}" +
 
-                                /* footers */
-                                "@bottom-left {" +
-                                    "content: 'Lorem ipsum';" +
-                                "} " +
-                                "@bottom-right {" +
-                                    "content: 'Page ' counter(page) ' of ' counter(pages);" +
+                                "table, th, td {" +
+                                    "border: 1px solid black;" +
+                                    "text-align: left;" +
+                                    "vertical-align: top;" +
+                                    "padding:5px;" +
                                 "}" +
-                                "@bottom-center  {" +
-                                    "content:element(footer);" +
-                                "}" +
-                            "}" +
-                            //"#main-table td:nth-child(1){ width:5%; } #main-table td:nth-child(8),#main-table td:nth-child(9),#main-table td:nth-child(7){ width:6%; } #main-table td:nth-child(10){ width:8%; }" +
-                            //  "#main-table td:nth-child(3),#main-table td:nth-child(5){ width:12%;white-space: nowrap; }" +
-                            "#footer {" +
-                                "position: running(footer);" +
-                            "}" +
-                            "table {" +
-                              "border-collapse: collapse;" +
-                            "}" +
-                            "table, th, td {" +
-                                "border: 1px solid black;" +
-                                "text-align: left;" +
-                                "vertical-align: top;" +
-                                "padding-left:10px;" +
-                                "padding-bottom:6px;" +
-                                "padding-right:10px;" +
-                                "padding-top:5px;" +
-
-                            "}" +
-                            "#main-table table,#main-table th,#main-table td{" +
-                             "white-space: nowrap;}" +
-                        "</style>" +
-                    "</head>" +
-                    "<body>");
-
+                            "</style>" +
+                        "</head>" +
+                        "<body>");
                     #endregion
 
                     string fileAppoinmentDate = string.Empty;
@@ -4139,6 +4129,9 @@ namespace ProductionSheetDashBoard
                      "d.DealerAffixationID as SubDealerId, H.dealerid AS ParentDealerId,SlotBookingDate from	HSRPrecords H with(nolock) join DealerAffixationCenter d  with(nolock) on H.HSRP_StateID=d.StateID and H.Affix_Id=d.DealerAffixationID  join BookMYHSRPappointment B on H.orderno=B.orderno  " +
                     " where   Navembid='" + Navembcode + "'  and Navembid not like '%CODO%'     and  NewPdfRunningNo is null and erpassigndate is not null and  h.OrderStatus='New Order' and  IsBookMyHsrpRecord='Y' and  h.affix_id is not NULL    and  ((d.TypeofDelivery is null) or (d.TypeofDelivery='Dealer') or(d.TypeofDelivery='RWA')) ";
 
+                    //    oemDealerQuery = "select distinct d.oemid as oemid, (select name  from oemmaster where oemid=d.oemid) as oemname,d.dealerid as dealerid,d.Dealername as Dealername,  d.DealerAffixationCenterAddress as Address, " +
+                    // "d.DealerAffixationID as SubDealerId, H.dealerid AS ParentDealerId from	HSRPrecords H with(nolock) join DealerAffixationCenter d  with(nolock) on H.HSRP_StateID=d.StateID and H.Affix_Id=d.DealerAffixationID    " +
+                    //" where   Navembid='" + Navembcode + "'  and Navembid not like '%CODO%'     and  NewPdfRunningNo is null and erpassigndate is not null and  h.OrderStatus='New Order' and  IsBookMyHsrpRecord='Y' and  h.affix_id is not NULL    and d.TypeofDelivery is null ";
 
 
                     #region
@@ -4172,7 +4165,7 @@ namespace ProductionSheetDashBoard
 
 
                             SqlConnection con = new SqlConnection(CnnString);
-                            SqlCommand cmd = new SqlCommand("USP_BookMYHSRPProductionSheetNew", con);
+                            SqlCommand cmd = new SqlCommand("USP_BookMYHSRPProductionSheet", con);
                             cmd.CommandType = CommandType.StoredProcedure;
                             con.Open();
 
@@ -4226,87 +4219,77 @@ namespace ProductionSheetDashBoard
 
 
                                 #region
-
-
-
                                 html.Append("<div style='page-break-before: avoid;page-break-inside: avoid;page-break-after: always;'>" +
+                                        "<table style='width:100%;border: 0px;'>" +
+                                            "<tr style='border: 0px;'>" +
+                                                "<td colspan='7' style='border: 0px;'>" +
+                                                    "<div style='text-align:left'><b>Report Generation Date:</b> " + DateTime.Now.ToString("dd-MM-yyyy") + "</div>" +
+                                                "</td>" +
+                                                "<td colspan='7' style='border: 0px;'>" +
+                                                    "<div style='float:right;width: 500px;word-wrap: break-word;'>" +
+                                                        //"<b>Production Sheet No: " + strProductionSheetNo + "<br /> </b>" +
+                                                        //"<b>Pin Code:" + dealername + "<br />  </b>" +
+                                                        //"<b>Pin Code Location:" + Address + "<br /> </b>" +
 
-                                     "<table style='width:100%;border: 0px;'>" +
-                                         "<tr  style='border: 0px;'>" +
-                                             "<td colspan='4'   style='border: 0px; '>" +
-                                                 "<div style='text-align:left'><b>Sheet Generation Date:</b> " + DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss") + "</div>" +
-                                             "</td>" +
+                                                        //"<div style='float:right;width: 500px;word-wrap: break-word;'>" +
+                                                        "<b>Production Sheet No:</b> " + strProductionSheetNo + "<br />" +
+                                                        "<b>Dealer ID/Name:</b> " + dealerid + "/" + dealername + "/" + strsubaffixid + "<br />" +
+                                                        "<b>Dealer Address:</b> " + Address + "<br />" +
+                                                    "</div>" +
 
-                                              "<td colspan='3'  style='border: 0px; '>" +
-                                                 "<div style='text-align:left'><b>ROSMERTA SAFETY SYSTEMS LIMITED</b> " + "</div>" +
-                                             "</td>" +
+                                                    //"<b>Appointment Date:-:" + dtProduction.Rows[0]["AppointmentDate"].ToString() + "<br />  </b>" +
+                                                    "</div>" +
+                                                "</td>" +
+                                            "</tr>" +
+                                            "<tr style='border: 0px;'>" +
+                                                "<td colspan='14' style='border: 0px;'>" +
+                                                    "<div style='text-align:center;font-size:26px;'><b>Book My HSRP Production Sheet : -</b> Rosmerta Safety System</div>" +
+                                                "</td>" +
+                                            "</tr>" +
+                                            "<tr style='border: 0px;'>" +
+                                                "<td colspan='9' style='border: 0px;'>" +
+                                                    "<table style='border:0px;width:100%;'>" +
+                                                        "<tr style='border:0px;'>" +
+                                                            "<td style='border:0px;'><b>State Name :</b> " + HSRPStateName + "</td>" +
 
+                                                            "<td style='border:0px; font-size:21px;'><b>Report Date: " + DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss") + "</td> </b>" +
 
-                                              "<td  colspan='6' style='border: 0px;'>" +
-                                                 "<div style='float:left;width: 500px;word-wrap: break-word;'><b>Production Sheet No:</b> " + strProductionSheetNo + " </div>" +
-                                             "</td>" +
+                                                              "<td style='border:0px; font-size:21px;'><b>Appointment Date:- " + dtProduction.Rows[0]["AppointmentDate"].ToString() + "</td> </b>" +
+                                                        "</tr>" +
+                                                    "</table>" +
+                                                "</td>" +
+                                                "<td colspan='4' style='border: 0px;'>" +
+                                                    "<div style='float:right'>" +
 
-                                         "</tr>" +
+                                                        "VC:Vehicle Class<br />" +
+                                                        //"VT:Vehicle Type<br />" +
+                                                        "Front PS:Front Plate Size<br />" +
+                                                        "Rear PS:Rear Plate Size<br />" +
 
-                                           "<tr style='border: 0px;'>" +
-                                             "<td colspan='4' style='border: 0px;'>" +
-                                                 "<div style='text-align:left'><b>State:</b> " + HSRPStateName + "</div>" +
-                                             "</td>" +
+                                                    "</div>" +
+                                                "</td>" +
+                                                "<td style='border: 0px;'></td>" +
+                                            "</tr>" +
+                                            "<tr style='border: 0px;'>" +
+                                                 "<td colspan='14' style='border: 0px;'>" +
+                                                    "<div style='text-align:left'>Location Name : " + RTOLocationName + "</div>" +
+                                                "</td>" +
+                                            "</tr>" +
+                                            "<tr>" +
+                                                "<td style='text-align:center'>SR.No</td>" +
+                                                "<td>VC</td>" +
+                                                "<td>Vehicle No</td>" +
+                                                "<td>Fuel Type</td>" +
+                                                 "<td>Front PS</td>" +
+                                                "<td>Front Laser No</td>" +
+                                                "<td>Rear PS</td>" +
+                                                "<td>Rear Laser No.</td>" +
 
-                                              "<td colspan='3' style='border: 0px; '>" +
-                                                 "<div style='text-align:left'><b>Book My HSRP (Dealer Delivery) </b> " + "</div>" +
-                                             "</td>" +
+                                                "<td style='text-align:center'>Sticker Color</td>" +
+                                                 "<td style='text-align:center'>Customer Name</td>" +
 
-
-                                              "<td colspan='6' style='border: 0px;'>" +
-                                                 "<div style='float:left;width: 500px;word-wrap: break-word;'><b>Hub/Dealer (ID - Name):</b> " + dealerid + "/" + dealername + "/" + strsubaffixid + " </div>" +
-                                             "</td>" +
-
-                                         "</tr>" +
-
-                                             "<tr style='border: 0px;'>" +
-                                             "<td colspan='4' style='border: 0px;'>" +
-                                                 "<div style='text-align:left'><b>EC Location: </b> " + RTOLocationName + "</div>" +
-                                             "</td>" +
-
-                                              "<td colspan='3' style='border: 0px;'>" +
-                                                "<div style='text-align:left;font-size:22px;'><b>Appointment Date: " + dtProduction.Rows[0]["AppointmentDate"].ToString() + "</ b >" + "</div>" +
-                                             "</td>" +
-
-
-                                              "<td  colspan='6' style='border: 0px;'>" +
-                                                                "<div style='float:left;width: 500px;word-wrap: break-word;'><b>Hub/Dealer Address:</b> " + Address + " </div>" +
-                                             "</td>" +
-
-                                         "</tr>" +
-
-
-
-
-                                         "<tr>" +
-                                              "<td style='text-align:center;white-space: nowrap'>Sr. No.</td>" +
-                                                 "<td style='width:15%;white-space: nowrap'>Vehicle No.</td>" +
-                                                 "<td>Front Plate Size</td>" +
-
-                                                  "<td style='width:15%;white-space: nowrap'>Front Laser No.</td>" +
-
-                                              "<td>Rear Plate Size</td>" +
-
-
-                                                  "<td style='width:15%;white-space: nowrap'>Rear Laser No.</td>" +
-
-
-                                              "<td style='white-space: nowrap'>H. S. Foil </td>" +
-                                              "<td style='white-space: nowrap'>Caution Sticker</td>" +
-                                              "<td style='white-space: nowrap'>Fuel Type</td>" +
-                                              "<td style='white-space: nowrap'>VT</td>" +
-                                                "<td style='white-space: nowrap'>VC</td>" +
-                                              "<td style='white-space: nowrap'>Frame</ td>" +
-                                                "<td style='white-space: nowrap'>Pin Code</ td>" +
-
-                                          "</tr>");
-
-
+                                                   "<td style='width:8%;' style='text-align:center'>Appointment Time</td>" +
+                                            "</tr>");
                                 #endregion
 
                                 #region
@@ -4320,85 +4303,81 @@ namespace ProductionSheetDashBoard
 
                                     j = j + 1;
 
-                                    if (total == 22)
+                                    if (total == 12)
                                     {
                                         total = 0;
 
                                         html.Append("<div style='page-break-before: avoid;page-break-inside: avoid;page-break-after: always;'>" +
-                                   "<table style='width:100%;border: 0px;'>" +
-                                       "<tr style='border: 0px;'>" +
-                                           "<td colspan='4'  style='border: 0px;'>" +
-                                               "<div style='text-align:left'><b>Sheet Generation Date:</b> " + DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss") + "</div>" +
-                                           "</td>" +
+                                        "<table style='width:100%;border: 0px;'>" +
+                                            "<tr style='border: 0px;'>" +
+                                                "<td colspan='7' style='border: 0px;'>" +
+                                                    "<div style='text-align:left'><b>Report Generation Date:</b> " + DateTime.Now.ToString("dd-MM-yyyy") + "</div>" +
+                                                "</td>" +
+                                                "<td colspan='7' style='border: 0px;'>" +
+                                                    "<div style='float:right;width: 500px;word-wrap: break-word;'>" +
+                                                        //"<b>Production Sheet No: " + strProductionSheetNo + "<br /> </b>" +
+                                                        //"<b>Pin Code:" + dealername + "<br />  </b>" +
+                                                        //"<b>Pin Code Location:" + Address + "<br /> </b>" +
 
-                                            "<td colspan='3'  style='border: 0px;'>" +
-                                               "<div style='text-align:left'><b>ROSMERTA SAFETY SYSTEMS LIMITED</b> " + "</div>" +
-                                           "</td>" +
+                                                        //"<div style='float:right;width: 500px;word-wrap: break-word;'>" +
+                                                        "<b>Production Sheet No:</b> " + strProductionSheetNo + "<br />" +
+                                                        "<b>Dealer ID/Name:</b> " + dealerid + "/" + dealername + "/" + strsubaffixid + "<br />" +
+                                                        "<b>Dealer Address:</b> " + Address + "<br />" +
+                                                    "</div>" +
 
+                                                    //"<b>Appointment Date:-:" + dtProduction.Rows[0]["AppointmentDate"].ToString() + "<br />  </b>" +
+                                                    "</div>" +
+                                                "</td>" +
+                                            "</tr>" +
+                                            "<tr style='border: 0px;'>" +
+                                                "<td colspan='14' style='border: 0px;'>" +
+                                                    "<div style='text-align:center;font-size:26px;'><b>Book My HSRP Production Sheet : -</b> Rosmerta Safety System</div>" +
+                                                "</td>" +
+                                            "</tr>" +
+                                            "<tr style='border: 0px;'>" +
+                                                "<td colspan='9' style='border: 0px;'>" +
+                                                    "<table style='border:0px;width:100%;'>" +
+                                                        "<tr style='border:0px;'>" +
+                                                            "<td style='border:0px;'><b>State Name :</b> " + HSRPStateName + "</td>" +
 
-                                            "<td colspan='6' style='border: 0px; '>" +
-                                               "<div style='float:left;width: 500px;word-wrap: break-word;'><b>Production Sheet No:</b> " + strProductionSheetNo + " </div>" +
-                                           "</td>" +
+                                                            "<td style='border:0px; font-size:21px;'><b>Report Date: " + DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss") + "</td> </b>" +
 
-                                       "</tr>" +
+                                                              "<td style='border:0px; font-size:21px;'><b>Appointment Date:- " + dtProduction.Rows[0]["AppointmentDate"].ToString() + "</td> </b>" +
+                                                        "</tr>" +
+                                                    "</table>" +
+                                                "</td>" +
+                                                "<td colspan='4' style='border: 0px;'>" +
+                                                    "<div style='float:right'>" +
 
-                                         "<tr style='border: 0px;'>" +
-                                           "<td colspan='4' style='border: 0px;'>" +
-                                               "<div style='text-align:left'><b>State:</b> " + HSRPStateName + "</div>" +
-                                           "</td>" +
+                                                        "VC:Vehicle Class<br />" +
+                                                        //"VT:Vehicle Type<br />" +
+                                                        "Front PS:Front Plate Size<br />" +
+                                                        "Rear PS:Rear Plate Size<br />" +
 
-                                            "<td colspan='3' style='border: 0px; '>" +
-                                               "<div style='text-align:left'><b>Book My HSRP (Dealer Delivery) </b> " + "</div>" +
-                                           "</td>" +
+                                                    "</div>" +
+                                                "</td>" +
+                                                "<td style='border: 0px;'></td>" +
+                                            "</tr>" +
+                                            "<tr style='border: 0px;'>" +
+                                                 "<td colspan='14' style='border: 0px;'>" +
+                                                    "<div style='text-align:left'>Location Name : " + RTOLocationName + "</div>" +
+                                                "</td>" +
+                                            "</tr>" +
+                                            "<tr>" +
+                                                "<td style='text-align:center'>SR.No</td>" +
+                                                "<td>VC</td>" +
+                                                "<td>Vehicle No</td>" +
+                                                "<td>Fuel Type</td>" +
+                                                 "<td>Front PS</td>" +
+                                                "<td>Front Laser No</td>" +
+                                                "<td>Rear PS</td>" +
+                                                "<td>Rear Laser No.</td>" +
 
+                                                "<td style='text-align:center'>Sticker Color</td>" +
+                                                 "<td style='text-align:center'>Customer Name</td>" +
 
-                                            "<td colspan='6' style='border: 0px;'>" +
-                                               "<div style='float:left;width: 500px;word-wrap: break-word;'><b>Hub/Dealer (ID - Name):</b> " + dealerid + "/" + dealername + "/" + strsubaffixid + " </div>" +
-                                           "</td>" +
-
-                                       "</tr>" +
-
-                                           "<tr style='border: 0px;'>" +
-                                           "<td colspan='4'  style='border: 0px;'>" +
-                                               "<div style='text-align:left'><b>EC Location: </b> " + RTOLocationName + "</div>" +
-                                           "</td>" +
-
-                                            "<td colspan='3' style='border: 0px;'>" +
-                                              "<div style='text-align:left;font-size:22px;'><b>Appointment Date: " + dtProduction.Rows[0]["AppointmentDate"].ToString() + "</ b >" + "</div>" +
-                                           "</td>" +
-
-
-                                            "<td colspan='6'  style='border: 0px;'>" +
-                                                              "<div style='float:left;width: 500px;word-wrap: break-word;'><b>Hub/Dealer Address:</b> " + Address + " </div>" +
-                                           "</td>" +
-
-                                       "</tr>" +
-
-
-
-
-                                          "<tr>" +
-                                              "<td style='text-align:center;white-space: nowrap'>Sr. No.</td>" +
-                                                 "<td style='width:15%;white-space: nowrap'>Vehicle No.</td>" +
-                                                 "<td>Front Plate Size</td>" +
-
-                                                  "<td style='width:15%;white-space: nowrap'>Front Laser No.</td>" +
-
-                                              "<td>Rear Plate Size</td>" +
-
-
-                                                  "<td style='width:15%;white-space: nowrap'>Rear Laser No.</td>" +
-
-
-                                              "<td style='white-space: nowrap'>H. S. Foil </td>" +
-                                              "<td style='white-space: nowrap'>Caution Sticker</td>" +
-                                              "<td style='white-space: nowrap'>Fuel Type</td>" +
-                                              "<td style='white-space: nowrap'>VT</td>" +
-                                                "<td style='white-space: nowrap'>VC</td>" +
-                                              "<td style='white-space: nowrap'>Frame</ td>" +
-                                                "<td style='white-space: nowrap'>Pin Code</ td>" +
-
-                                          "</tr>");
+                                                   "<td style='width:8%;' style='text-align:center'>Appointment Time</td>" +
+                                            "</tr>");
                                     }
                                     string FS1 = string.Empty;
                                     string FS2 = string.Empty;
@@ -4406,14 +4385,16 @@ namespace ProductionSheetDashBoard
                                     string RS1 = string.Empty;
                                     string RS2 = string.Empty;
                                     total = total + 1;
-
+                                    //foreach (DataRow drProduction in dtProduction.Rows)
+                                    //{
                                     string HsrprecordID = dtProduction.Rows[i]["hsrprecordID"].ToString().Trim();
                                     string SRNo = dtProduction.Rows[i]["SRNo"].ToString().Trim();
-
+                                    //string ORD = "";// drProduction["ORD"].ToString().Trim();
                                     string VC = dtProduction.Rows[i]["VehicleClass"].ToString().Trim();
-                                    string VT = dtProduction.Rows[i]["VehicleType"].ToString().Trim();
                                     string VehicleNo = dtProduction.Rows[i]["VehicleRegNo"].ToString().Trim();
-
+                                    //string VT = drProduction["VehicleType"].ToString().Trim();
+                                    //string ChassisNo = drProduction["ChassisNo"].ToString().Trim();
+                                    //string EngineNo = drProduction["EngineNo"].ToString().Trim();
                                     string FuelType = dtProduction.Rows[i]["FuelType"].ToString().Trim();
                                     string FrontPSize = dtProduction.Rows[i]["FrontProductCode"].ToString().Trim();
 
@@ -4434,35 +4415,35 @@ namespace ProductionSheetDashBoard
 
 
 
+                                    //string Amount = drProduction["roundoff_netamount"].ToString().Trim();
+                                    //string OrderStatus = drProduction["OrderStatus"].ToString().Trim();
                                     string StickerColor = dtProduction.Rows[i]["stickerColor"].ToString().Trim();
-                                    string HotStampingFoilColour = dtProduction.Rows[i]["HotStampingFoilColour"].ToString().Trim();
-                                    string Frame = dtProduction.Rows[i]["Frame"].ToString().Trim();
-
-                                    string Pincode = dtProduction.Rows[i]["Pincode"].ToString().Trim();
-
+                                    string CustomerName = dtProduction.Rows[i]["CustomerName"].ToString().Trim();
+                                    //string AppointmentDate = drProduction["AppointmentDate"].ToString().Trim();
+                                    string AppointmentTime = dtProduction.Rows[i]["AppointmentTime"].ToString().Trim();
+                                    // "<b>Production Sheet No: " + strProductionSheetNo + "<br /> </b>" +
                                     html.Append("<tr>" +
-                                       "<td style='text-align:center;white-space: nowrap'>" + SRNo + "</td>" +
-                                       "<td style='font-size:20px;white-space: nowrap' >" + "<b>" + VehicleNo + "</td>" +
-                                       "<td style='white-space: nowrap'> " + FrontPSize + "  </td> " +
-                                       "<td style='font-size:20px;white-space: nowrap'>" + "<b>" + FS1 + "<b>" + FS2 + "</b> </td>" +
+                                       "<td style='text-align:center'>" + SRNo + "</td>" +
+                                       "<td>" + VC + "</td>" +
+                                       "<td > <b>" + VehicleNo + " </b> </td> " +
+                                        "<td>" + FuelType + "</td>" +
 
 
-                                       "<td style='white-space: nowrap" + RearPSize + "</td>" +
-                                       "<td style='font-size:20px;white-space: nowrap'>" + "<b>" + RS1 + "<b>" + RS2 + "</b> </td>" +
+                                       "<td>" + FrontPSize + "</td>" +
+                                       "<td>" + FS1 + "<b>" + FS2 + "</b> </td>" +
+                                       "<td>" + RearPSize + "</td>" +
 
-                                         "<td style='white-space: nowrap'>" + HotStampingFoilColour + "</td>" +
-                                        "<td style='white-space: nowrap'>" + StickerColor + "</td>" +
-                                        "<td style='white-space: nowrap'>" + FuelType + "</td>" +
-                                        "<td style='white-space: nowrap'>" + VT + "</td>" +
-                                        "<td style='white-space: nowrap'>" + VC + "</td>" +
+                                       "<td>" + RS1 + "<b>" + RS2 + "</b> </td>" +
+                                        "<td>" + StickerColor + "</td>" +
+                                       "<td>" + CustomerName + "</td>" +
 
-
-                                       "<td style='white-space: nowrap'>" + Frame + "</td>" +
-
-                                         "<td style='white-space: nowrap'>" + Pincode + "</td>" +
+                                         "<td>" + AppointmentTime + "</td>" +
                                    "</tr>");
 
-
+                                    //start updating hsrprecords 
+                                    //string sqlUpdateHSRPRecords = "update hsrprecords set sendtoProductionStatus='Y', NAVPDFFlag='1', NewPdfRunningNo='" + strProductionSheetNo + "', Requisitionsheetno='" + ReqNum + "', " +
+                                    //       "PdfDownloadDate=GetDate(), pdfFileName='" + fileName + "', PDFDownloadUserID='1' where hsrprecordID='" + HsrprecordID + "' ";
+                                    //Utils.Utils.ExecNonQuery(sqlUpdateHSRPRecords, CnnString);   // uncomment after testing
 
                                     UpdateSQL.Append("update hsrprecords set sendtoProductionStatus='Y', NAVPDFFlag='1', NewPdfRunningNo='" + strProductionSheetNo + "', Requisitionsheetno='" + ReqNum + "',PdfDownloadDate=GetDate(), pdfFileName='" + fileName + "', PDFDownloadUserID='1' where hsrprecordID='" + HsrprecordID + "';");
 
@@ -4693,6 +4674,25 @@ namespace ProductionSheetDashBoard
 
 
 
+                    //html.Append("<tr>" +
+                    //                           "<td colspan='12'>" +
+                    //                               "<div style='text-align:left;padding:8px;'>" +
+                    //                                   "<b style='font-size:20px;margin-top:2px;margin-bottom:2px;'>" + " " + "</b>" +
+                    //                                   "<p style='margin-top:2px;margin-bottom:2px;'>" + " " + "</p>" +
+                    //                                    "<b style='font-size:20px;'>" + "" + "</b>" +
+                    //                               "</div>" +
+                    //                           "</td>" +
+                    //                       "</tr>");
+
+
+
+
+                    //html.Append("</table>");
+
+                    //html.Append("</div>");
+                    ///html.Append("style='page-break-after: always;'");
+
+
 
 
 
@@ -4921,12 +4921,11 @@ namespace ProductionSheetDashBoard
                         #endregion
                     }
 
-                    //#endregion
+                    #endregion
 
                 }//close foreach stateEcQuery
             }
         }
-
 
         protected void btnExternal_Click(object sender, EventArgs e)
         {
@@ -5641,26 +5640,19 @@ namespace ProductionSheetDashBoard
                                         "content:element(footer);" +
                                     "}" +
                                 "}" +
-                                //"#main-table td:nth-child(1){ width:5%; } #main-table td:nth-child(8),#main-table td:nth-child(9),#main-table td:nth-child(7){ width:6%; } #main-table td:nth-child(10){ width:8%; }" +
-                                //  "#main-table td:nth-child(3),#main-table td:nth-child(5){ width:12%;white-space: nowrap; }" +
-                                "#footer {" +
+                                 "#footer {" +
                                     "position: running(footer);" +
                                 "}" +
                                 "table {" +
                                   "border-collapse: collapse;" +
                                 "}" +
+
                                 "table, th, td {" +
                                     "border: 1px solid black;" +
                                     "text-align: left;" +
                                     "vertical-align: top;" +
-                                    "padding-left:10px;" +
-                                    "padding-bottom:5px;" +
-                                    "padding-right:10px;" +
-                                    "padding-top:5px;" +
-
+                                    "padding:5px;" +
                                 "}" +
-                                "#main-table table,#main-table th,#main-table td{" +
-                                 "white-space: nowrap;}" +
                             "</style>" +
                         "</head>" +
                         "<body>");
@@ -5715,13 +5707,13 @@ namespace ProductionSheetDashBoard
                                "a.HSRP_StateID, (select HSRPStateName from hsrpstate where HSRP_StateID=a.HSRP_StateID) as 'State Name', " +
                                "(select Distinct Oemname from Dealermaster where dealerid=a.dealerid and Oemid='20' ) as OemName, " +
 
-
+                                "(select top (1) Plant from HeroOrder where RegistrationNumber=a.VehicleRegNo)  as 'Plant'," +
 
 
                                "(select replace(ProductCode,'MM-','') from Product where productid= a.RearPlateSize) AS RearProductCode, " +
                                "(select replace(ProductCode,'MM-','') from Product where productid= a.FrontPlateSize) AS FrontProductCode, " +
-                               "a.FrontPlateSize, a.HSRP_Front_LaserCode, a.HSRP_Rear_LaserCode, a.RearPlateSize,HotStampingFoilColour FROM HSRPRecords AS a with(nolock) " +
-                               " left join  HotStampingFoilColourMaster H  with(nolock) on a.vehicletype=h.Vehicletype and a.vehicleclass=h.Vehicleclass where IsBookMyHsrpRecord='N' and  sendtoProductionStatus ='N'  and heroorderno is not null and a.hsrp_StateID='" + HSRP_StateID + "' " +
+                               "a.FrontPlateSize, a.HSRP_Front_LaserCode, a.HSRP_Rear_LaserCode, a.RearPlateSize FROM HSRPRecords AS a with(nolock) " +
+                               "where ((IsBookMyHsrpRecord='N') or  (IsBookMyHsrpRecord is null)) and  ( sendtoProductionStatus ='N' or isnull(sendtoProductionStatus,'') ='') and isnull(heroorderno,'')!='' and a.hsrp_StateID='" + HSRP_StateID + "' " +
                                "and a.RTOLocationID in (select rtolocationid from rtolocation where navembid='" + Navembcode + "') " +
                                "and  VahanStatus='Y' and newpdfrunningno is  null and ([HSRP_Front_LaserCode] is not null or [HSRP_Rear_LaserCode] is not null) " +
                                "and ([HSRP_Front_LaserCode] !='' or [HSRP_Rear_LaserCode] !='') " +
@@ -5764,91 +5756,73 @@ namespace ProductionSheetDashBoard
 
                                 string RTOLocationName = dtProduction.Rows[0]["RTOLocationName"].ToString();
 
-
-
                                 #region
-
-
                                 html.Append("<div style='page-break-before: avoid;page-break-inside: avoid;page-break-after: always;'>" +
-                                      "<table style='width:100%;border: 0px;'>" +
-                                          "<tr style='border: 0px;'>" +
-                                              "<td  style='border: 0px; width:36%;'>" +
-                                                  "<div style='text-align:left'><b>Report Generation Date:</b> " + DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss") + "</div>" +
-                                              "</td>" +
-
-                                               "<td  style='border: 0px; width:30%;'>" +
-                                                  "<div style='text-align:left'><b>ROSMERTA SAFETY SYSTEMS LIMITED</b> " + "</div>" +
-                                              "</td>" +
-
-
-                                               "<td  style='border: 0px; width:33%;'>" +
-                                                  "<div style='float:left;width: 500px;word-wrap: break-word;'><b>Production Sheet No:</b> " + strProductionSheetNo + " </div>" +
-                                              "</td>" +
-
-                                          "</tr>" +
-
+                                        "<table style='width:100%;border: 0px;'>" +
                                             "<tr style='border: 0px;'>" +
-                                              "<td  style='border: 0px;width:36%;'>" +
-                                                  "<div style='text-align:left'><b>State:</b> " + HSRPStateName + "</div>" +
-                                              "</td>" +
-
-                                               "<td style='border: 0px; width:30%;'>" +
-                                                  "<div style='text-align:left'><b>Production Sheet</b> " + "</div>" +
-                                              "</td>" +
-
-
-                                               "<td style='border: 0px;width:33%;'>" +
-                                                  "<div style='float:left;width: 500px;word-wrap: break-word;'><b>Dealer ID/Name:</b> " + dealerid + "/" + dealername + " </div>" +
-                                              "</td>" +
-
-                                          "</tr>" +
-
-                                              "<tr style='border: 0px;'>" +
-                                              "<td  style='border: 0px;width:36%;'>" +
-                                                  "<div style='text-align:left'><b>EC Location: </b> " + RTOLocationName + "</div>" +
-                                              "</td>" +
-
-                                               "<td  style='border: 0px;width:30%;'>" +
-                                                  "<div style='text-align:left'><b>Oem :" + oemname + " </ b > </div>" +
-                                              "</td>" +
-
-
-                                               "<td  style='border: 0px;width:33%;'>" +
-                                                   "<div style='float:left;width: 500px;word-wrap: break-word;'><b>Dealer Address:</b> " + Address + " </div>" +
-                                              //"<div style='text-align:left'><b>Dealer Address:</b> " + Address + " </div>" +
-                                              "</td>" +
-
-                                          "</tr>" +
-
-
-
-
-                                                                          "</table>" +
-
-
-
-                                // Sr.No.Vehicle No.Front Plate Size    Front Laser No.Rear Plate Size Rear Laser No.H.S.Foil  Caution Sticker Fuel Type   VT  VC
-                                "<table id='main-table' style='width:100%;border: 0px;'>" +
-
-"<tr>" +
-                                                "<td >Sr. No.</td>" +
-                                                  "<td style='width:15%;'>Vehicle No.</td>" +
-                                                   "<td  >Front Plate Size</td>" +
-                                                "<td style='width:15%;'>Front Laser No.</td>" +
-
-                                                "<td>Rear Plate Size</td>" +
-                                                "<td style='width:15%;'>Rear Laser No.</td>" +
-
-                                                "<td>H. S. Foil </td>" +
-
+                                                "<td colspan='9' style='border: 0px;'>" +
+                                                    "<div style='text-align:left'><b>Report Generation Date:</b> " + DateTime.Now.ToString("dd-MM-yyyy") + "</div>" +
+                                                "</td>" +
+                                                "<td colspan='3' style='border: 0px;'>" +
+                                                    "<div style='float:right;width: 500px;word-wrap: break-word;'>" +
+                                                        "<b>Production Sheet No:</b> " + strRunningNo + "<br />" +
+                                                        "<b>Dealer ID/Name:</b> " + dealerid + "/" + dealername + "<br />" +
+                                                        "<b>Dealer Address:</b> " + Address + "<br />" +
+                                                    "</div>" +
+                                                "</td>" +
+                                            "</tr>" +
+                                            "<tr style='border: 0px;'>" +
+                                                "<td colspan='12' style='border: 0px;'>" +
+                                                    "<div style='text-align:center;font-size:26px;'><b>Production Sheet : -</b> Rosmerta Safety System</div>" +
+                                                "</td>" +
+                                            "</tr>" +
+                                            "<tr style='border: 0px;'>" +
+                                                "<td colspan='10' style='border: 0px;'>" +
+                                                    "<table style='border:0px;width:100%;'>" +
+                                                        "<tr style='border:0px;'>" +
+                                                            "<td style='border:0px;'><b>State Name :</b> " + HSRPStateName + "</td>" +
+                                                            "<td style='border:0px;'><b>Oem Name :</b> " + oemname + "</td>" +
+                                                            "<td style='border:0px;'><b>Report Date:</b> " + DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss") + "</td>" +
+                                                        "</tr>" +
+                                                    "</table>" +
+                                                "</td>" +
+                                                "<td colspan='2' style='border: 0px;'>" +
+                                                    "<div style='float:right'>" +
+                                                        "ORD:Order Open Date<br />" +
+                                                        "VC:Vehicle Class<br />" +
+                                                        "VT:Vehicle Type<br />" +
+                                                        "Front PS:Front Plate Size<br />" +
+                                                        "Rear PS:Rear Plate Size<br />" +
+                                                        "OS: Order Satus(New Order/Embossing Done/Closed)" +
+                                                    "</div>" +
+                                                "</td>" +
+                                                "<td style='border: 0px;'></td>" +
+                                            "</tr>" +
+                                            "<tr style='border: 0px;'>" +
+                                                 "<td colspan='12' style='border: 0px;'>" +
+                                                    "<div style='text-align:left'>Location Name : " + RTOLocationName + " Hero Order No :  " + dtProduction.Rows[0]["heroorderno"].ToString() + "</div>" +
+                                                "</td>" +
+                                            "</tr>" +
+                                            "<tr>" +
+                                                "<td style='text-align:center'>SR.No</td>" +
+                                                  "<td>Hero Order No</td>" +
+                                                  "<td>VC</td>" +
+                                                "<td>Vehicle No</td>" +
                                                 "<td>VT</td>" +
-                                                "<td>VC</ td>" +
-                                                 "<td>Order No</td>" +
+                                                "<td>Chassis No</td>" +
+                                                "<td>EngineNo</td>" +
+                                                "<td>Fuel Type</td>" +
+                                                "<td>Front PS</td>" +
+                                                "<td>Front Laser No</td>" +
+                                                "<td>Rear PS</td>" +
+                                                "<td>Rear Laser No.</td>" +
 
+
+                                                    "<td>Plant Code</td>" +
+                                            //"<td>Hot Stamping Foil Colour</td>" +
+                                            "<td style='text-align:center'>OS</td>" +
                                             "</tr>");
                                 #endregion
-
-
 
                                 #region
                                 string strheroorderno = "";
@@ -5858,49 +5832,96 @@ namespace ProductionSheetDashBoard
 
                                     string HsrprecordID = dtProduction.Rows[i]["hsrprecordID"].ToString().Trim();
                                     string SRNo = dtProduction.Rows[i]["SRNo"].ToString().Trim();
+                                    //if (strtvspono == "")
+                                    //{
+                                    //    html.Append("<tr style='border:0px;'><td colspan='14' style='border:0px;'><br/><b>TVSPONO.: " + dtProduction.Rows[0]["TVSMPONO"].ToString() + "</b></td></tr>");
+                                    //}
 
-                                    string VehicleNo = dtProduction.Rows[i]["VehicleRegNo"].ToString().Trim();
-                                    string VC = dtProduction.Rows[i]["VehicleClass"].ToString().Trim();
-                                    string VT = dtProduction.Rows[i]["VehicleType"].ToString().Trim();
-                                    string FrontPSize = dtProduction.Rows[i]["FrontProductCode"].ToString().Trim();
-                                    string FrontLaserNo = dtProduction.Rows[i]["HSRP_Front_LaserCode"].ToString().Trim();
-                                    string RearPSize = dtProduction.Rows[i]["RearProductCode"].ToString().Trim();
-                                    string RearLaserNo = dtProduction.Rows[i]["HSRP_Rear_LaserCode"].ToString().Trim();
-                                    string HotStampingFoilColour = dtProduction.Rows[i]["HotStampingFoilColour"].ToString().Trim();
-                                    strheroorderno = dtProduction.Rows[i]["heroorderno"].ToString();
+                                    if (strheroorderno.ToString() == "")
+                                    {
+                                        strheroorderno = dtProduction.Rows[i]["heroorderno"].ToString();
+                                        //html.Append("<tr style='border:0px;'><td colspan='14' style='border:0px;'><br/><b>TVSPONO.: " + strtvspono + "</b></td></tr>");
+                                    }
 
+
+
+                                    j = j + 1;
+                                    if (strheroorderno.ToString() != dtProduction.Rows[i]["heroorderno"].ToString())
+                                    {
+
+
+                                        string heroorderno = dtProduction.Rows[i]["heroorderno"].ToString().Trim();
+                                        string ORD = "";// drProduction["ORD"].ToString().Trim();
+                                        string VC = dtProduction.Rows[i]["VehicleClass"].ToString().Trim();
+                                        string VehicleNo = dtProduction.Rows[i]["VehicleRegNo"].ToString().Trim();
+                                        string VT = dtProduction.Rows[i]["VehicleType"].ToString().Trim();
+                                        string ChassisNo = dtProduction.Rows[i]["ChassisNo"].ToString().Trim();
+                                        string EngineNo = dtProduction.Rows[i]["EngineNo"].ToString().Trim();
+                                        string FuelType = dtProduction.Rows[i]["FuelType"].ToString().Trim();
+                                        string FrontPSize = dtProduction.Rows[i]["FrontProductCode"].ToString().Trim();
+                                        string FrontLaserNo = dtProduction.Rows[i]["HSRP_Front_LaserCode"].ToString().Trim();
+                                        string RearPSize = dtProduction.Rows[i]["RearProductCode"].ToString().Trim();
+                                        string RearLaserNo = dtProduction.Rows[i]["HSRP_Rear_LaserCode"].ToString().Trim();
+                                        // string Amount = drProduction["roundoff_netamount"].ToString().Trim();
+                                        string Plant = dtProduction.Rows[i]["Plant"].ToString().Trim();
+                                       // string HotStampingFoilColour = dtProduction.Rows[i]["HotStampingFoilColour"].ToString().Trim();
+
+                                        //string OrderStatus = dtProduction.Rows[i]["OrderStatus"].ToString().Trim();
+                                        j = 1;
+                                        strheroorderno = dtProduction.Rows[i]["heroorderno"].ToString();
+
+
+                                        html.Append("<tr style='border:0px;'><td colspan='14' style='border:0px;'><br/><b>Hero Order No.: " + heroorderno + "</b></td></tr>");
+
+
+
+                                        html.Append("<tr>" +
+                                                "<td style='text-align:center'>SR.No</td>" +
+                                                  "<td>Hero Order No.</td>" +
+                                                  "<td>VC</td>" +
+                                                "<td>Vehicle No</td>" +
+                                                "<td>VT</td>" +
+                                                "<td>Chassis No</td>" +
+                                                "<td>EngineNo</td>" +
+                                                "<td>Fuel Type</td>" +
+                                                "<td>Front PS</td>" +
+                                                "<td>Front Laser No</td>" +
+                                                "<td>Rear PS</td>" +
+                                                "<td>Rear Laser No.</td>" +
+                                                "<td>Plant</td>" +
+                                                 //"<td>Hot Stamping Foil Colour</td>" +
+                                            // "<td style='text-align:center'>OS</td>" +
+                                            "</tr>");
+
+                                    }
 
 
                                     html.Append("<tr>" +
+                                       "<td style='text-align:center'>" + j + "</td>" +
+                                       "<td>" + dtProduction.Rows[i]["heroorderno"].ToString().Trim() + "</td>" +
+                                            "<td style='text-align:left;font-size:20px;'>" + "<b>" + dtProduction.Rows[i]["VehicleRegNo"].ToString().Trim() + "</b> </td>" +
+                                       //  "<td>" + dtProduction.Rows[i]["VehicleRegNo"].ToString().Trim() + "</td>" +
+                                       //"<td style='text-align:center;font-size:20px;'>" + "<b>" + dtProduction.Rows[i]["VehicleRegNo"].ToString().Trim() + "</b> </td>" +
+                                       "<td>" + dtProduction.Rows[i]["VehicleType"].ToString().Trim() + "</td>" +
+                                       "<td>" + dtProduction.Rows[i]["ChassisNo"].ToString().Trim() + "</td>" +
+                                       "<td>" + dtProduction.Rows[i]["EngineNo"].ToString().Trim() + "</td>" +
+                                       "<td>" + dtProduction.Rows[i]["FuelType"].ToString().Trim() + "</td>" +
+                                       "<td>" + dtProduction.Rows[i]["FrontProductCode"].ToString().Trim() + "</td>" +
+                                         // "<td>" + dtProduction.Rows[i]["HSRP_Front_LaserCode"] + "</td>" +
 
+                                         "<td style='text-align:left;font-size:20px;'>" + "<b>" + dtProduction.Rows[i]["HSRP_Front_LaserCode"].ToString().Trim() + "</b> </td>" +
+                                       //"<td style='text-align:center;font-size:20px;'>" + "<b>" + dtProduction.Rows[i]["HSRP_Front_LaserCode"].ToString().Trim() + "</b> </td>" +
+                                       "<td>" + dtProduction.Rows[i]["RearProductCode"].ToString().Trim() + "</td>" +
+                                          // "<td>" + dtProduction.Rows[i]["HSRP_Rear_LaserCode"].ToString().Trim() + "</td>" +
+                                          "<td style='text-align:left;font-size:20px;'>" + "<b>" + dtProduction.Rows[i]["HSRP_Rear_LaserCode"].ToString().Trim() + "</b> </td>" +
 
-                                             "<td style='text-align:center'>" + SRNo + "</td>" +
-                                    "<td style='text-align:left;font-size:20px;'>" + "<b>" + VehicleNo + "</b> </td>" +
+                                      // "<td style='text-align:center;font-size:20px;'>" + "<b>" + dtProduction.Rows[i]["HSRP_Rear_LaserCode"].ToString().Trim() + "</b> </td>" +
 
-                                     "<td >" + FrontPSize + "</td>" +
-                                      "<td style='text-align:left;font-size:20px;'>" + "<b>" + FrontLaserNo + "</b> </td>" +
-                                        "<td >" + RearPSize + "</td>" +
-                                      "<td style='text-align:left;font-size:20px;'>" + "<b>" + RearLaserNo + "</b> </td>" +
+                                        "<td>" + dtProduction.Rows[i]["Plant"].ToString().Trim() + "</td>" +
 
-                                       "<td style='text-align:center;'>" + HotStampingFoilColour + "</td>" +
-
-
-                                         "<td style='text-align:center;'>" + VT + "</td>" +
-                                         "<td style='text-align:center;'>" + VC + "</td>" +
-                                         "<td style='text-align:center;' >" + strheroorderno + "</td>" +
-
-
-
-
-
-
-
-
-                                    "</tr>");
-
-
-
-
+                                        //"<td>" + dtProduction.Rows[i]["HotStampingFoilColour"].ToString().Trim() + "</td>" +
+                                    "<td>" + dtProduction.Rows[i]["OrderStatus"].ToString().Trim() + "</td>" +
+                                   "</tr>");
 
                                     //start updating hsrprecords 
                                     string sqlUpdateHSRPRecords = "update hsrprecords set sendtoProductionStatus='Y', NAVPDFFlag='1', NewPdfRunningNo='" + strProductionSheetNo + "',  Requisitionsheetno='" + ReqNum + "',  " +
@@ -5943,7 +5964,7 @@ namespace ProductionSheetDashBoard
                     int Itotal = 0;
 
                     html.Append("<div style='width:100%;height:100%;'>" +
-                                        "<table  style='width:100%'>" +
+                                        "<table style='width:100%'>" +
 
                                             "<tr>" +
                                                 "<td colspan='12'>" +
@@ -6268,55 +6289,47 @@ namespace ProductionSheetDashBoard
                     */
                     #region
                     html.Append(
-                       "<!DOCTYPE html>" +
-                       "<html>" +
-                       "<head>" +
-                           "<meta charset='UTF-8'><title>Title</title>" +
-                           "<style>" +
-                               "@page {" +
-                                   /* headers*/
-                                   "@top-left {" +
-                                       "content: 'Left header';" +
-                                   "}" +
-                                   "@top-right {" +
-                                       "content: 'Right header';" +
-                                   "}" +
+                        "<!DOCTYPE html>" +
+                        "<html>" +
+                        "<head>" +
+                            "<meta charset='UTF-8'><title>Title</title>" +
+                            "<style>" +
+                                "@page {" +
+                                    /* headers*/
+                                    "@top-left {" +
+                                        "content: 'Left header';" +
+                                    "}" +
+                                    "@top-right {" +
+                                        "content: 'Right header';" +
+                                    "}" +
 
-                                   /* footers */
-                                   "@bottom-left {" +
-                                       "content: 'Lorem ipsum';" +
-                                   "} " +
-                                   "@bottom-right {" +
-                                       "content: 'Page ' counter(page) ' of ' counter(pages);" +
-                                   "}" +
-                                   "@bottom-center  {" +
-                                       "content:element(footer);" +
-                                   "}" +
-                               "}" +
-                               //"#main-table td:nth-child(1){ width:5%; } #main-table td:nth-child(8),#main-table td:nth-child(9),#main-table td:nth-child(7){ width:6%; } #main-table td:nth-child(10){ width:8%; }" +
-                               //  "#main-table td:nth-child(3),#main-table td:nth-child(5){ width:12%;white-space: nowrap; }" +
-                               "#footer {" +
-                                   "position: running(footer);" +
-                               "}" +
-                               "table {" +
-                                 "border-collapse: collapse;" +
-                               "}" +
-                               "table, th, td {" +
-                                   "border: 1px solid black;" +
-                                   "text-align: left;" +
-                                   "vertical-align: top;" +
-                                   "padding-left:10px;" +
-                                   "padding-bottom:6px;" +
-                                   "padding-right:10px;" +
-                                   "padding-top:5px;" +
+                                    /* footers */
+                                    "@bottom-left {" +
+                                        "content: 'Lorem ipsum';" +
+                                    "} " +
+                                    "@bottom-right {" +
+                                        "content: 'Page ' counter(page) ' of ' counter(pages);" +
+                                    "}" +
+                                    "@bottom-center  {" +
+                                        "content:element(footer);" +
+                                    "}" +
+                                "}" +
+                                 "#footer {" +
+                                    "position: running(footer);" +
+                                "}" +
+                                "table {" +
+                                  "border-collapse: collapse;" +
+                                "}" +
 
-                               "}" +
-                               "#main-table table,#main-table th,#main-table td{" +
-                                "white-space: nowrap;}" +
-                           "</style>" +
-                       "</head>" +
-                       "<body>");
-
+                                "table, th, td {" +
+                                    "border: 1px solid black;" +
+                                    "text-align: left;" +
+                                    "vertical-align: top;" +
+                                    "padding:5px;" +
+                                "}" +
+                            "</style>" +
+                        "</head>" +
+                        "<body>");
                     #endregion
 
                     string oemDealerQuery = string.Empty;
@@ -6372,7 +6385,7 @@ namespace ProductionSheetDashBoard
 
 
                             SqlConnection con = new SqlConnection(CnnString);
-                            SqlCommand cmd = new SqlCommand("USP_BookMYHSRPProductionSheetWIthFramesNew", con);
+                            SqlCommand cmd = new SqlCommand("USP_BookMYHSRPProductionSheetWIthFrames", con);
                             cmd.CommandType = CommandType.StoredProcedure;
                             con.Open();
 
@@ -6429,86 +6442,70 @@ namespace ProductionSheetDashBoard
 
 
                                 html.Append("<div style='page-break-before: avoid;page-break-inside: avoid;page-break-after: always;'>" +
+                                        "<table style='width:100%;border: 0px;'>" +
+                                            "<tr style='border: 0px;'>" +
+                                                "<td colspan='7' style='border: 0px;'>" +
+                                                    "<div style='text-align:left'><b>Report Generation Date:</b> " + DateTime.Now.ToString("dd-MM-yyyy") + "</div>" +
+                                                "</td>" +
+                                                "<td colspan='7' style='border: 0px;'>" +
+                                                    "<div style='float:right;width: 500px;word-wrap: break-word;'>" +
+                                                        "<b>Production Sheet No: " + strProductionSheetNo + "<br /> </b>" +
+                                                        "<b>Pin Code:" + dealername + "<br />  </b>" +
+                                                        "<b>Pin Code Location:" + Address + "<br /> </b>" +
 
-                                   "<table style='width:100%;border: 0px;'>" +
-                                       "<tr  style='border: 0px;'>" +
-                                           "<td colspan='4'   style='border: 0px; '>" +
-                                               "<div style='text-align:left'><b>Sheet Generation Date:</b> " + DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss") + "</div>" +
-                                           "</td>" +
+                                                    //"<b>Appointment Date:-:" + dtProduction.Rows[0]["AppointmentDate"].ToString() + "<br />  </b>" +
+                                                    "</div>" +
+                                                "</td>" +
+                                            "</tr>" +
+                                            "<tr style='border: 0px;'>" +
+                                                "<td colspan='14' style='border: 0px;'>" +
+                                                    "<div style='text-align:center;font-size:26px;'><b>Home Delivery Production Sheet With Plastic Packing : -</b> Rosmerta Safety System</div>" +
+                                                "</td>" +
+                                            "</tr>" +
+                                            "<tr style='border: 0px;'>" +
+                                                "<td colspan='9' style='border: 0px;'>" +
+                                                    "<table style='border:0px;width:100%;'>" +
+                                                        "<tr style='border:0px;'>" +
+                                                            "<td style='border:0px;'><b>State Name :</b> " + HSRPStateName + "</td>" +
 
-                                            "<td colspan='3'  style='border: 0px; '>" +
-                                               "<div style='text-align:left'><b>ROSMERTA SAFETY SYSTEMS LIMITED</b> " + "</div>" +
-                                           "</td>" +
+                                                            "<td style='border:0px; font-size:22px;'><b>Report Date: " + DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss") + "</td> </b>" +
 
+                                                              "<td style='border:0px; font-size:22px;'><b>Appointment Date:-: " + dtProduction.Rows[0]["AppointmentDate"].ToString() + "</td> </b>" +
+                                                        "</tr>" +
+                                                    "</table>" +
+                                                "</td>" +
+                                                "<td colspan='4' style='border: 0px;'>" +
+                                                    "<div style='float:right'>" +
 
-                                            "<td  colspan='6' style='border: 0px;'>" +
-                                               "<div style='float:left;width: 500px;word-wrap: break-word;'><b>Production Sheet No:</b> " + strProductionSheetNo + " </div>" +
-                                           "</td>" +
+                                                        "VC:Vehicle Class<br />" +
+                                                        //"VT:Vehicle Type<br />" +
+                                                        "Front PS:Front Plate Size<br />" +
+                                                        "Rear PS:Rear Plate Size<br />" +
 
-                                       "</tr>" +
+                                                    "</div>" +
+                                                "</td>" +
+                                                "<td style='border: 0px;'></td>" +
+                                            "</tr>" +
+                                            "<tr style='border: 0px;'>" +
+                                                 "<td colspan='14' style='border: 0px;'>" +
+                                                    "<div style='text-align:left'>Location Name : " + RTOLocationName + "</div>" +
+                                                "</td>" +
+                                            "</tr>" +
+                                            "<tr>" +
+                                                "<td style='text-align:center'>SR.No</td>" +
+                                                "<td>VC</td>" +
+                                                "<td>Vehicle No</td>" +
+                                                "<td>Fuel Type</td>" +
+                                                 "<td>Front PS</td>" +
+                                                "<td>Front Laser No</td>" +
+                                                "<td>Rear PS</td>" +
+                                                "<td>Rear Laser No.</td>" +
 
-                                         "<tr style='border: 0px;'>" +
-                                           "<td colspan='4' style='border: 0px;'>" +
-                                               "<div style='text-align:left'><b>State:</b> " + HSRPStateName + "</div>" +
-                                           "</td>" +
+                                                "<td style='text-align:center'>Sticker Color</td>" +
+                                                 "<td style='text-align:center'>Customer Name</td>" +
 
-                                            "<td colspan='3' style='border: 0px; '>" +
-                                               "<div style='text-align:left'><b>Book My HSRP (Home Delivery) </b> " + "</div>" +
-                                           "</td>" +
-
-
-                                            "<td colspan='6' style='border: 0px;'>" +
-                                               "<div style='float:left;width: 500px;word-wrap: break-word;'><b>Hub/Dealer (ID - Name):</b> " + dealerid + "/" + dealername + "/" + strsubaffixid + " </div>" +
-                                           "</td>" +
-
-                                       "</tr>" +
-
-                                           "<tr style='border: 0px;'>" +
-                                           "<td colspan='4' style='border: 0px;'>" +
-                                               "<div style='text-align:left'><b>EC Location: </b> " + RTOLocationName + "</div>" +
-                                           "</td>" +
-
-                                            "<td colspan='3' style='border: 0px;'>" +
-                                              "<div style='text-align:left;font-size:22px;'><b>Appointment Date: " + dtProduction.Rows[0]["AppointmentDate"].ToString() + "</ b >" + "</div>" +
-                                           "</td>" +
-
-
-                                            "<td  colspan='6' style='border: 0px;'>" +
-                                                              "<div style='float:left;width: 500px;word-wrap: break-word;'><b>Hub/Dealer Address:</b> " + Address + " </div>" +
-                                           "</td>" +
-
-                                       "</tr>" +
-
-
-
-
-                                       "<tr>" +
-                                            "<td style='text-align:center;white-space: nowrap'>Sr. No.</td>" +
-                                               "<td style='width:15%;white-space: nowrap'>Vehicle No.</td>" +
-                                               "<td>Front Plate Size</td>" +
-
-                                                "<td style='width:15%;white-space: nowrap'>Front Laser No.</td>" +
-
-                                            "<td>Rear Plate Size</td>" +
-
-
-                                                "<td style='width:15%;white-space: nowrap'>Rear Laser No.</td>" +
-
-
-                                            "<td style='white-space: nowrap'>H. S. Foil </td>" +
-                                            "<td style='white-space: nowrap'>Caution Sticker</td>" +
-                                            "<td style='white-space: nowrap'>Fuel Type</td>" +
-                                            "<td style='white-space: nowrap'>VT</td>" +
-                                              "<td style='white-space: nowrap'>VC</td>" +
-                                            "<td style='white-space: nowrap'>Frame</ td>" +
-                                              "<td style='white-space: nowrap'>Pin Code</ td>" +
-
-                                        "</tr>");
-
-
-
-
-
+                                                   "<td style='width:8%;' style='text-align:center'>Appointment Time</td>" +
+                                            "</tr>");
                                 #endregion
 
                                 #region
@@ -6517,96 +6514,90 @@ namespace ProductionSheetDashBoard
                                 int j = 0;
                                 int total = 0;
                                 StringBuilder UpdateSQL = new StringBuilder();
+                                //string FS1 = string.Empty;
+                                //string FS2 = string.Empty;
+                                string RS1 = string.Empty;
+                                string RS2 = string.Empty;
                                 for (int i = 0; i <= dtProduction.Rows.Count - 1; i++)
                                 {
 
                                     j = j + 1;
 
-                                    if (total == 22)
+                                    if (total == 12)
                                     {
                                         total = 0;
 
+
+
+
                                         html.Append("<div style='page-break-before: avoid;page-break-inside: avoid;page-break-after: always;'>" +
-                                 "<table style='width:100%;border: 0px;'>" +
-                                     "<tr style='border: 0px;'>" +
-                                         "<td colspan='4'  style='border: 0px;'>" +
-                                             "<div style='text-align:left'><b>Sheet Generation Date:</b> " + DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss") + "</div>" +
-                                         "</td>" +
+                                        "<table style='width:100%;border: 0px;'>" +
+                                            "<tr style='border: 0px;'>" +
+                                                "<td colspan='7' style='border: 0px;'>" +
+                                                    "<div style='text-align:left'><b>Report Generation Date:</b> " + DateTime.Now.ToString("dd-MM-yyyy") + "</div>" +
+                                                "</td>" +
+                                                "<td colspan='7' style='border: 0px;'>" +
+                                                    "<div style='float:right;width: 500px;word-wrap: break-word;'>" +
+                                                        "<b>Production Sheet No: " + strProductionSheetNo + "<br /> </b>" +
+                                                        "<b>Pin Code:" + dealername + "<br />  </b>" +
+                                                        "<b>Pin Code Location:" + Address + "<br /> </b>" +
 
-                                          "<td colspan='3'  style='border: 0px;'>" +
-                                             "<div style='text-align:left'><b>ROSMERTA SAFETY SYSTEMS LIMITED</b> " + "</div>" +
-                                         "</td>" +
+                                                    //"<b>Appointment Date:-:" + dtProduction.Rows[0]["AppointmentDate"].ToString() + "<br />  </b>" +
+                                                    "</div>" +
+                                                "</td>" +
+                                            "</tr>" +
+                                            "<tr style='border: 0px;'>" +
+                                                "<td colspan='14' style='border: 0px;'>" +
+                                                    "<div style='text-align:center;font-size:26px;'><b>Home Delivery Production Sheet With Plastic Packing : -</b> Rosmerta Safety System</div>" +
+                                                "</td>" +
+                                            "</tr>" +
+                                            "<tr style='border: 0px;'>" +
+                                                "<td colspan='9' style='border: 0px;'>" +
+                                                    "<table style='border:0px;width:100%;'>" +
+                                                        "<tr style='border:0px;'>" +
+                                                            "<td style='border:0px;'><b>State Name :</b> " + HSRPStateName + "</td>" +
+                                                              "<td style='border:0px; font-size:22px;'><b>Report Date: " + DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss") + "</td> </b>" +
 
+                                                                "<td style='border:0px; font-size:22px;'><b>Appointment Date:-: " + dtProduction.Rows[0]["AppointmentDate"].ToString() + "</td> </b>" +
+                                                        "</tr>" +
+                                                    "</table>" +
+                                                "</td>" +
+                                                "<td colspan='4' style='border: 0px;'>" +
+                                                    "<div style='float:right'>" +
 
-                                          "<td colspan='6' style='border: 0px; '>" +
-                                             "<div style='float:left;width: 500px;word-wrap: break-word;'><b>Production Sheet No:</b> " + strProductionSheetNo + " </div>" +
-                                         "</td>" +
+                                                        "VC:Vehicle Class<br />" +
+                                                        //"VT:Vehicle Type<br />" +
+                                                        "Front PS:Front Plate Size<br />" +
+                                                        "Rear PS:Rear Plate Size<br />" +
 
-                                     "</tr>" +
+                                                    "</div>" +
+                                                "</td>" +
+                                                "<td style='border: 0px;'></td>" +
+                                            "</tr>" +
+                                            "<tr style='border: 0px;'>" +
+                                                 "<td colspan='14' style='border: 0px;'>" +
+                                                    "<div style='text-align:left'>Location Name : " + RTOLocationName + "</div>" +
+                                                "</td>" +
+                                            "</tr>" +
+                                            "<tr>" +
+                                                "<td style='text-align:center'>SR.No</td>" +
+                                                "<td>VC</td>" +
+                                                "<td>Vehicle No</td>" +
+                                                "<td>Fuel Type</td>" +
+                                                 "<td>Front PS</td>" +
+                                                "<td>Front Laser No</td>" +
+                                                "<td>Rear PS</td>" +
+                                                "<td>Rear Laser No.</td>" +
 
-                                       "<tr style='border: 0px;'>" +
-                                         "<td colspan='4' style='border: 0px;'>" +
-                                             "<div style='text-align:left'><b>State:</b> " + HSRPStateName + "</div>" +
-                                         "</td>" +
+                                                "<td style='text-align:center'>Sticker Color</td>" +
+                                                 "<td style='text-align:center'>Customer Name</td>" +
 
-                                          "<td colspan='3' style='border: 0px; '>" +
-                                             "<div style='text-align:left'><b>Book My HSRP (Home Delivery) </b> " + "</div>" +
-                                         "</td>" +
-
-
-                                          "<td colspan='6' style='border: 0px;'>" +
-                                             "<div style='float:left;width: 500px;word-wrap: break-word;'><b>Hub/Dealer (ID - Name):</b> " + dealerid + "/" + dealername + "/" + strsubaffixid + " </div>" +
-                                         "</td>" +
-
-                                     "</tr>" +
-
-                                         "<tr style='border: 0px;'>" +
-                                         "<td colspan='4'  style='border: 0px;'>" +
-                                             "<div style='text-align:left'><b>EC Location: </b> " + RTOLocationName + "</div>" +
-                                         "</td>" +
-
-                                          "<td colspan='3' style='border: 0px;'>" +
-                                            "<div style='text-align:left;font-size:22px;'><b>Appointment Date: " + dtProduction.Rows[0]["AppointmentDate"].ToString() + "</ b >" + "</div>" +
-                                         "</td>" +
-
-
-                                          "<td colspan='6'  style='border: 0px;'>" +
-                                                            "<div style='float:left;width: 500px;word-wrap: break-word;'><b>Hub/Dealer Address:</b> " + Address + " </div>" +
-                                         "</td>" +
-
-                                     "</tr>" +
-
-
-
-
-                                        "<tr>" +
-                                            "<td style='text-align:center;white-space: nowrap'>Sr. No.</td>" +
-                                               "<td style='width:15%;white-space: nowrap'>Vehicle No.</td>" +
-                                               "<td>Front Plate Size</td>" +
-
-                                                "<td style='width:15%;white-space: nowrap'>Front Laser No.</td>" +
-
-                                            "<td>Rear Plate Size</td>" +
-
-
-                                                "<td style='width:15%;white-space: nowrap'>Rear Laser No.</td>" +
-
-
-                                            "<td style='white-space: nowrap'>H. S. Foil </td>" +
-                                            "<td style='white-space: nowrap'>Caution Sticker</td>" +
-                                            "<td style='white-space: nowrap'>Fuel Type</td>" +
-                                            "<td style='white-space: nowrap'>VT</td>" +
-                                              "<td style='white-space: nowrap'>VC</td>" +
-                                            "<td style='white-space: nowrap'>Frame</ td>" +
-                                              "<td style='white-space: nowrap'>Pin Code</ td>" +
-
-                                        "</tr>");
+                                                   "<td style='width:8%;' style='text-align:center'>Appointment Time</td>" +
+                                            "</tr>");
 
 
                                     }
 
-                                    string RS1 = string.Empty;
-                                    string RS2 = string.Empty;
                                     total = total + 1;
                                     //foreach (DataRow drProduction in dtProduction.Rows)
                                     //{
@@ -6614,21 +6605,19 @@ namespace ProductionSheetDashBoard
                                     string SRNo = dtProduction.Rows[i]["SRNo"].ToString().Trim();
                                     //string ORD = "";// drProduction["ORD"].ToString().Trim();
                                     string VC = dtProduction.Rows[i]["VehicleClass"].ToString().Trim();
-                                    string VT = dtProduction.Rows[i]["VehicleType"].ToString().Trim();
                                     string VehicleNo = dtProduction.Rows[i]["VehicleRegNo"].ToString().Trim();
                                     //string VT = drProduction["VehicleType"].ToString().Trim();
                                     //string ChassisNo = drProduction["ChassisNo"].ToString().Trim();
                                     //string EngineNo = drProduction["EngineNo"].ToString().Trim();
                                     string FuelType = dtProduction.Rows[i]["FuelType"].ToString().Trim();
                                     string FrontPSize = dtProduction.Rows[i]["FrontProductCode"].ToString().Trim();
-
                                     string FrontLaserNo = dtProduction.Rows[i]["HSRP_Front_LaserCode"].ToString().Trim();
                                     if (FrontLaserNo != "")
                                     {
                                         FS1 = dtProduction.Rows[i]["HSRP_Front_LaserCode"].ToString().Substring(0, 7);
+
                                         FS2 = dtProduction.Rows[i]["HSRP_Front_LaserCode"].ToString().Substring(7, 5);
                                     }
-
                                     string RearPSize = dtProduction.Rows[i]["RearProductCode"].ToString().Trim();
                                     string RearLaserNo = dtProduction.Rows[i]["HSRP_Rear_LaserCode"].ToString().Trim();
                                     if (RearLaserNo != "")
@@ -6636,42 +6625,63 @@ namespace ProductionSheetDashBoard
                                         RS1 = dtProduction.Rows[i]["HSRP_Rear_LaserCode"].ToString().Substring(0, 7);
                                         RS2 = dtProduction.Rows[i]["HSRP_Rear_LaserCode"].ToString().Substring(7, 5);
                                     }
-
-
-
+                                    //string RearLaserNo = dtProduction.Rows[i]["HSRP_Rear_LaserCode"].ToString().Trim();
+                                    //string Amount = drProduction["roundoff_netamount"].ToString().Trim();
+                                    //string OrderStatus = drProduction["OrderStatus"].ToString().Trim();
                                     string StickerColor = dtProduction.Rows[i]["stickerColor"].ToString().Trim();
-                                    string HotStampingFoilColour = dtProduction.Rows[i]["HotStampingFoilColour"].ToString().Trim();
-                                    string Frame = dtProduction.Rows[i]["Frame"].ToString().Trim();
+                                    string CustomerName = dtProduction.Rows[i]["CustomerName"].ToString().Trim();
                                     //string AppointmentDate = drProduction["AppointmentDate"].ToString().Trim();
-                                    string Pincode = dtProduction.Rows[i]["Pincode"].ToString().Trim();
-                                    // "<b>Production Sheet No: " + strProductionSheetNo + "<br /> </b>" +
+                                    string AppointmentTime = dtProduction.Rows[i]["AppointmentTime"].ToString().Trim();
+
                                     html.Append("<tr>" +
-                                          "<td style='text-align:center;white-space: nowrap'>" + SRNo + "</td>" +
-                                          "<td style='font-size:20px;white-space: nowrap' >" + "<b>" + VehicleNo + "</td>" +
-                                          "<td style='white-space: nowrap'> " + FrontPSize + "  </td> " +
-                                          "<td style='font-size:20px;white-space: nowrap'>" + "<b>" + FS1 + "<b>" + FS2 + "</b> </td>" +
+                                      "<td style='text-align:center'>" + SRNo + "</td>" +
+                                       "<td>" + VC + "</td>" +
+                                       "<td > <b>" + VehicleNo + " </b> </td> " +
+                                        "<td>" + FuelType + "</td>" +
 
 
-                                          "<td style='white-space: nowrap'>" + RearPSize + "</td>" +
-                                          "<td style='font-size:20px;white-space: nowrap'>" + "<b>" + RS1 + "<b>" + RS2 + "</b> </td>" +
+                                       "<td>" + FrontPSize + "</td>" +
+                                       "<td>" + FS1 + "<b>" + FS2 + "</b> </td>" +
+                                       "<td>" + RearPSize + "</td>" +
+                                       //"<td>" + RearLaserNo + "</td>" +
+                                       "<td>" + RS1 + "<b>" + RS2 + "</b> </td>" +
 
-                                            "<td style='white-space: nowrap'>" + HotStampingFoilColour + "</td>" +
-                                           "<td style='white-space: nowrap'>" + StickerColor + "</td>" +
-                                           "<td style='white-space: nowrap'>" + FuelType + "</td>" +
-                                           "<td style='white-space: nowrap'>" + VT + "</td>" +
-                                           "<td style='white-space: nowrap'>" + VC + "</td>" +
+                                        "<td>" + StickerColor + "</td>" +
+                                       "<td>" + CustomerName + "</td>" +
 
+                                         "<td>" + AppointmentTime + "</td>" +
+                                   "</tr>");
 
-                                          "<td style='white-space: nowrap'>" + Frame + "</td>" +
-
-                                            "<td style='white-space: nowrap'>" + Pincode + "</td>" +
-                                      "</tr>");
-
-
-
+                                    //start updating hsrprecords 
+                                    //string sqlUpdateHSRPRecords = "update hsrprecords set sendtoProductionStatus='Y', NAVPDFFlag='1', NewPdfRunningNo='" + strProductionSheetNo + "', Requisitionsheetno='" + ReqNum + "', " +
+                                    //       "PdfDownloadDate=GetDate(), pdfFileName='" + fileName + "', PDFDownloadUserID='1' where hsrprecordID='" + HsrprecordID + "' ";
+                                    //Utils.Utils.ExecNonQuery(sqlUpdateHSRPRecords, CnnString);   // uncomment after testing
 
                                     UpdateSQL.Append("update hsrprecords set sendtoProductionStatus='Y', NAVPDFFlag='1', NewPdfRunningNo='" + strProductionSheetNo + "', Requisitionsheetno='" + ReqNum + "',PdfDownloadDate=GetDate(), pdfFileName='" + fileName + "', PDFDownloadUserID='1' where hsrprecordID='" + HsrprecordID + "';");
 
+                                    // total = total + 1;
+
+                                    //if(total>11)
+                                    //{
+                                    //    html.Append("<tr>" +
+
+                                    //            "<td style='text-align:center'>SR.No</td>" +
+                                    //            "<td>VC</td>" +
+                                    //            "<td>Vehicle No</td>" +
+                                    //            "<td>Fuel Type</td>" +
+                                    //             "<td>Front PS</td>" +
+                                    //            "<td>Front Laser No</td>" +
+                                    //            "<td>Rear PS</td>" +
+                                    //            "<td>Rear Laser No.</td>" +
+
+                                    //            "<td style='text-align:center'>Sticker Color</td>" +
+                                    //             "<td style='text-align:center'>Customer Name</td>" +
+
+                                    //               "<td style='text-align:center'>Appointment Time</td>" +
+                                    //        "</tr>");
+
+                                    //}
+                                    //end 
 
                                 }
 
@@ -6692,6 +6702,9 @@ namespace ProductionSheetDashBoard
                                     Utils.Utils.ExecNonQuery(StrSqlUpdateECQuery, CnnString); // uncomment after testing
                                 }
 
+                                //string StrSqlUpdateECQuery = "update EmbossingCentersNew set NewProductionSheetRunningNo='" + strProductionSheetNo + "' " +
+                                // "where  Emb_Center_Id='" + Navembcode + "'";
+                                //Utils.Utils.ExecNonQuery(StrSqlUpdateECQuery, CnnString); // uncomment after testing
                             }
 
                             #endregion
@@ -7042,7 +7055,6 @@ namespace ProductionSheetDashBoard
                 }//close foreach stateEcQuery
             }
         }
-
 
 
 
@@ -9775,7 +9787,7 @@ namespace ProductionSheetDashBoard
             string ShortECname = dtECName.Rows[0]["NewHSRPStateShortName"].ToString();
             // string HSRPStateShortName = dtECName.Rows[0]["HSRPStateShortName"].ToString();
 
-            stateECQuery = "select distinct a.HSRP_StateID, (select HSRPStateName from hsrpstate c where c.hsrp_stateid=a.hsrp_stateid) as HSRPStateName,(select HSRPStateShortName from hsrpstate d with(nolock) where d.hsrp_stateid='" + ddlStateName.SelectedValue + "') as HSRPStateShortName,   a.Navembid AS  navembcode from hsrprecords a with(nolock) where  left(a.Navembid,4) = '" + ShortECname + "'  and  a.NAVEMBID='" + Navembid + "' and  NewPdfRunningNo is null and erpassigndate is not null  and (IsBookMyHsrpRecord='Y')  and OrderStatus='New Order' and   a.NAVEMBID='" + Navembid + "' and   Navembid not like '%CODO%'  order by  a.HSRP_StateID";
+             stateECQuery = "select distinct a.HSRP_StateID, (select HSRPStateName from hsrpstate c where c.hsrp_stateid=a.hsrp_stateid) as HSRPStateName,(select HSRPStateShortName from hsrpstate d with(nolock) where d.hsrp_stateid='" + ddlStateName.SelectedValue + "') as HSRPStateShortName,   a.Navembid AS  navembcode from hsrprecords a with(nolock) where  left(a.Navembid,4) = '" + ShortECname + "'  and  a.NAVEMBID='" + Navembid + "' and  NewPdfRunningNo is null and erpassigndate is not null  and (IsBookMyHsrpRecord='Y')  and OrderStatus='New Order' and   a.NAVEMBID='" + Navembid + "' and   Navembid not like '%CODO%'  order by  a.HSRP_StateID";
             DataTable dtSE = Utils.Utils.GetDataTable(stateECQuery, CnnString);
             //string allStrProductionSheetNo = string.Empty;
 
@@ -9810,54 +9822,47 @@ namespace ProductionSheetDashBoard
                     */
                     #region
                     html.Append(
-                      "<!DOCTYPE html>" +
-                      "<html>" +
-                      "<head>" +
-                          "<meta charset='UTF-8'><title>Title</title>" +
-                          "<style>" +
-                              "@page {" +
-                                  /* headers*/
-                                  "@top-left {" +
-                                      "content: 'Left header';" +
-                                  "}" +
-                                  "@top-right {" +
-                                      "content: 'Right header';" +
-                                  "}" +
+                        "<!DOCTYPE html>" +
+                        "<html>" +
+                        "<head>" +
+                            "<meta charset='UTF-8'><title>Title</title>" +
+                            "<style>" +
+                                "@page {" +
+                                    /* headers*/
+                                    "@top-left {" +
+                                        "content: 'Left header';" +
+                                    "}" +
+                                    "@top-right {" +
+                                        "content: 'Right header';" +
+                                    "}" +
 
-                                  /* footers */
-                                  "@bottom-left {" +
-                                      "content: 'Lorem ipsum';" +
-                                  "} " +
-                                  "@bottom-right {" +
-                                      "content: 'Page ' counter(page) ' of ' counter(pages);" +
-                                  "}" +
-                                  "@bottom-center  {" +
-                                      "content:element(footer);" +
-                                  "}" +
-                              "}" +
-                              //"#main-table td:nth-child(1){ width:5%; } #main-table td:nth-child(8),#main-table td:nth-child(9),#main-table td:nth-child(7){ width:6%; } #main-table td:nth-child(10){ width:8%; }" +
-                              //  "#main-table td:nth-child(3),#main-table td:nth-child(5){ width:12%;white-space: nowrap; }" +
-                              "#footer {" +
-                                  "position: running(footer);" +
-                              "}" +
-                              "table {" +
-                                "border-collapse: collapse;" +
-                              "}" +
-                              "table, th, td {" +
-                                  "border: 1px solid black;" +
-                                  "text-align: left;" +
-                                  "vertical-align: top;" +
-                                  "padding-left:10px;" +
-                                  "padding-bottom:6px;" +
-                                  "padding-right:10px;" +
-                                  "padding-top:5px;" +
+                                    /* footers */
+                                    "@bottom-left {" +
+                                        "content: 'Lorem ipsum';" +
+                                    "} " +
+                                    "@bottom-right {" +
+                                        "content: 'Page ' counter(page) ' of ' counter(pages);" +
+                                    "}" +
+                                    "@bottom-center  {" +
+                                        "content:element(footer);" +
+                                    "}" +
+                                "}" +
+                                 "#footer {" +
+                                    "position: running(footer);" +
+                                "}" +
+                                "table {" +
+                                  "border-collapse: collapse;" +
+                                "}" +
 
-                              "}" +
-                              "#main-table table,#main-table th,#main-table td{" +
-                               "white-space: nowrap;}" +
-                          "</style>" +
-                      "</head>" +
-                      "<body>");
+                                "table, th, td {" +
+                                    "border: 1px solid black;" +
+                                    "text-align: left;" +
+                                    "vertical-align: top;" +
+                                    "padding:5px;" +
+                                "}" +
+                            "</style>" +
+                        "</head>" +
+                        "<body>");
                     #endregion
 
                     string oemDealerQuery = string.Empty;
@@ -9913,7 +9918,7 @@ namespace ProductionSheetDashBoard
 
 
                             SqlConnection con = new SqlConnection(CnnString);
-                            SqlCommand cmd = new SqlCommand("USP_BookMYHSRPProductionSheetWithOutFramesNEW", con);
+                            SqlCommand cmd = new SqlCommand("USP_BookMYHSRPProductionSheetWithOutFrames", con);
                             cmd.CommandType = CommandType.StoredProcedure;
                             con.Open();
 
@@ -9970,86 +9975,77 @@ namespace ProductionSheetDashBoard
 
 
                                 html.Append("<div style='page-break-before: avoid;page-break-inside: avoid;page-break-after: always;'>" +
-
-                                    "<table style='width:100%;border: 0px;'>" +
-                                        "<tr  style='border: 0px;'>" +
-                                            "<td colspan='4'   style='border: 0px; '>" +
-                                                "<div style='text-align:left'><b>Sheet Generation Date:</b> " + DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss") + "</div>" +
-                                            "</td>" +
-
-                                             "<td colspan='3'  style='border: 0px; '>" +
-                                                "<div style='text-align:left'><b>ROSMERTA SAFETY SYSTEMS LIMITED</b> " + "</div>" +
-                                            "</td>" +
-
-
-                                             "<td  colspan='6' style='border: 0px;'>" +
-                                                "<div style='float:left;width: 500px;word-wrap: break-word;'><b>Production Sheet No:</b> " + strProductionSheetNo + " </div>" +
-                                            "</td>" +
-
-                                        "</tr>" +
-
-                                          "<tr style='border: 0px;'>" +
-                                            "<td colspan='4' style='border: 0px;'>" +
-                                                "<div style='text-align:left'><b>State:</b> " + HSRPStateName + "</div>" +
-                                            "</td>" +
-
-                                             "<td colspan='3' style='border: 0px; '>" +
-                                                "<div style='text-align:left'><b>Book My HSRP (Home Delivery) </b> " + "</div>" +
-                                            "</td>" +
-
-
-                                             "<td colspan='6' style='border: 0px;'>" +
-                                                "<div style='float:left;width: 500px;word-wrap: break-word;'><b>Hub/Dealer (ID - Name):</b> " + dealerid + "/" + dealername + "/" + strsubaffixid + " </div>" +
-                                            "</td>" +
-
-                                        "</tr>" +
-
+                                        "<table style='width:100%;border: 0px;'>" +
                                             "<tr style='border: 0px;'>" +
-                                            "<td colspan='4' style='border: 0px;'>" +
-                                                "<div style='text-align:left'><b>EC Location: </b> " + RTOLocationName + "</div>" +
-                                            "</td>" +
+                                                "<td colspan='7' style='border: 0px;'>" +
+                                                    "<div style='text-align:left'><b>Report Generation Date:</b> " + DateTime.Now.ToString("dd-MM-yyyy") + "</div>" +
+                                                "</td>" +
+                                                "<td colspan='7' style='border: 0px;'>" +
+                                                    "<div style='float:right;width: 500px;word-wrap: break-word;'>" +
+                                                        "<b>Production Sheet No: " + strProductionSheetNo + "<br /> </b>" +
+                                                        "<b>Pin Code:" + dealername + "<br />  </b>" +
+                                                        "<b>Pin Code Location:" + Address + "<br /> </b>" +
 
-                                             "<td colspan='3' style='border: 0px;'>" +
-                                               "<div style='text-align:left;font-size:22px;'><b>Appointment Date: " + dtProduction.Rows[0]["AppointmentDate"].ToString() + "</ b >" + "</div>" +
-                                            "</td>" +
+                                                    //"<b>Appointment Date:-:" + dtProduction.Rows[0]["AppointmentDate"].ToString() + "<br />  </b>" +
+                                                    "</div>" +
+                                                "</td>" +
+                                            "</tr>" +
+                                            "<tr style='border: 0px;'>" +
+                                                "<td colspan='14' style='border: 0px;'>" +
+                                                    "<div style='text-align:center;font-size:26px;'><b>Home Delivery Production Sheet Without Plastic Packing : -</b> Rosmerta Safety System</div>" +
+                                                "</td>" +
+                                            "</tr>" +
+                                            "<tr style='border: 0px;'>" +
+                                                "<td colspan='9' style='border: 0px;'>" +
+                                                    "<table style='border:0px;width:100%;'>" +
+                                                        "<tr style='border:0px;'>" +
+                                                            "<td style='border:0px;'><b>State Name :</b> " + HSRPStateName + "</td>" +
 
+                                                            "<td style='border:0px; font-size:22px;'><b>Report Date: " + DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss") + "</td> </b>" +
 
-                                             "<td  colspan='6' style='border: 0px;'>" +
-                                                               "<div style='float:left;width: 500px;word-wrap: break-word;'><b>Hub/Dealer Address:</b> " + Address + " </div>" +
-                                            "</td>" +
+                                                              "<td style='border:0px; font-size:22px;'><b>Appointment Date:-: " + dtProduction.Rows[0]["AppointmentDate"].ToString() + "</td> </b>" +
+                                                        "</tr>" +
+                                                    "</table>" +
+                                                "</td>" +
+                                                "<td colspan='4' style='border: 0px;'>" +
+                                                    "<div style='float:right'>" +
 
-                                        "</tr>" +
+                                                        "VC:Vehicle Class<br />" +
+                                                        //"VT:Vehicle Type<br />" +
+                                                        "Front PS:Front Plate Size<br />" +
+                                                        "Rear PS:Rear Plate Size<br />" +
 
+                                                    "</div>" +
+                                                "</td>" +
+                                                "<td style='border: 0px;'></td>" +
+                                            "</tr>" +
+                                            "<tr style='border: 0px;'>" +
+                                                 "<td colspan='14' style='border: 0px;'>" +
+                                                    "<div style='text-align:left'>Location Name : " + RTOLocationName + "</div>" +
+                                                "</td>" +
+                                            "</tr>" +
+                                            "<tr>" +
+                                                "<td style='text-align:center'>SR.No</td>" +
+                                                "<td>VC</td>" +
+                                                "<td>Vehicle No</td>" +
+                                                "<td>Fuel Type</td>" +
+                                                 "<td>Front PS</td>" +
+                                                "<td>Front Laser No</td>" +
+                                                "<td>Rear PS</td>" +
+                                                "<td>Rear Laser No.</td>" +
 
+                                                "<td style='text-align:center'>Sticker Color</td>" +
+                                                 "<td style='text-align:center'>Customer Name</td>" +
 
-
-                                        "<tr>" +
-                                             "<td style='text-align:center;white-space: nowrap'>Sr. No.</td>" +
-                                                "<td style='width:15%;white-space: nowrap'>Vehicle No.</td>" +
-                                                "<td>Front Plate Size</td>" +
-
-                                                 "<td style='width:15%;white-space: nowrap'>Front Laser No.</td>" +
-
-                                             "<td>Rear Plate Size</td>" +
-
-
-                                                 "<td style='width:15%;white-space: nowrap'>Rear Laser No.</td>" +
-
-
-                                             "<td style='white-space: nowrap'>H. S. Foil </td>" +
-                                             "<td style='white-space: nowrap'>Caution Sticker</td>" +
-                                             "<td style='white-space: nowrap'>Fuel Type</td>" +
-                                             "<td style='white-space: nowrap'>VT</td>" +
-                                               "<td style='white-space: nowrap'>VC</td>" +
-                                             "<td style='white-space: nowrap'>Frame</ td>" +
-                                               "<td style='white-space: nowrap'>Pin Code</ td>" +
-
-                                         "</tr>");
-
+                                                   "<td style='width:8%;' style='text-align:center'>Appointment Time</td>" +
+                                            "</tr>");
                                 #endregion
 
                                 #region
                                 string strtvspono = "";
+                               
+                                string RS1 = string.Empty;
+                                string RS2 = string.Empty;
 
                                 int j = 0;
                                 int total = 0;
@@ -10059,92 +10055,81 @@ namespace ProductionSheetDashBoard
 
                                     j = j + 1;
 
-                                    if (total == 22)
+                                    if (total == 12)
                                     {
                                         total = 0;
 
+
+
+
                                         html.Append("<div style='page-break-before: avoid;page-break-inside: avoid;page-break-after: always;'>" +
-                              "<table style='width:100%;border: 0px;'>" +
-                                  "<tr style='border: 0px;'>" +
-                                      "<td colspan='4'  style='border: 0px;'>" +
-                                          "<div style='text-align:left'><b>Sheet Generation Date:</b> " + DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss") + "</div>" +
-                                      "</td>" +
+                                        "<table style='width:100%;border: 0px;'>" +
+                                            "<tr style='border: 0px;'>" +
+                                                "<td colspan='7' style='border: 0px;'>" +
+                                                    "<div style='text-align:left'><b>Report Generation Date:</b> " + DateTime.Now.ToString("dd-MM-yyyy") + "</div>" +
+                                                "</td>" +
+                                                "<td colspan='7' style='border: 0px;'>" +
+                                                    "<div style='float:right;width: 500px;word-wrap: break-word;'>" +
+                                                        "<b>Production Sheet No: " + strProductionSheetNo + "<br /> </b>" +
+                                                        "<b>Pin Code:" + dealername + "<br />  </b>" +
+                                                        "<b>Pin Code Location:" + Address + "<br /> </b>" +
 
-                                       "<td colspan='3'  style='border: 0px;'>" +
-                                          "<div style='text-align:left'><b>ROSMERTA SAFETY SYSTEMS LIMITED</b> " + "</div>" +
-                                      "</td>" +
+                                                    //"<b>Appointment Date:-:" + dtProduction.Rows[0]["AppointmentDate"].ToString() + "<br />  </b>" +
+                                                    "</div>" +
+                                                "</td>" +
+                                            "</tr>" +
+                                            "<tr style='border: 0px;'>" +
+                                                "<td colspan='14' style='border: 0px;'>" +
+                                                    "<div style='text-align:center;font-size:26px;'><b>Home Delivery Production Sheet Without Plastic Packing : -</b> Rosmerta Safety System</div>" +
+                                                "</td>" +
+                                            "</tr>" +
+                                            "<tr style='border: 0px;'>" +
+                                                "<td colspan='9' style='border: 0px;'>" +
+                                                    "<table style='border:0px;width:100%;'>" +
+                                                        "<tr style='border:0px;'>" +
+                                                            "<td style='border:0px;'><b>State Name :</b> " + HSRPStateName + "</td>" +
+                                                              "<td style='border:0px; font-size:22px;'><b>Report Date: " + DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss") + "</td> </b>" +
 
+                                                                "<td style='border:0px; font-size:22px;'><b>Appointment Date:-: " + dtProduction.Rows[0]["AppointmentDate"].ToString() + "</td> </b>" +
+                                                        "</tr>" +
+                                                    "</table>" +
+                                                "</td>" +
+                                                "<td colspan='4' style='border: 0px;'>" +
+                                                    "<div style='float:right'>" +
 
-                                       "<td colspan='6' style='border: 0px; '>" +
-                                          "<div style='float:left;width: 500px;word-wrap: break-word;'><b>Production Sheet No:</b> " + strProductionSheetNo + " </div>" +
-                                      "</td>" +
+                                                        "VC:Vehicle Class<br />" +
+                                                        //"VT:Vehicle Type<br />" +
+                                                        "Front PS:Front Plate Size<br />" +
+                                                        "Rear PS:Rear Plate Size<br />" +
 
-                                  "</tr>" +
+                                                    "</div>" +
+                                                "</td>" +
+                                                "<td style='border: 0px;'></td>" +
+                                            "</tr>" +
+                                            "<tr style='border: 0px;'>" +
+                                                 "<td colspan='14' style='border: 0px;'>" +
+                                                    "<div style='text-align:left'>Location Name : " + RTOLocationName + "</div>" +
+                                                "</td>" +
+                                            "</tr>" +
+                                            "<tr>" +
+                                                "<td style='text-align:center'>SR.No</td>" +
+                                                "<td>VC</td>" +
+                                                "<td>Vehicle No</td>" +
+                                                "<td>Fuel Type</td>" +
+                                                 "<td>Front PS</td>" +
+                                                "<td>Front Laser No</td>" +
+                                                "<td>Rear PS</td>" +
+                                                "<td>Rear Laser No.</td>" +
 
-                                    "<tr style='border: 0px;'>" +
-                                      "<td colspan='4' style='border: 0px;'>" +
-                                          "<div style='text-align:left'><b>State:</b> " + HSRPStateName + "</div>" +
-                                      "</td>" +
+                                                "<td style='text-align:center'>Sticker Color</td>" +
+                                                 "<td style='text-align:center'>Customer Name</td>" +
 
-                                       "<td colspan='3' style='border: 0px; '>" +
-                                          "<div style='text-align:left'><b>Book My HSRP (Home Delivery) </b> " + "</div>" +
-                                      "</td>" +
-
-
-                                       "<td colspan='6' style='border: 0px;'>" +
-                                          "<div style='float:left;width: 500px;word-wrap: break-word;'><b>Hub/Dealer (ID - Name):</b> " + dealerid + "/" + dealername + "/" + strsubaffixid + " </div>" +
-                                      "</td>" +
-
-                                  "</tr>" +
-
-                                      "<tr style='border: 0px;'>" +
-                                      "<td colspan='4'  style='border: 0px;'>" +
-                                          "<div style='text-align:left'><b>EC Location: </b> " + RTOLocationName + "</div>" +
-                                      "</td>" +
-
-                                       "<td colspan='3' style='border: 0px;'>" +
-                                         "<div style='text-align:left;font-size:22px;'><b>Appointment Date: " + dtProduction.Rows[0]["AppointmentDate"].ToString() + "</ b >" + "</div>" +
-                                      "</td>" +
-
-
-                                       "<td colspan='6'  style='border: 0px;'>" +
-                                                         "<div style='float:left;width: 500px;word-wrap: break-word;'><b>Hub/Dealer Address:</b> " + Address + " </div>" +
-                                      "</td>" +
-
-                                  "</tr>" +
-
-
-
-
-                                     "<tr>" +
-                                         "<td style='text-align:center;white-space: nowrap'>Sr. No.</td>" +
-                                            "<td style='width:15%;white-space: nowrap'>Vehicle No.</td>" +
-                                            "<td>Front Plate Size</td>" +
-
-                                             "<td style='width:15%;white-space: nowrap'>Front Laser No.</td>" +
-
-                                         "<td>Rear Plate Size</td>" +
-
-
-                                             "<td style='width:15%;white-space: nowrap'>Rear Laser No.</td>" +
-
-
-                                         "<td style='white-space: nowrap'>H. S. Foil </td>" +
-                                         "<td style='white-space: nowrap'>Caution Sticker</td>" +
-                                         "<td style='white-space: nowrap'>Fuel Type</td>" +
-                                         "<td style='white-space: nowrap'>VT</td>" +
-                                           "<td style='white-space: nowrap'>VC</td>" +
-                                         "<td style='white-space: nowrap'>Frame</ td>" +
-                                           "<td style='white-space: nowrap'>Pin Code</ td>" +
-
-                                     "</tr>");
+                                                   "<td style='width:8%;' style='text-align:center'>Appointment Time</td>" +
+                                            "</tr>");
 
 
                                     }
 
-
-                                    string RS1 = string.Empty;
-                                    string RS2 = string.Empty;
                                     total = total + 1;
                                     //foreach (DataRow drProduction in dtProduction.Rows)
                                     //{
@@ -10152,65 +10137,83 @@ namespace ProductionSheetDashBoard
                                     string SRNo = dtProduction.Rows[i]["SRNo"].ToString().Trim();
                                     //string ORD = "";// drProduction["ORD"].ToString().Trim();
                                     string VC = dtProduction.Rows[i]["VehicleClass"].ToString().Trim();
-                                    string VT = dtProduction.Rows[i]["VehicleType"].ToString().Trim();
                                     string VehicleNo = dtProduction.Rows[i]["VehicleRegNo"].ToString().Trim();
                                     //string VT = drProduction["VehicleType"].ToString().Trim();
                                     //string ChassisNo = drProduction["ChassisNo"].ToString().Trim();
                                     //string EngineNo = drProduction["EngineNo"].ToString().Trim();
                                     string FuelType = dtProduction.Rows[i]["FuelType"].ToString().Trim();
                                     string FrontPSize = dtProduction.Rows[i]["FrontProductCode"].ToString().Trim();
-
                                     string FrontLaserNo = dtProduction.Rows[i]["HSRP_Front_LaserCode"].ToString().Trim();
                                     if (FrontLaserNo != "")
                                     {
                                         FS1 = dtProduction.Rows[i]["HSRP_Front_LaserCode"].ToString().Substring(0, 7);
+
                                         FS2 = dtProduction.Rows[i]["HSRP_Front_LaserCode"].ToString().Substring(7, 5);
                                     }
-
                                     string RearPSize = dtProduction.Rows[i]["RearProductCode"].ToString().Trim();
                                     string RearLaserNo = dtProduction.Rows[i]["HSRP_Rear_LaserCode"].ToString().Trim();
                                     if (RearLaserNo != "")
                                     {
-                                        RS1 = dtProduction.Rows[i]["HSRP_Rear_LaserCode"].ToString().Substring(0, 7);
-                                        RS2 = dtProduction.Rows[i]["HSRP_Rear_LaserCode"].ToString().Substring(7, 5);
+                                         RS1 = dtProduction.Rows[i]["HSRP_Rear_LaserCode"].ToString().Substring(0, 7);
+                                         RS2 = dtProduction.Rows[i]["HSRP_Rear_LaserCode"].ToString().Substring(7, 5);
                                     }
-
-
-
+                                    //string RearLaserNo = dtProduction.Rows[i]["HSRP_Rear_LaserCode"].ToString().Trim();
+                                    //string Amount = drProduction["roundoff_netamount"].ToString().Trim();
+                                    //string OrderStatus = drProduction["OrderStatus"].ToString().Trim();
                                     string StickerColor = dtProduction.Rows[i]["stickerColor"].ToString().Trim();
-                                    string HotStampingFoilColour = dtProduction.Rows[i]["HotStampingFoilColour"].ToString().Trim();
-                                    string Frame = dtProduction.Rows[i]["Frame"].ToString().Trim();
+                                    string CustomerName = dtProduction.Rows[i]["CustomerName"].ToString().Trim();
                                     //string AppointmentDate = drProduction["AppointmentDate"].ToString().Trim();
-                                    string Pincode = dtProduction.Rows[i]["Pincode"].ToString().Trim();
-                                    // "<b>Production Sheet No: " + strProductionSheetNo + "<br /> </b>" +
+                                    string AppointmentTime = dtProduction.Rows[i]["AppointmentTime"].ToString().Trim();
+
                                     html.Append("<tr>" +
-                                       "<td style='text-align:center;white-space: nowrap'>" + SRNo + "</td>" +
-                                       "<td style='font-size:20px;white-space: nowrap' >" + "<b>" + VehicleNo + "</td>" +
-                                       "<td style='white-space: nowrap'> " + FrontPSize + "  </td> " +
-                                       "<td style='font-size:20px;white-space: nowrap'>" + "<b>" + FS1 + "<b>" + FS2 + "</b> </td>" +
+                                      "<td style='text-align:center'>" + SRNo + "</td>" +
+                                       "<td>" + VC + "</td>" +
+                                       "<td > <b>" + VehicleNo + " </b> </td> " +
+                                        "<td>" + FuelType + "</td>" +
 
 
-                                       "<td style='white-space: nowrap'>" + RearPSize + "</td>" +
-                                       "<td style='font-size:20px;white-space: nowrap'>" + "<b>" + RS1 + "<b>" + RS2 + "</b> </td>" +
+                                       "<td>" + FrontPSize + "</td>" +
+                                       "<td>" + FS1 + "<b>" + FS2 + "</b> </td>" +
+                                       "<td>" + RearPSize + "</td>" +
+                                       //"<td>" + RearLaserNo + "</td>" +
+                                       "<td>" + RS1 + "<b>" + RS2 + "</b> </td>" +
 
-                                         "<td style='white-space: nowrap'>" + HotStampingFoilColour + "</td>" +
-                                        "<td style='white-space: nowrap'>" + StickerColor + "</td>" +
-                                        "<td style='white-space: nowrap'>" + FuelType + "</td>" +
-                                        "<td style='white-space: nowrap'>" + VT + "</td>" +
-                                        "<td style='white-space: nowrap'>" + VC + "</td>" +
+                                        "<td>" + StickerColor + "</td>" +
+                                       "<td>" + CustomerName + "</td>" +
 
-
-                                       "<td style='white-space: nowrap'>" + Frame + "</td>" +
-
-                                         "<td style='white-space: nowrap'>" + Pincode + "</td>" +
+                                         "<td>" + AppointmentTime + "</td>" +
                                    "</tr>");
 
-
+                                    //start updating hsrprecords 
+                                    //string sqlUpdateHSRPRecords = "update hsrprecords set sendtoProductionStatus='Y', NAVPDFFlag='1', NewPdfRunningNo='" + strProductionSheetNo + "', Requisitionsheetno='" + ReqNum + "', " +
+                                    //       "PdfDownloadDate=GetDate(), pdfFileName='" + fileName + "', PDFDownloadUserID='1' where hsrprecordID='" + HsrprecordID + "' ";
+                                    //Utils.Utils.ExecNonQuery(sqlUpdateHSRPRecords, CnnString);   // uncomment after testing
 
                                     UpdateSQL.Append("update hsrprecords set sendtoProductionStatus='Y', NAVPDFFlag='1', NewPdfRunningNo='" + strProductionSheetNo + "', Requisitionsheetno='" + ReqNum + "',PdfDownloadDate=GetDate(), pdfFileName='" + fileName + "', PDFDownloadUserID='1' where hsrprecordID='" + HsrprecordID + "';");
 
+                                    // total = total + 1;
 
+                                    //if(total>11)
+                                    //{
+                                    //    html.Append("<tr>" +
 
+                                    //            "<td style='text-align:center'>SR.No</td>" +
+                                    //            "<td>VC</td>" +
+                                    //            "<td>Vehicle No</td>" +
+                                    //            "<td>Fuel Type</td>" +
+                                    //             "<td>Front PS</td>" +
+                                    //            "<td>Front Laser No</td>" +
+                                    //            "<td>Rear PS</td>" +
+                                    //            "<td>Rear Laser No.</td>" +
+
+                                    //            "<td style='text-align:center'>Sticker Color</td>" +
+                                    //             "<td style='text-align:center'>Customer Name</td>" +
+
+                                    //               "<td style='text-align:center'>Appointment Time</td>" +
+                                    //        "</tr>");
+
+                                    //}
+                                    //end 
 
                                 }
 
