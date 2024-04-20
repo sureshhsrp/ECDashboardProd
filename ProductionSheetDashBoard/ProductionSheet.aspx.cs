@@ -36,8 +36,8 @@ namespace ProductionSheetDashBoard
 
             //if (Request.QueryString["UID"] == null)
             //{
-            //    //userId = "32650"; //Dealer
-            //    userId = "53164";
+            //    userId = "32650"; //Dealer
+            //    //userId = "53164";
 
             //}
 
@@ -4441,26 +4441,26 @@ namespace ProductionSheetDashBoard
                                     string Pincode = dtProduction.Rows[i]["Pincode"].ToString().Trim();
 
                                     html.Append("<tr>" +
-                                       "<td style='text-align:center;white-space: nowrap'>" + SRNo + "</td>" +
-                                       "<td style='font-size:20px;white-space: nowrap' >" + "<b>" + VehicleNo + "</td>" +
-                                       "<td style='white-space: nowrap'> " + FrontPSize + "  </td> " +
-                                       "<td style='font-size:20px;white-space: nowrap'>" + "<b>" + FS1 + "<b>" + FS2 + "</b> </td>" +
+                                        "<td style='text-align:center;white-space: nowrap'>" + SRNo + "</td>" +
+                                        "<td style='font-size:20px;white-space: nowrap' >" + "<b>" + VehicleNo + "</td>" +
+                                        "<td style='white-space: nowrap'> " + FrontPSize + "  </td> " +
+                                        "<td style='font-size:20px;white-space: nowrap'>" + "<b>" + FS1 + "<b>" + FS2 + "</b> </td>" +
 
 
-                                       "<td style='white-space: nowrap" + RearPSize + "</td>" +
-                                       "<td style='font-size:20px;white-space: nowrap'>" + "<b>" + RS1 + "<b>" + RS2 + "</b> </td>" +
+                                        "<td style='white-space: nowrap'>" + RearPSize + "</td>" +
+                                        "<td style='font-size:20px;white-space: nowrap'>" + "<b>" + RS1 + "<b>" + RS2 + "</b> </td>" +
 
-                                         "<td style='white-space: nowrap'>" + HotStampingFoilColour + "</td>" +
-                                        "<td style='white-space: nowrap'>" + StickerColor + "</td>" +
-                                        "<td style='white-space: nowrap'>" + FuelType + "</td>" +
-                                        "<td style='white-space: nowrap'>" + VT + "</td>" +
-                                        "<td style='white-space: nowrap'>" + VC + "</td>" +
+                                          "<td style='white-space: nowrap'>" + HotStampingFoilColour + "</td>" +
+                                         "<td style='white-space: nowrap'>" + StickerColor + "</td>" +
+                                         "<td style='white-space: nowrap'>" + FuelType + "</td>" +
+                                         "<td style='white-space: nowrap'>" + VT + "</td>" +
+                                         "<td style='white-space: nowrap'>" + VC + "</td>" +
 
 
-                                       "<td style='white-space: nowrap'>" + Frame + "</td>" +
+                                        "<td style='white-space: nowrap'>" + Frame + "</td>" +
 
-                                         "<td style='white-space: nowrap'>" + Pincode + "</td>" +
-                                   "</tr>");
+                                          "<td style='white-space: nowrap'>" + Pincode + "</td>" +
+                                    "</tr>");
 
 
 
