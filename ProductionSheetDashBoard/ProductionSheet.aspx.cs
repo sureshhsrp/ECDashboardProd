@@ -36,8 +36,8 @@ namespace ProductionSheetDashBoard
 
             //if (Request.QueryString["UID"] == null)
             //{
-            //    userId = "32650"; //Dealer
-            //    //userId = "53164";
+            //    //userId = "32650"; //Dealer
+            //   //userId = "53164";
 
             //}
 
@@ -4254,7 +4254,7 @@ namespace ProductionSheetDashBoard
                                              "</td>" +
 
                                               "<td colspan='3' style='border: 0px; '>" +
-                                                 "<div style='text-align:left'><b>Book My HSRP (Dealer Delivery) </b> " + "</div>" +
+                                                 "<div style='text-align:left;font-size:22px;''><b>Book My HSRP (Dealer Delivery) </b> " + "</div>" +
                                              "</td>" +
 
 
@@ -4348,8 +4348,7 @@ namespace ProductionSheetDashBoard
                                            "</td>" +
 
                                             "<td colspan='3' style='border: 0px; '>" +
-                                               "<div style='text-align:left'><b>Book My HSRP (Dealer Delivery) </b> " + "</div>" +
-                                           "</td>" +
+                                              "<div style='text-align:left;font-size:22px;''><b>Book My HSRP (Dealer Delivery) </b> " + "</div>" + "</td>" +
 
 
                                             "<td colspan='6' style='border: 0px;'>" +
@@ -6453,7 +6452,8 @@ namespace ProductionSheetDashBoard
                                            "</td>" +
 
                                             "<td colspan='3' style='border: 0px; '>" +
-                                               "<div style='text-align:left'><b>Book My HSRP (Home Delivery) </b> " + "</div>" +
+                                               //"<div style='text-align:left'><b>Book My HSRP (Home Delivery) </b> " + "</div>" +
+                                               "<div style='text-align:left;font-size:22px;''><b>Book My HSRP (Home Delivery) </b> " + "</div>" +
                                            "</td>" +
 
 
@@ -6550,7 +6550,7 @@ namespace ProductionSheetDashBoard
                                          "</td>" +
 
                                           "<td colspan='3' style='border: 0px; '>" +
-                                             "<div style='text-align:left'><b>Book My HSRP (Home Delivery) </b> " + "</div>" +
+                                               "<div style='text-align:left;font-size:22px;''><b>Book My HSRP (Home Delivery) </b> " + "</div>" +
                                          "</td>" +
 
 
@@ -9994,8 +9994,9 @@ namespace ProductionSheetDashBoard
                                             "</td>" +
 
                                              "<td colspan='3' style='border: 0px; '>" +
-                                                "<div style='text-align:left'><b>Book My HSRP (Home Delivery) </b> " + "</div>" +
-                                            "</td>" +
+                                                                                               //"<div style='text-align:left'><b>Book My HSRP (Home Delivery) </b> " + "</div>" +
+                                   "<div style='text-align:left;font-size:22px;''><b>Book My HSRP (Home Delivery) </b> " + "</div>" +
+                             "</td>" +
 
 
                                              "<td colspan='6' style='border: 0px;'>" +
@@ -10087,8 +10088,9 @@ namespace ProductionSheetDashBoard
                                       "</td>" +
 
                                        "<td colspan='3' style='border: 0px; '>" +
-                                          "<div style='text-align:left'><b>Book My HSRP (Home Delivery) </b> " + "</div>" +
-                                      "</td>" +
+                                                                                         //"<div style='text-align:left'><b>Book My HSRP (Home Delivery) </b> " + "</div>" +
+                       "<div style='text-align:left;font-size:22px;''><b>Book My HSRP (Home Delivery) </b> " + "</div>" +
+                     "</td>" +
 
 
                                        "<td colspan='6' style='border: 0px;'>" +
