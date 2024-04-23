@@ -36,8 +36,8 @@ namespace ProductionSheetDashBoard
 
             //if (Request.QueryString["UID"] == null)
             //{
-            //    //userId = "32650"; //Dealer
-            //   //userId = "53164";
+            //userId = "32650"; //Dealer
+           //userId = "53164";
 
             //}
 
@@ -4259,7 +4259,8 @@ namespace ProductionSheetDashBoard
 
 
                                               "<td colspan='6' style='border: 0px;'>" +
-                                                 "<div style='float:left;width: 500px;word-wrap: break-word;'><b>Hub/Dealer (ID - Name):</b> " + dealerid + "/" + dealername + "/" + strsubaffixid + " </div>" +
+                                                // "<div style='float:left;width: 500px;word-wrap: break-word;'><b>Hub/Dealer (ID - Name):</b> " + dealerid + "/" + dealername + "/" + strsubaffixid + " </div>" +
+                                                    "<div style='float:left;width: 500px;word-wrap: break-word;'><b>Hub/Dealer (ID - Name):</b> " + dealerid + "/" + dealername +  " </div>" +
                                              "</td>" +
 
                                          "</tr>" +
@@ -4352,7 +4353,10 @@ namespace ProductionSheetDashBoard
 
 
                                             "<td colspan='6' style='border: 0px;'>" +
-                                               "<div style='float:left;width: 500px;word-wrap: break-word;'><b>Hub/Dealer (ID - Name):</b> " + dealerid + "/" + dealername + "/" + strsubaffixid + " </div>" +
+
+                               "<div style='float:left;width: 500px;word-wrap: break-word;'><b>Hub/Dealer (ID - Name):</b> " + dealerid + "/" + dealername + " </div>" +
+
+                                           // "<div style='float:left;width: 500px;word-wrap: break-word;'><b>Hub/Dealer (ID - Name):</b> " + dealerid + "/" + dealername + "/" + strsubaffixid + " </div>" +
                                            "</td>" +
 
                                        "</tr>" +
@@ -6337,7 +6341,7 @@ namespace ProductionSheetDashBoard
 
 
 
-                    oemDealerQuery = "select distinct d.oemid as oemid, (select name  from oemmaster where oemid=d.oemid) as oemname,d.dealerid as dealerid,d.DealerAffixationcenterName as Dealername,  d.DealerAffixationCenterAddress as Address, " +
+                    oemDealerQuery = "select distinct d.oemid as oemid, (select name  from oemmaster where oemid=d.oemid) as oemname,d.DispatchHub,d.dealerid as dealerid,d.DealerAffixationcenterName as Dealername,  d.DealerAffixationCenterAddress as Address, " +
                      "d.DealerAffixationID as SubDealerId, H.dealerid AS ParentDealerId,SlotBookingDate from	HSRPrecords H with(nolock) join DealerAffixationCenter d  with(nolock) on H.HSRP_StateID=d.StateID and H.Affix_Id=d.DealerAffixationID  join BookMyHSRPAppointment B on H.orderno=B.orderno  " +
                     " where   Navembid='" + Navembcode + "'  and Navembid not like '%CODO%'     and  NewPdfRunningNo is null and erpassigndate is not null and  h.OrderStatus='New Order' and  IsBookMyHsrpRecord='Y' and  B.IsFrame='Y' and  h.affix_id is not NULL   and  d.TypeofDelivery in('Home','RWA')";
 
@@ -6356,6 +6360,7 @@ namespace ProductionSheetDashBoard
                             string oemname = drOD["oemname"].ToString().Trim();
                             string dealername = drOD["Dealername"].ToString().Trim();
                             string Address = drOD["Address"].ToString().Trim();
+                            string dispatchHub = drOD["DispatchHub"].ToString().Trim();
 
                             DateTime AppointmentDate = Convert.ToDateTime(drOD["SlotBookingDate"].ToString().Trim());
 
@@ -6458,7 +6463,7 @@ namespace ProductionSheetDashBoard
 
 
                                             "<td colspan='6' style='border: 0px;'>" +
-                                               "<div style='float:left;width: 500px;word-wrap: break-word;'><b>Hub/Dealer (ID - Name):</b> " + dealerid + "/" + dealername + "/" + strsubaffixid + " </div>" +
+                                               "<div style='float:left;width: 500px;word-wrap: break-word;'><b>Hub/Dealer (ID - Name):</b> " + dealerid + "/" + dispatchHub  + " </div>" +
                                            "</td>" +
 
                                        "</tr>" +
@@ -6555,7 +6560,8 @@ namespace ProductionSheetDashBoard
 
 
                                           "<td colspan='6' style='border: 0px;'>" +
-                                             "<div style='float:left;width: 500px;word-wrap: break-word;'><b>Hub/Dealer (ID - Name):</b> " + dealerid + "/" + dealername + "/" + strsubaffixid + " </div>" +
+                                          "<div style='float:left;width: 500px;word-wrap: break-word;'><b>Hub/Dealer (ID - Name):</b> " + dealerid + "/" + dispatchHub + " </div>" +
+                                      //"<div style='float:left;width: 500px;word-wrap: break-word;'><b>Hub/Dealer (ID - Name):</b> " + dealerid + "/" + dealername + "/" + strsubaffixid + " </div>" +
                                          "</td>" +
 
                                      "</tr>" +
@@ -9879,7 +9885,7 @@ namespace ProductionSheetDashBoard
 
 
 
-                    oemDealerQuery = "select distinct d.oemid as oemid, (select name  from oemmaster where oemid=d.oemid) as oemname,d.dealerid as dealerid,d.DealerAffixationcenterName as Dealername,  d.DealerAffixationCenterAddress as Address, " +
+                    oemDealerQuery = "select distinct d.oemid as oemid, (select name  from oemmaster where oemid=d.oemid) as oemname,d.dealerid as dealerid,d.DispatchHub,d.DealerAffixationcenterName as Dealername,  d.DealerAffixationCenterAddress as Address, " +
                      "d.DealerAffixationID as SubDealerId, H.dealerid AS ParentDealerId,SlotBookingDate from	HSRPrecords H with(nolock) join DealerAffixationCenter d  with(nolock) on H.HSRP_StateID=d.StateID and H.Affix_Id=d.DealerAffixationID  join BookMyHSRPAppointment B on H.orderno=B.orderno  " +
                     " where   Navembid='" + Navembcode + "'  and Navembid not like '%CODO%'     and  NewPdfRunningNo is null and erpassigndate is not null and  h.OrderStatus='New Order' and  IsBookMyHsrpRecord='Y' and  h.affix_id is not NULL   and  d.TypeofDelivery in('Home','RWA') and  ((b.IsFrame is null) or (b.IsFrame='N')) ";
 
@@ -9898,7 +9904,7 @@ namespace ProductionSheetDashBoard
                             string oemname = drOD["oemname"].ToString().Trim();
                             string dealername = drOD["Dealername"].ToString().Trim();
                             string Address = drOD["Address"].ToString().Trim();
-
+                            string dispatchHub= drOD["DispatchHub"].ToString().Trim();
                             DateTime AppointmentDate = Convert.ToDateTime(drOD["SlotBookingDate"].ToString().Trim());
 
 
@@ -10000,7 +10006,8 @@ namespace ProductionSheetDashBoard
 
 
                                              "<td colspan='6' style='border: 0px;'>" +
-                                                "<div style='float:left;width: 500px;word-wrap: break-word;'><b>Hub/Dealer (ID - Name):</b> " + dealerid + "/" + dealername + "/" + strsubaffixid + " </div>" +
+                                        "<div style='float:left;width: 500px;word-wrap: break-word;'><b>Hub/Dealer (ID - Name):</b> " + dealerid + "/" + dispatchHub + " </div>" +
+                              // "<div style='float:left;width: 500px;word-wrap: break-word;'><b>Hub/Dealer (ID - Name):</b> " + dealerid + "/" + dealername + "/" + strsubaffixid + " </div>" +
                                             "</td>" +
 
                                         "</tr>" +
@@ -10094,8 +10101,9 @@ namespace ProductionSheetDashBoard
 
 
                                        "<td colspan='6' style='border: 0px;'>" +
-                                          "<div style='float:left;width: 500px;word-wrap: break-word;'><b>Hub/Dealer (ID - Name):</b> " + dealerid + "/" + dealername + "/" + strsubaffixid + " </div>" +
-                                      "</td>" +
+                                                                               //   "<div style='float:left;width: 500px;word-wrap: break-word;'><b>Hub/Dealer (ID - Name):</b> " + dealerid + "/" + dealername + "/" + strsubaffixid + " </div>" +
+                              "<div style='float:left;width: 500px;word-wrap: break-word;'><b>Hub/Dealer (ID - Name):</b> " + dealerid + "/" + dispatchHub + " </div>" +
+                                 "</td>" +
 
                                   "</tr>" +
 
@@ -10110,7 +10118,7 @@ namespace ProductionSheetDashBoard
 
 
                                        "<td colspan='6'  style='border: 0px;'>" +
-                                                         "<div style='float:left;width: 500px;word-wrap: break-word;'><b>Hub/Dealer Address:</b> " + Address + " </div>" +
+                                        "<div style='float:left;width: 500px;word-wrap: break-word;'><b>Hub/Dealer Address:</b> " + Address + " </div>" +
                                       "</td>" +
 
                                   "</tr>" +
