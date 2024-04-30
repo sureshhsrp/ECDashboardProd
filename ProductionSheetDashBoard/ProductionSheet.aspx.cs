@@ -37,15 +37,15 @@ namespace ProductionSheetDashBoard
             //if (Request.QueryString["UID"] == null)
             //{
             //userId = "32650"; //Dealer
-           //userId = "53164";
+            //userId = "53164";
 
             //}
 
 
-            ////if (Request.QueryString["UID"] == null)
-            ////{
-            ////    userId = "46266";
-            ////}
+            //if (Request.QueryString["UID"] == null)
+            //{
+            //    userId = "32650";
+            //}
 
             //if (Request.QueryString["UID"] == null)
             //{
@@ -860,19 +860,20 @@ namespace ProductionSheetDashBoard
             FillUserDetails();
             string ReqNum = string.Empty;
 
-            if ((ddlStateName.SelectedValue == "20") || (ddlStateName.SelectedValue == "10"))
-            {
+            //if ((ddlStateName.SelectedValue == "20") || (ddlStateName.SelectedValue == "10"))
+            //if ((ddlStateName.SelectedValue == "20") || (ddlStateName.SelectedValue == "10") || (ddlStateName.SelectedValue == "17") || (ddlStateName.SelectedValue == "14"))
+            //{
 
 
                 stateECQuery = "select distinct a.HSRP_StateID, (select HSRPStateName from hsrpstate c where c.hsrp_stateid=a.hsrp_stateid) as HSRPStateName,(select HSRPStateShortName from hsrpstate d where d.hsrp_stateid=a.hsrp_stateid) as HSRPStateShortName, navembcode from hsrprecords a with(nolock),rtolocation b where a.HSRP_StateID ='" + ddlStateName.SelectedValue + "' and   b.Navembcode not like '%CODO%'    and a.rtolocationid=b.rtolocationid and NewPdfRunningNo is null and erpassigndate is not null and OrderStatus='New Order' AND b.NAVEMBID='" + Navembid + "'   order by  a.HSRP_StateID";
-            }
-            else
-            {
-                stateECQuery = "select distinct a.HSRP_StateID, (select HSRPStateName from hsrpstate c where c.hsrp_stateid=a.hsrp_stateid) as HSRPStateName,(select HSRPStateShortName from hsrpstate d where d.hsrp_stateid=a.hsrp_stateid) as HSRPStateShortName, navembcode from hsrprecords a with(nolock),rtolocation b where a.HSRP_StateID ='" + ddlStateName.SelectedValue + "' and   b.Navembcode not like '%CODO%'    and a.rtolocationid=b.rtolocationid and NewPdfRunningNo is null and erpassigndate is not null and OrderStatus='New Order' and   b.navembcode like  '%'+(select HSRPStateShortName from hsrpstate d where d.hsrp_stateid=a.hsrp_stateid)+'%'  and b.NAVEMBID='" + Navembid + "'    order by  a.HSRP_StateID";
+            //}
+            //else
+            //{
+            //    stateECQuery = "select distinct a.HSRP_StateID, (select HSRPStateName from hsrpstate c where c.hsrp_stateid=a.hsrp_stateid) as HSRPStateName,(select HSRPStateShortName from hsrpstate d where d.hsrp_stateid=a.hsrp_stateid) as HSRPStateShortName, navembcode from hsrprecords a with(nolock),rtolocation b where a.HSRP_StateID ='" + ddlStateName.SelectedValue + "' and   b.Navembcode not like '%CODO%'    and a.rtolocationid=b.rtolocationid and NewPdfRunningNo is null and erpassigndate is not null and OrderStatus='New Order' and   b.navembcode like  '%'+(select HSRPStateShortName from hsrpstate d where d.hsrp_stateid=a.hsrp_stateid)+'%'  and b.NAVEMBID='" + Navembid + "'    order by  a.HSRP_StateID";
 
-               // stateECQuery = "select distinct a.HSRP_StateID, (select HSRPStateName from hsrpstate c where c.hsrp_stateid=a.hsrp_stateid) as HSRPStateName,(select HSRPStateShortName from hsrpstate d where d.hsrp_stateid=a.hsrp_stateid) as HSRPStateShortName, navembcode from hsrprecords a with(nolock),rtolocation b where a.HSRP_StateID ='" + ddlStateName.SelectedValue + "' and   b.Navembcode  like '%CODO%'    and a.rtolocationid=b.rtolocationid and NewPdfRunningNo is null and erpassigndate is not null and OrderStatus='New Order' and   b.navembcode like  '%'+(select HSRPStateShortName from hsrpstate d where d.hsrp_stateid=a.hsrp_stateid)+'%'  and b.NAVEMBID='" + Navembid + "'    order by  a.HSRP_StateID";
+            //   // stateECQuery = "select distinct a.HSRP_StateID, (select HSRPStateName from hsrpstate c where c.hsrp_stateid=a.hsrp_stateid) as HSRPStateName,(select HSRPStateShortName from hsrpstate d where d.hsrp_stateid=a.hsrp_stateid) as HSRPStateShortName, navembcode from hsrprecords a with(nolock),rtolocation b where a.HSRP_StateID ='" + ddlStateName.SelectedValue + "' and   b.Navembcode  like '%CODO%'    and a.rtolocationid=b.rtolocationid and NewPdfRunningNo is null and erpassigndate is not null and OrderStatus='New Order' and   b.navembcode like  '%'+(select HSRPStateShortName from hsrpstate d where d.hsrp_stateid=a.hsrp_stateid)+'%'  and b.NAVEMBID='" + Navembid + "'    order by  a.HSRP_StateID";
 
-            }
+            //}
 
 
             DataTable dtSE = Utils.Utils.GetDataTable(stateECQuery, CnnString);
@@ -1042,12 +1043,12 @@ namespace ProductionSheetDashBoard
                                                 "</td>" +
 
                                                  "<td colspan='3' style='border: 0px;'>" +
-                                                    "<div style='text-align:left'><b>Rosmerta Safety Systems Pvt. Ltd.</b> " + "</div>" +
+                                                    "<div style='text-align:left'><b>ROSMERTA SAFETY SYSTEMS LIMITED</b> " + "</div>" +
                                                 "</td>" +
 
 
                                                  "<td colspan='5' style='border: 0px;'>" +
-                                                    "<div style='float:left;width: 500px;word-wrap: break-word;'><b>Production Sheet No:</b> " +   strRunningNo +  " </div>" +
+                                                    "<div style='float:left;width: 500px;word-wrap: break-word;'><b>Production Sheet No:</b> " + strProductionSheetNo +  " </div>" +
                                                 "</td>" +
 
                                             "</tr>" +
@@ -4024,19 +4025,19 @@ namespace ProductionSheetDashBoard
             // string HSRPStateShortName = dtECName.Rows[0]["HSRPStateShortName"].ToString();
 
             //stateECQuery = "select distinct a.HSRP_StateID, (select HSRPStateName from hsrpstate c where c.hsrp_stateid=a.hsrp_stateid) as HSRPStateName,(select HSRPStateShortName from hsrpstate d with(nolock) where d.hsrp_stateid='" + ddlStateName.SelectedValue + "') as HSRPStateShortName,   a.Navembid AS  navembcode from hsrprecords a with(nolock) where  left(a.Navembid,4) = '" + ShortECname + "'  and  NewPdfRunningNo is null and erpassigndate is not null  and (IsBookMyHsrpRecord='Y')  and OrderStatus='New Order' and a.NAVEMBID='" + Navembid + "' and     Navembid not like '%CODO%'  order by  a.HSRP_StateID";
-            if ((ddlStateName.SelectedValue == "17") || (ddlStateName.SelectedValue == "10"))
-            {
+            //if ((ddlStateName.SelectedValue == "20") || (ddlStateName.SelectedValue == "10") ||(ddlStateName.SelectedValue == "17")||(ddlStateName.SelectedValue == "14"))
+            //{
 
 
                 stateECQuery = "select distinct a.HSRP_StateID, (select HSRPStateName from hsrpstate c where c.hsrp_stateid=a.hsrp_stateid) as HSRPStateName,(select HSRPStateShortName from hsrpstate d with(nolock) where d.hsrp_stateid='" + ddlStateName.SelectedValue + "') as HSRPStateShortName,   a.Navembid AS  navembcode from hsrprecords a with(nolock) where  NewPdfRunningNo is null and erpassigndate is not null  and (IsBookMyHsrpRecord='Y')  and OrderStatus='New Order' and a.NAVEMBID='" + Navembid + "' and     Navembid not like '%CODO%'  order by  a.HSRP_StateID";
 
                 //stateECQuery = "select distinct a.HSRP_StateID, (select HSRPStateName from hsrpstate c where c.hsrp_stateid=a.hsrp_stateid) as HSRPStateName,(select HSRPStateShortName from hsrpstate d where d.hsrp_stateid=a.hsrp_stateid) as HSRPStateShortName, navembcode from hsrprecords a with(nolock),rtolocation b where a.HSRP_StateID ='" + ddlStateName.SelectedValue + "' and   b.Navembcode not like '%CODO%'    and a.rtolocationid=b.rtolocationid and NewPdfRunningNo is null and erpassigndate is not null and OrderStatus='New Order'  order by  a.HSRP_StateID";
-            }
-            else
-            {
-                stateECQuery = "select distinct a.HSRP_StateID, (select HSRPStateName from hsrpstate c where c.hsrp_stateid=a.hsrp_stateid) as HSRPStateName,(select HSRPStateShortName from hsrpstate d with(nolock) where d.hsrp_stateid='" + ddlStateName.SelectedValue + "') as HSRPStateShortName,   a.Navembid AS  navembcode from hsrprecords a with(nolock) where  left(a.Navembid,4) = '" + ShortECname + "'  and  NewPdfRunningNo is null and erpassigndate is not null  and (IsBookMyHsrpRecord='Y')  and OrderStatus='New Order' and a.NAVEMBID='" + Navembid + "' and     Navembid not like '%CODO%'  order by  a.HSRP_StateID";
+            //}
+            //else
+            //{
+            //    stateECQuery = "select distinct a.HSRP_StateID, (select HSRPStateName from hsrpstate c where c.hsrp_stateid=a.hsrp_stateid) as HSRPStateName,(select HSRPStateShortName from hsrpstate d with(nolock) where d.hsrp_stateid='" + ddlStateName.SelectedValue + "') as HSRPStateShortName,   a.Navembid AS  navembcode from hsrprecords a with(nolock) where  left(a.Navembid,4) = '" + ShortECname + "'  and  NewPdfRunningNo is null and erpassigndate is not null  and (IsBookMyHsrpRecord='Y')  and OrderStatus='New Order' and a.NAVEMBID='" + Navembid + "' and     Navembid not like '%CODO%'  order by  a.HSRP_StateID";
 
-            }
+            //}
             DataTable dtSE = Utils.Utils.GetDataTable(stateECQuery, CnnString);
 
 
@@ -6236,8 +6237,22 @@ namespace ProductionSheetDashBoard
             string ShortECname = dtECName.Rows[0]["NewHSRPStateShortName"].ToString();
             // string HSRPStateShortName = dtECName.Rows[0]["HSRPStateShortName"].ToString();
 
-            stateECQuery = "select distinct a.HSRP_StateID, (select HSRPStateName from hsrpstate c where c.hsrp_stateid=a.hsrp_stateid) as HSRPStateName,(select HSRPStateShortName from hsrpstate d with(nolock) where d.hsrp_stateid='" + ddlStateName.SelectedValue + "') as HSRPStateShortName,   a.Navembid AS  navembcode from hsrprecords a with(nolock) where  left(a.Navembid,4) = '" + ShortECname + "'  and  NewPdfRunningNo is null and erpassigndate is not null  and (IsBookMyHsrpRecord='Y')  and OrderStatus='New Order'   and a.NAVEMBID='" + Navembid + "' and   Navembid not like '%CODO%'   order by  a.HSRP_StateID";
+            //if ((ddlStateName.SelectedValue == "20") || (ddlStateName.SelectedValue == "10") || (ddlStateName.SelectedValue == "17") || (ddlStateName.SelectedValue == "14"))
+            //{
+
+
+            //    stateECQuery = "select distinct a.HSRP_StateID, (select HSRPStateName from hsrpstate c where c.hsrp_stateid=a.hsrp_stateid) as HSRPStateName,(select HSRPStateShortName from hsrpstate d with(nolock) where d.hsrp_stateid='" + ddlStateName.SelectedValue + "') as HSRPStateShortName,   a.Navembid AS  navembcode from hsrprecords a with(nolock) where  NewPdfRunningNo is null and erpassigndate is not null  and (IsBookMyHsrpRecord='Y')  and OrderStatus='New Order' and a.NAVEMBID='" + Navembid + "' and     Navembid not like '%CODO%'  order by  a.HSRP_StateID";
+
+            //    //stateECQuery = "select distinct a.HSRP_StateID, (select HSRPStateName from hsrpstate c where c.hsrp_stateid=a.hsrp_stateid) as HSRPStateName,(select HSRPStateShortName from hsrpstate d where d.hsrp_stateid=a.hsrp_stateid) as HSRPStateShortName, navembcode from hsrprecords a with(nolock),rtolocation b where a.HSRP_StateID ='" + ddlStateName.SelectedValue + "' and   b.Navembcode not like '%CODO%'    and a.rtolocationid=b.rtolocationid and NewPdfRunningNo is null and erpassigndate is not null and OrderStatus='New Order'  order by  a.HSRP_StateID";
+            //}
+
+            //else
+            //{
+                //stateECQuery = "select distinct a.HSRP_StateID, (select HSRPStateName from hsrpstate c where c.hsrp_stateid=a.hsrp_stateid) as HSRPStateName,(select HSRPStateShortName from hsrpstate d with(nolock) where d.hsrp_stateid='" + ddlStateName.SelectedValue + "') as HSRPStateShortName,   a.Navembid AS  navembcode from hsrprecords a with(nolock) where  left(a.Navembid,4) = '" + ShortECname + "'  and  NewPdfRunningNo is null and erpassigndate is not null  and (IsBookMyHsrpRecord='Y')  and OrderStatus='New Order'   and a.NAVEMBID='" + Navembid + "' and   Navembid not like '%CODO%'   order by  a.HSRP_StateID";
+            stateECQuery = "select distinct a.HSRP_StateID, (select HSRPStateName from hsrpstate c where c.hsrp_stateid=a.hsrp_stateid) as HSRPStateName,(select HSRPStateShortName from hsrpstate d with(nolock) where d.hsrp_stateid='" + ddlStateName.SelectedValue + "') as HSRPStateShortName,   a.Navembid AS  navembcode from hsrprecords a with(nolock) where   NewPdfRunningNo is null and erpassigndate is not null  and (IsBookMyHsrpRecord='Y')  and OrderStatus='New Order'   and a.NAVEMBID='" + Navembid + "' and   Navembid not like '%CODO%'   order by  a.HSRP_StateID";
+
             DataTable dtSE = Utils.Utils.GetDataTable(stateECQuery, CnnString);
+            //}
             //string allStrProductionSheetNo = string.Empty;
 
             if (dtSE.Rows.Count > 0)
@@ -9781,7 +9796,9 @@ namespace ProductionSheetDashBoard
             string ShortECname = dtECName.Rows[0]["NewHSRPStateShortName"].ToString();
             // string HSRPStateShortName = dtECName.Rows[0]["HSRPStateShortName"].ToString();
 
-            stateECQuery = "select distinct a.HSRP_StateID, (select HSRPStateName from hsrpstate c where c.hsrp_stateid=a.hsrp_stateid) as HSRPStateName,(select HSRPStateShortName from hsrpstate d with(nolock) where d.hsrp_stateid='" + ddlStateName.SelectedValue + "') as HSRPStateShortName,   a.Navembid AS  navembcode from hsrprecords a with(nolock) where  left(a.Navembid,4) = '" + ShortECname + "'  and  a.NAVEMBID='" + Navembid + "' and  NewPdfRunningNo is null and erpassigndate is not null  and (IsBookMyHsrpRecord='Y')  and OrderStatus='New Order' and   a.NAVEMBID='" + Navembid + "' and   Navembid not like '%CODO%'  order by  a.HSRP_StateID";
+            //stateECQuery = "select distinct a.HSRP_StateID, (select HSRPStateName from hsrpstate c where c.hsrp_stateid=a.hsrp_stateid) as HSRPStateName,(select HSRPStateShortName from hsrpstate d with(nolock) where d.hsrp_stateid='" + ddlStateName.SelectedValue + "') as HSRPStateShortName,   a.Navembid AS  navembcode from hsrprecords a with(nolock) where  left(a.Navembid,4) = '" + ShortECname + "'  and  a.NAVEMBID='" + Navembid + "' and  NewPdfRunningNo is null and erpassigndate is not null  and (IsBookMyHsrpRecord='Y')  and OrderStatus='New Order' and   a.NAVEMBID='" + Navembid + "' and   Navembid not like '%CODO%'  order by  a.HSRP_StateID";
+            stateECQuery = "select distinct a.HSRP_StateID, (select HSRPStateName from hsrpstate c where c.hsrp_stateid=a.hsrp_stateid) as HSRPStateName,(select HSRPStateShortName from hsrpstate d with(nolock) where d.hsrp_stateid='" + ddlStateName.SelectedValue + "') as HSRPStateShortName,   a.Navembid AS  navembcode from hsrprecords a with(nolock) where    a.NAVEMBID='" + Navembid + "' and  NewPdfRunningNo is null and erpassigndate is not null  and (IsBookMyHsrpRecord='Y')  and OrderStatus='New Order' and   a.NAVEMBID='" + Navembid + "' and   Navembid not like '%CODO%'  order by  a.HSRP_StateID";
+
             DataTable dtSE = Utils.Utils.GetDataTable(stateECQuery, CnnString);
             //string allStrProductionSheetNo = string.Empty;
 
