@@ -282,7 +282,7 @@ namespace ProductionSheetDashBoard
 
                     string dir = dirPath + DateTime.Now.ToString("yyyy-MM-dd") + "\\" + HSRPStateShortName + "\\";
 
-                    string fileName = "Victory" + "-" + filePrefix + "-" + Navembcode + ".pdf";
+                    string fileName = "VictoryACE" + "-" + filePrefix + "-" + Navembcode + ".pdf";
                     string filePath = dir + fileName;
 
 
@@ -349,7 +349,7 @@ namespace ProductionSheetDashBoard
                         "dm.RTOLocationID from oemmaster om with(nolock) " +
                         "left join dealermaster dm with(nolock) on dm.oemid = om.oemid join DealerAffixation d with(nolock) on d.DealerID=dm.DealerId where D.STATE_ID =" + HSRP_StateID + " and   d.Navembcode='" + Navembcode + "' and " +
 
-                        "dm.dealerid in (select distinct dealerid from hsrprecords where NewPdfRunningNo is null and erpassigndate is not null and   affix_id is not null ) and    OM.OEMid in('1367')";
+                        "dm.dealerid in (select distinct dealerid from hsrprecords where NewPdfRunningNo is null and erpassigndate is not null and   affix_id is not null ) and   (( OM.OEMid=1367) or (d.dealerid=45012))";
 
 
                     #region
