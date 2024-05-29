@@ -965,6 +965,7 @@ namespace ProductionSheetDashBoard
 
                     SqlDataAdapter da = new SqlDataAdapter(cmd1);
                     // dtOD = new DataTable();
+                    cmd1.CommandTimeout = 400;
                     da.Fill(dtOD);
                     con1.Close();
 
