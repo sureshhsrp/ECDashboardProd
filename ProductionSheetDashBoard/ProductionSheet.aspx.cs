@@ -36,8 +36,8 @@ namespace ProductionSheetDashBoard
 
             //if (Request.QueryString["UID"] == null)
             //{
-            //userId = "32650"; //Dealer
-            //userId = "53164";
+            //    userId = "15736"; 
+
 
             //}
 
@@ -190,17 +190,17 @@ namespace ProductionSheetDashBoard
             if (filePrefix.Length > 0)
             {
 
-                SheetGeneration();                
-                //btnHero_Click(sender, e);
+                SheetGeneration();
+
                 btnRenault_Click(sender, e);
                 btnSuzu_Click(sender, e);
                 VICTORY_ELECTRIC(sender, e);
                 btnTVS_Click(sender, e);
                 btnJCB_Click(sender, e);
                 btnExternal_Click(sender, e);
-                //btnExternal_Click(sender, e);
 
-               
+
+
 
                 //SheetGeneration();
                 //SheetGenerationHero();
@@ -349,7 +349,7 @@ namespace ProductionSheetDashBoard
                         "dm.RTOLocationID from oemmaster om with(nolock) " +
                         "left join dealermaster dm with(nolock) on dm.oemid = om.oemid join DealerAffixation d with(nolock) on d.DealerID=dm.DealerId where D.STATE_ID =" + HSRP_StateID + " and   d.Navembcode='" + Navembcode + "' and " +
 
-                        "dm.dealerid in (select distinct dealerid from hsrprecords where NewPdfRunningNo is null and erpassigndate is not null and   affix_id is not null ) and   (( OM.OEMid=1367) or (d.dealerid=45012))";
+                        "dm.dealerid in (select distinct dealerid from hsrprecords where NewPdfRunningNo is null and erpassigndate is not null and   affix_id is not null ) and   (( OM.OEMid=1367) or (d.dealerid=45012) or (d.dealerid=92724))";
 
 
                     #region
@@ -431,7 +431,7 @@ namespace ProductionSheetDashBoard
                                                 "</td>" +
 
                                                  "<td colspan='3' style='border: 0px;'>" +
-                                                    "<div style='text-align:left'><b>Rosmerta Safety Systems Pvt. Ltd.</b> " + "</div>" +
+                                                    "<div style='text-align:left'><b>ROSMERTA SAFETY SYSTEMS LIMITED</b> " + "</div>" +
                                                 "</td>" +
 
 
@@ -1690,7 +1690,7 @@ namespace ProductionSheetDashBoard
                                                 "</td>" +
 
                                                  "<td colspan='3' style='border: 0px;'>" +
-                                                    "<div style='text-align:left'><b>Rosmerta Safety Systems Pvt. Ltd.</b> " + "</div>" +
+                                                    "<div style='text-align:left'><b>ROSMERTA SAFETY SYSTEMS LIMITED</b> " + "</div>" +
                                                 "</td>" +
 
 
@@ -2293,7 +2293,7 @@ namespace ProductionSheetDashBoard
                                                 "</td>" +
 
                                                  "<td colspan='3' style='border: 0px;'>" +
-                                                    "<div style='text-align:left'><b>Rosmerta Safety Systems Pvt. Ltd.</b> " + "</div>" +
+                                                    "<div style='text-align:left'><b>ROSMERTA SAFETY SYSTEMS LIMITED</b> " + "</div>" +
                                                 "</td>" +
 
 
@@ -2930,7 +2930,7 @@ namespace ProductionSheetDashBoard
                                             "</tr>" +
                                             "<tr style='border: 0px;'>" +
                                                 "<td colspan='12' style='border: 0px;'>" +
-                                                    "<div style='text-align:center;font-size:26px;'><b>HALLP Production Sheet : -</b> Rosmerta Safety System</div>" +
+                                                    "<div style='text-align:center;font-size:26px;'><b>HALLP Production Sheet : -</b> ROSMERTA SAFETY SYSTEMS LIMITED</div>" +
                                                 "</td>" +
                                             "</tr>" +
                                             "<tr style='border: 0px;'>" +
@@ -3580,7 +3580,7 @@ namespace ProductionSheetDashBoard
                                                 "</td>" +
 
                                                  "<td colspan='3' style='border: 0px;'>" +
-                                                    "<div style='text-align:left'><b>Rosmerta Safety Systems Pvt. Ltd.</b> " + "</div>" +
+                                                    "<div style='text-align:left'><b>ROSMERTA SAFETY SYSTEMS LIMITED</b> " + "</div>" +
                                                 "</td>" +
 
 
@@ -5154,7 +5154,7 @@ namespace ProductionSheetDashBoard
                                                 "</td>" +
 
                                                  "<td colspan='3' style='border: 0px;'>" +
-                                                    "<div style='text-align:left'><b>Rosmerta Safety Systems Pvt. Ltd.</b> " + "</div>" +
+                                                    "<div style='text-align:left'><b>ROSMERTA SAFETY SYSTEMS LIMITED</b> " + "</div>" +
                                                 "</td>" +
 
 
@@ -7325,7 +7325,7 @@ namespace ProductionSheetDashBoard
                                             "</tr>" +
                                             "<tr style='border: 0px;'>" +
                                                 "<td colspan='14' style='border: 0px;'>" +
-                                                    "<div style='text-align:center;font-size:26px;'><b>Home Delivery Production Sheet : -</b> Rosmerta Safety System</div>" +
+                                                    "<div style='text-align:center;font-size:26px;'><b>Home Delivery Production Sheet : -</b> ROSMERTA SAFETY SYSTEMS LIMITED</div>" +
                                                 "</td>" +
                                             "</tr>" +
                                             "<tr style='border: 0px;'>" +
@@ -7410,7 +7410,7 @@ namespace ProductionSheetDashBoard
                                             "</tr>" +
                                             "<tr style='border: 0px;'>" +
                                                 "<td colspan='14' style='border: 0px;'>" +
-                                                    "<div style='text-align:center;font-size:26px;'><b>Home Delivery Production Sheet : -</b> Rosmerta Safety System</div>" +
+                                                    "<div style='text-align:center;font-size:26px;'><b>Home Delivery Production Sheet : -</b> ROSMERTA SAFETY SYSTEMS LIMITED</div>" +
                                                 "</td>" +
                                             "</tr>" +
                                             "<tr style='border: 0px;'>" +
@@ -7921,7 +7921,7 @@ namespace ProductionSheetDashBoard
                                             "</tr>" +
                                             "<tr style='border: 0px;'>" +
                                                 "<td colspan='6' style='border: 0px;'>" +
-                                                    "<div style='text-align:center;font-size:24px;'><b>Home Delivery Sticker Production Sheet : -</b> Rosmerta Safety System</div>" +
+                                                    "<div style='text-align:center;font-size:24px;'><b>Home Delivery Sticker Production Sheet : -</b> ROSMERTA SAFETY SYSTEMS LIMITED</div>" +
                                                 "</td>" +
                                             "</tr>" +
                                             "<tr style='border: 0px;'>" +
@@ -8006,7 +8006,7 @@ namespace ProductionSheetDashBoard
                                             "</tr>" +
                                             "<tr style='border: 0px;'>" +
                                                 "<td colspan='14' style='border: 0px;'>" +
-                                                    "<div style='text-align:center;font-size:24px;'><b>Book My HSRP Sticker Production Sheet : -</b> Rosmerta Safety System</div>" +
+                                                    "<div style='text-align:center;font-size:24px;'><b>Book My HSRP Sticker Production Sheet : -</b> ROSMERTA SAFETY SYSTEMS LIMITED</div>" +
                                                 "</td>" +
                                             "</tr>" +
                                             "<tr style='border: 0px;'>" +
@@ -8703,7 +8703,7 @@ namespace ProductionSheetDashBoard
                                             "</tr>" +
                                             "<tr style='border: 0px;'>" +
                                                 "<td colspan='6' style='border: 0px;'>" +
-                                                    "<div style='text-align:center;font-size:24px;'><b>Book My HSRP Sticker Production Sheet : -</b> Rosmerta Safety System</div>" +
+                                                    "<div style='text-align:center;font-size:24px;'><b>Book My HSRP Sticker Production Sheet : -</b> ROSMERTA SAFETY SYSTEMS LIMITED</div>" +
                                                 "</td>" +
                                             "</tr>" +
                                             "<tr style='border: 0px;'>" +
@@ -8791,7 +8791,7 @@ namespace ProductionSheetDashBoard
                                             "</tr>" +
                                             "<tr style='border: 0px;'>" +
                                                 "<td colspan='14' style='border: 0px;'>" +
-                                                    "<div style='text-align:center;font-size:24px;'><b>Book My HSRP Sticker Production Sheet : -</b> Rosmerta Safety System</div>" +
+                                                    "<div style='text-align:center;font-size:24px;'><b>Book My HSRP Sticker Production Sheet : -</b> ROSMERTA SAFETY SYSTEMS LIMITED</div>" +
                                                 "</td>" +
                                             "</tr>" +
                                             "<tr style='border: 0px;'>" +
@@ -9514,7 +9514,7 @@ namespace ProductionSheetDashBoard
                                             "</tr>" +
                                             "<tr style='border: 0px;'>" +
                                                 "<td colspan='6' style='border: 0px;'>" +
-                                                    "<div style='text-align:center;font-size:24px;'><b>Third Sticker Production Sheet : -</b> Rosmerta Safety System</div>" +
+                                                    "<div style='text-align:center;font-size:24px;'><b>Third Sticker Production Sheet : -</b> ROSMERTA SAFETY SYSTEMS LIMITED</div>" +
                                                 "</td>" +
                                             "</tr>" +
                                             "<tr style='border: 0px;'>" +
@@ -9586,7 +9586,7 @@ namespace ProductionSheetDashBoard
                                             "</tr>" +
                                             "<tr style='border: 0px;'>" +
                                                 "<td colspan='14' style='border: 0px;'>" +
-                                                    "<div style='text-align:center;font-size:24px;'><bThird Sticker Production Sheet : -</b> Rosmerta Safety System</div>" +
+                                                    "<div style='text-align:center;font-size:24px;'><bThird Sticker Production Sheet : -</b> ROSMERTA SAFETY SYSTEMS LIMITED</div>" +
                                                 "</td>" +
                                             "</tr>" +
                                             "<tr style='border: 0px;'>" +
@@ -10886,7 +10886,7 @@ namespace ProductionSheetDashBoard
                                                 "</td>" +
 
                                                  "<td colspan='3' style='border: 0px;'>" +
-                                                    "<div style='text-align:left'><b>Rosmerta Safety Systems Pvt. Ltd.</b> " + "</div>" +
+                                                    "<div style='text-align:left'><b>ROSMERTA SAFETY SYSTEMS LIMITED</b> " + "</div>" +
                                                 "</td>" +
 
 
@@ -11496,7 +11496,7 @@ namespace ProductionSheetDashBoard
                                                 "</td>" +
 
                                                  "<td colspan='3' style='border: 0px;'>" +
-                                                    "<div style='text-align:left'><b>Rosmerta Safety Systems Pvt. Ltd.</b> " + "</div>" +
+                                                    "<div style='text-align:left'><b>ROSMERTA SAFETY SYSTEMS LIMITED</b> " + "</div>" +
                                                 "</td>" +
 
 
@@ -12145,7 +12145,7 @@ namespace ProductionSheetDashBoard
                                                 "</td>" +
 
                                                  "<td colspan='3' style='border: 0px;'>" +
-                                                    "<div style='text-align:left'><b>Rosmerta Safety Systems Pvt. Ltd.</b> " + "</div>" +
+                                                    "<div style='text-align:left'><b>ROSMERTA SAFETY SYSTEMS LIMITED</b> " + "</div>" +
                                                 "</td>" +
 
 
@@ -12742,7 +12742,7 @@ namespace ProductionSheetDashBoard
                                                "</td>" +
 
                                                 "<td colspan='3' style='border: 0px;'>" +
-                                                   "<div style='text-align:left'><b>Rosmerta Safety Systems Pvt. Ltd.</b> " + "</div>" +
+                                                   "<div style='text-align:left'><b>ROSMERTA SAFETY SYSTEMS LIMITED</b> " + "</div>" +
                                                "</td>" +
 
 
@@ -13478,7 +13478,7 @@ namespace ProductionSheetDashBoard
                                                "</td>" +
 
                                                 "<td colspan='3' style='border: 0px;'>" +
-                                                   "<div style='text-align:left'><b>Rosmerta Safety Systems Pvt. Ltd.</b> " + "</div>" +
+                                                   "<div style='text-align:left'><b>ROSMERTA SAFETY SYSTEMS LIMITED</b> " + "</div>" +
                                                "</td>" +
 
 
@@ -14087,7 +14087,7 @@ namespace ProductionSheetDashBoard
                                                "</td>" +
 
                                                 "<td colspan='3' style='border: 0px;'>" +
-                                                   "<div style='text-align:left'><b>Rosmerta Safety Systems Pvt. Ltd.</b> " + "</div>" +
+                                                   "<div style='text-align:left'><b>ROSMERTA SAFETY SYSTEMS LIMITED</b> " + "</div>" +
                                                "</td>" +
 
 
@@ -14674,7 +14674,7 @@ namespace ProductionSheetDashBoard
                                                "</td>" +
 
                                                 "<td colspan='3' style='border: 0px;'>" +
-                                                   "<div style='text-align:left'><b>Rosmerta Safety Systems Pvt. Ltd.</b> " + "</div>" +
+                                                   "<div style='text-align:left'><b>ROSMERTA SAFETY SYSTEMS LIMITED</b> " + "</div>" +
                                                "</td>" +
 
 

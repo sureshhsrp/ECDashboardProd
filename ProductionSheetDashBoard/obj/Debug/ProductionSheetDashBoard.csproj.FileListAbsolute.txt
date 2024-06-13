@@ -1386,3 +1386,4 @@ D:\Rabindra\NGithubCode\ECDashboardProd\ProductionSheetDashBoard\obj\Debug\Produ
 D:\Rabindra\NGithubCode\ECDashboardProd\ProductionSheetDashBoard\obj\Debug\ProductionSheetDashBoard.csproj.CopyComplete
 D:\Rabindra\NGithubCode\ECDashboardProd\ProductionSheetDashBoard\obj\Debug\ProductionSheetDashBoard.dll
 D:\Rabindra\NGithubCode\ECDashboardProd\ProductionSheetDashBoard\obj\Debug\ProductionSheetDashBoard.pdb
+D:\Rabindra\NGithubCode\ECDashboardProd\ProductionSheetDashBoard\obj\Debug\ProductionSheetDashBoard.csproj.AssemblyReference.cache

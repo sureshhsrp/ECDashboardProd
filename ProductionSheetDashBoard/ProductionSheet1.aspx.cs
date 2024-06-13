@@ -34,10 +34,10 @@ namespace ProductionSheetDashBoard
                 userId = Request.QueryString["UID"];
             }
 
-            ////if (Request.QueryString["UID"] == null)
-            ////{
-            ////    userId = "46266";
-            ////}
+            //if (Request.QueryString["UID"] == null)
+            //{
+            //    userId = "15736";
+            //}
 
             //if (Request.QueryString["UID"] == null)
             //{
