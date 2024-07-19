@@ -36,10 +36,10 @@ namespace ProductionSheetDashBoard
 
             //if (Request.QueryString["UID"] == null)
             //{
-            //    userId = "15736"; 
+            //    userId = "65646";
 
 
-            //}
+            //    }
 
 
             //if (Request.QueryString["UID"] == null)
@@ -3412,7 +3412,7 @@ namespace ProductionSheetDashBoard
 
             //string Navembid = Session["Navembid"].ToString();
             FillUserDetails();
-            stateECQuery = "select distinct a.HSRP_StateID, (select HSRPStateName from hsrpstate c where c.hsrp_stateid=a.hsrp_stateid) as HSRPStateName,(select HSRPStateShortName from hsrpstate d where d.hsrp_stateid=a.hsrp_stateid) as HSRPStateShortName, navembcode from hsrprecords a,rtolocation b where a.HSRP_StateID ='" + ddlStateName.SelectedValue + "'  and a.rtolocationid=b.rtolocationid and  NewPdfRunningNo is null and erpassigndate is not null  and Dealerid in(select dealerid from dealermaster where oemid='21') and OrderStatus='New Order' and    b.Navembcode not like '%CODO%' and b.NAVEMBID='" + Navembid + "'  order by  a.HSRP_StateID";
+            stateECQuery = "select distinct a.HSRP_StateID, (select HSRPStateName from hsrpstate c where c.hsrp_stateid=a.hsrp_stateid) as HSRPStateName,(select HSRPStateShortName from hsrpstate d where d.hsrp_stateid=a.hsrp_stateid) as HSRPStateShortName, navembcode from hsrprecords a with(nolock) join Dealeraffixation b with(nolock) on a.affix_id=b.subdealerid where a.HSRP_StateID ='" + ddlStateName.SelectedValue + "'  and  NewPdfRunningNo is null and erpassigndate is not null  and a.Dealerid in(select dealerid from dealermaster where oemid='21') and OrderStatus='New Order' and    b.Navembcode not like '%CODO%' and b.Navembcode='" + Navembid + "'  order by  a.HSRP_StateID";
             DataTable dtSE = Utils.Utils.GetDataTable(stateECQuery, CnnString);
 
             if (dtSE.Rows.Count > 0)
@@ -3492,7 +3492,7 @@ namespace ProductionSheetDashBoard
                     oemDealerQuery = "select distinct om.oemid as oemid, om.name as oemname, dm.dealerid, d.Subdealername as Dealername, dm.dealercode, d.Address,d.SubDealerId, dm.HSRP_StateID, " +
                      "dm.RTOLocationID from oemmaster om " +
                      "left join dealermaster dm on dm.oemid = om.oemid join DealerAffixation d on d.DealerID=dm.DealerId where dm.HSRP_StateID =" + HSRP_StateID + " and " +
-                      "dm.RTOLocationID in (select RTOLocationID from rtolocation where Navembcode='" + Navembcode + "' ) and " +
+                      "d.RTOLocationID in (select RTOLocationID from rtolocation where Navembcode='" + Navembcode + "' ) and " +
 
                      "dm.dealerid in (select distinct dealerid from hsrprecords where NewPdfRunningNo is null and erpassigndate is not null and OrderStatus='New Order' and  affix_id is not NULL ) and    OM.OEMid='21'";
 
