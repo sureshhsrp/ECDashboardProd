@@ -17,7 +17,7 @@
         <div class="container">
             <div class="row mt-3">
                 <div class="col-md-12">
-                    <h2>Production Sheet Generation</h2>
+                    <h2>MH Production Sheet Generation</h2>
                 </div>
             </div>
             <div class="row">
@@ -44,9 +44,9 @@
                 </div>--%>
                 <div class="col-md-9">
                     <%--<span style="margin-bottom:20px;font-weight:bold;display:block;"> BMHSRP Production Sheet</span>--%>
-                    <asp:Button ID="btnBMHSRPPSSheet" runat="server" CssClass="btn btn-success btn-block" Text="BMHSRP Production Sheet" OnClick="btnBMHSRPPSSheet_Click" Width="50%" />
-                    <asp:Button ID="btnDelivery" runat="server" CssClass="btn btn-success btn-block" Text="BookMYHSRP Home Delivery PS With Frames" OnClick="btnDelivery_Click" Width="50%" />
-                    <asp:Button ID="btnDeliveryWFrame" runat="server" CssClass="btn btn-success btn-block" Text="BookMYHSRP Home Delivery PS Without Frames" OnClick="btnDeliveryWFrame_Click" Width="50%" />
+                    <asp:Button ID="btnBMHSRPPSSheet" runat="server" CssClass="btn btn-success btn-block" Text="MHHSRP Production Sheet" OnClick="btnBMHSRPPSSheet_Click" Width="50%" />
+                    <asp:Button ID="btnDelivery" runat="server" CssClass="btn btn-success btn-block" Text="MHHSRP Home Delivery PS With Frames" OnClick="btnDelivery_Click" Width="50%" />
+                    <asp:Button ID="btnDeliveryWFrame" runat="server" CssClass="btn btn-success btn-block" Text="MHHSRP Home Delivery PS Without Frames" OnClick="btnDeliveryWFrame_Click" Width="50%" />
                 </div>
             </div>
             <div class="row">

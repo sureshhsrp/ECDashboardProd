@@ -29,6 +29,8 @@ namespace ProductionSheetDashBoard
         protected void Page_Load(object sender, EventArgs e)
         {
 
+            //Remove MH  and Back Button in MHHSRP Production sheet
+
             if (Request.QueryString["UID"] != null)
             {
                 userId = Request.QueryString["UID"];
@@ -4011,34 +4013,17 @@ namespace ProductionSheetDashBoard
             string stateECQuery = string.Empty;
             string ReqNum = string.Empty;
 
-
-            //string Navembid = Session["Navembid"].ToString();
-
             FillUserDetails();
-
-
 
             string stateECShortName = "select distinct HSRP_StateID, 'EC'+HSRPStateShortName as NewHSRPStateShortName, HSRPStateShortName   from  HSRPState  where  HSRP_STateId='" + ddlStateName.SelectedValue + "'";
 
             DataTable dtECName = Utils.Utils.GetDataTable(stateECShortName, CnnString);
 
             string ShortECname = dtECName.Rows[0]["NewHSRPStateShortName"].ToString();
-            // string HSRPStateShortName = dtECName.Rows[0]["HSRPStateShortName"].ToString();
+         
 
-            //stateECQuery = "select distinct a.HSRP_StateID, (select HSRPStateName from hsrpstate c where c.hsrp_stateid=a.hsrp_stateid) as HSRPStateName,(select HSRPStateShortName from hsrpstate d with(nolock) where d.hsrp_stateid='" + ddlStateName.SelectedValue + "') as HSRPStateShortName,   a.Navembid AS  navembcode from hsrprecords a with(nolock) where  left(a.Navembid,4) = '" + ShortECname + "'  and  NewPdfRunningNo is null and erpassigndate is not null  and (IsBookMyHsrpRecord='Y')  and OrderStatus='New Order' and a.NAVEMBID='" + Navembid + "' and     Navembid not like '%CODO%'  order by  a.HSRP_StateID";
-            //if ((ddlStateName.SelectedValue == "20") || (ddlStateName.SelectedValue == "10") ||(ddlStateName.SelectedValue == "17")||(ddlStateName.SelectedValue == "14"))
-            //{
+                stateECQuery = "select distinct a.HSRP_StateID, (select HSRPStateName from hsrpstate c where c.hsrp_stateid=a.hsrp_stateid) as HSRPStateName,(select HSRPStateShortName from hsrpstate d with(nolock) where d.hsrp_stateid='" + ddlStateName.SelectedValue + "') as HSRPStateShortName,   a.Navembid AS  navembcode from hsrprecords a with(nolock) where  NewPdfRunningNo is null and erpassigndate is not null  and (IsBookMyHsrpRecord='Y')  and OrderStatus='New Order' and a.NAVEMBID='" + Navembid + "'   order by  a.HSRP_StateID";
 
-
-                stateECQuery = "select distinct a.HSRP_StateID, (select HSRPStateName from hsrpstate c where c.hsrp_stateid=a.hsrp_stateid) as HSRPStateName,(select HSRPStateShortName from hsrpstate d with(nolock) where d.hsrp_stateid='" + ddlStateName.SelectedValue + "') as HSRPStateShortName,   a.Navembid AS  navembcode from hsrprecords a with(nolock) where  NewPdfRunningNo is null and erpassigndate is not null  and (IsBookMyHsrpRecord='Y')  and OrderStatus='New Order' and a.NAVEMBID='" + Navembid + "' and     Navembid not like '%CODO%'  order by  a.HSRP_StateID";
-
-                //stateECQuery = "select distinct a.HSRP_StateID, (select HSRPStateName from hsrpstate c where c.hsrp_stateid=a.hsrp_stateid) as HSRPStateName,(select HSRPStateShortName from hsrpstate d where d.hsrp_stateid=a.hsrp_stateid) as HSRPStateShortName, navembcode from hsrprecords a with(nolock),rtolocation b where a.HSRP_StateID ='" + ddlStateName.SelectedValue + "' and   b.Navembcode not like '%CODO%'    and a.rtolocationid=b.rtolocationid and NewPdfRunningNo is null and erpassigndate is not null and OrderStatus='New Order'  order by  a.HSRP_StateID";
-            //}
-            //else
-            //{
-            //    stateECQuery = "select distinct a.HSRP_StateID, (select HSRPStateName from hsrpstate c where c.hsrp_stateid=a.hsrp_stateid) as HSRPStateName,(select HSRPStateShortName from hsrpstate d with(nolock) where d.hsrp_stateid='" + ddlStateName.SelectedValue + "') as HSRPStateShortName,   a.Navembid AS  navembcode from hsrprecords a with(nolock) where  left(a.Navembid,4) = '" + ShortECname + "'  and  NewPdfRunningNo is null and erpassigndate is not null  and (IsBookMyHsrpRecord='Y')  and OrderStatus='New Order' and a.NAVEMBID='" + Navembid + "' and     Navembid not like '%CODO%'  order by  a.HSRP_StateID";
-
-            //}
             DataTable dtSE = Utils.Utils.GetDataTable(stateECQuery, CnnString);
 
 
@@ -4095,8 +4080,7 @@ namespace ProductionSheetDashBoard
                                     "content:element(footer);" +
                                 "}" +
                             "}" +
-                            //"#main-table td:nth-child(1){ width:5%; } #main-table td:nth-child(8),#main-table td:nth-child(9),#main-table td:nth-child(7){ width:6%; } #main-table td:nth-child(10){ width:8%; }" +
-                            //  "#main-table td:nth-child(3),#main-table td:nth-child(5){ width:12%;white-space: nowrap; }" +
+                           
                             "#footer {" +
                                 "position: running(footer);" +
                             "}" +
@@ -4124,14 +4108,14 @@ namespace ProductionSheetDashBoard
                     string fileAppoinmentDate = string.Empty;
                     string maxAppointmentdate = "select distinct  Convert(varchar(10),max(SlotBookingDate),105) as MaxAppointmentdate  " +
                     " from	HSRPrecords H with(nolock) join DealerAffixationCenter d  with(nolock) on H.HSRP_StateID=d.StateID and H.Affix_Id=d.DealerAffixationID  join BookMYHSRPappointment B on H.orderno=B.orderno  " +
-                   " where   Navembid='" + Navembcode + "'  and Navembid not like '%CODO%'     and  NewPdfRunningNo is null and erpassigndate is not null and  h.OrderStatus='New Order' and  IsBookMyHsrpRecord='Y' and  h.affix_id is not NULL  and  ((d.TypeofDelivery is null) or (d.TypeofDelivery='Dealer') or(d.TypeofDelivery='RWA')) ";
+                   " where   Navembid='" + Navembcode + "'      and  NewPdfRunningNo is null and erpassigndate is not null and  h.OrderStatus='New Order' and  IsBookMyHsrpRecord='Y' and  h.affix_id is not NULL  and  ((d.TypeofDelivery is null) or (d.TypeofDelivery='Dealer') or(d.TypeofDelivery='RWA')) ";
                     DataTable dtmax = Utils.Utils.GetDataTable(maxAppointmentdate, CnnString);
 
                     if (dtmax.Rows.Count > 0)
                     {
                         fileAppoinmentDate = dtmax.Rows[0]["MaxAppointmentdate"].ToString();
                     }
-                    fileName = "BookMyHSRP" + "-" + fileAppoinmentDate + "-" + filePrefix + "-" + Navembcode + ".pdf";
+                    fileName = "MHHSRP" + "-" + fileAppoinmentDate + "-" + filePrefix + "-" + Navembcode + ".pdf";
                     filePath = dir + fileName;
 
                     string oemDealerQuery = string.Empty;
@@ -4139,7 +4123,7 @@ namespace ProductionSheetDashBoard
 
                     oemDealerQuery = "select distinct d.oemid as oemid, (select name  from oemmaster where oemid=d.oemid) as oemname,d.dealerid as dealerid,d.Dealername as Dealername,  d.DealerAffixationCenterAddress as Address, " +
                      "d.DealerAffixationID as SubDealerId, H.dealerid AS ParentDealerId,SlotBookingDate from	HSRPrecords H with(nolock) join DealerAffixationCenter d  with(nolock) on H.HSRP_StateID=d.StateID and H.Affix_Id=d.DealerAffixationID  join BookMYHSRPappointment B on H.orderno=B.orderno  " +
-                    " where   Navembid='" + Navembcode + "'  and Navembid not like '%CODO%'     and  NewPdfRunningNo is null and erpassigndate is not null and  h.OrderStatus='New Order' and  IsBookMyHsrpRecord='Y' and  h.affix_id is not NULL    and  ((d.TypeofDelivery is null) or (d.TypeofDelivery='Dealer') or(d.TypeofDelivery='RWA')) ";
+                    " where   Navembid='" + Navembcode + "'     and  NewPdfRunningNo is null and erpassigndate is not null and  h.OrderStatus='New Order' and  IsBookMyHsrpRecord='Y' and  h.affix_id is not NULL    and  ((d.TypeofDelivery is null) or (d.TypeofDelivery='Dealer') or(d.TypeofDelivery='RWA')) ";
 
 
 
@@ -4184,11 +4168,11 @@ namespace ProductionSheetDashBoard
                             cmd.Parameters.AddWithValue("@Affix_Id", strsubaffixid);
                             cmd.Parameters.AddWithValue("@AppointmentDate", AppointmentDate);
                             SqlDataAdapter da = new SqlDataAdapter(cmd);
-                            // dtProduction = new DataTable();
+                           
                             da.Fill(dtProduction);
                             con.Close();
 
-                            // string fileAppoinmentDate = AppointmentDate.ToString("dd/MM/yyyy");
+                         
 
 
 
@@ -4223,10 +4207,7 @@ namespace ProductionSheetDashBoard
                                 strProductionSheetNo = strPRFIXCom + strRunningNo;
 
                                 string RTOLocationName = dtProduction.Rows[0]["RTOLocationName"].ToString();
-                                //var maxDate = dtProduction.Select("AppointmentDate= MAX(AppointmentDate)");
-
-
-
+                               
                                 #region
 
 
@@ -4256,7 +4237,7 @@ namespace ProductionSheetDashBoard
                                              "</td>" +
 
                                               "<td colspan='3' style='border: 0px; '>" +
-                                                 "<div style='text-align:left;font-size:22px;''><b>Book My HSRP (Dealer Delivery) </b> " + "</div>" +
+                                                 "<div style='text-align:left;font-size:22px;''><b>MHHSRP (Dealer Delivery) </b> " + "</div>" +
                                              "</td>" +
 
 
@@ -4351,7 +4332,7 @@ namespace ProductionSheetDashBoard
                                            "</td>" +
 
                                             "<td colspan='3' style='border: 0px; '>" +
-                                              "<div style='text-align:left;font-size:22px;''><b>Book My HSRP (Dealer Delivery) </b> " + "</div>" + "</td>" +
+                                              "<div style='text-align:left;font-size:22px;''><b> MHHSRP (Dealer Delivery) </b> " + "</div>" + "</td>" +
 
 
                                             "<td colspan='6' style='border: 0px;'>" +
@@ -4683,16 +4664,7 @@ namespace ProductionSheetDashBoard
 
                     html.Append("</div>");
 
-                    // string strPrint = "<tr><td><p style=\"page-break-after:always\"/></td></tr>";
 
-                    //string strPrint = "<tr><td><p style=\"page-break-after:always\"/></td></tr>";
-
-                    //"<tr style='border: 0px;'>" +
-                    //                            "<td colspan='14' style='border: 0px;'>" +
-                    //                               "<div style='text-align:left'>Location Name : " + RTOLocationName + "</div>" +
-                    //                           "</td>" +
-                    //"</tr>" +
-                    //html.Append("<tr>" + "<td  ><p style=\"page-break-after:always\"/></td></tr>");
 
                     html.Append("<tr style='visibility: hidden;'>" + "<td  ><p style=\"page-break-after:always\"/></td></tr>");
 
@@ -4809,37 +4781,6 @@ namespace ProductionSheetDashBoard
 
                         }
                     }
-
-                    //html.Append("<div style='width:100%;height:100%;'>" +
-                    //             "<table style='width:100%;border=0;' >" +
-
-                    //            "<tr>" +
-                    //                     "<td colspan='12'>" +
-
-                    //    "</td>" +
-                    //"</tr>" 
-
-                    // "<tr>" +
-                    //    "<td colspan='12'>" +
-                    //        "<div style='text-align:left;padding:8px;'>" +
-                    //            "<b style='font-size:20px;margin-top:2px;margin-bottom:2px;'>" + "The Owner has to deposit the damaged plate at the fitment center at the time of fitment of HSRP." + "</b>" +
-
-                    //        "</div>" +
-                    //    "</td>" +
-                    //"</tr>" +
-                    // "<tr>" +
-                    //    "<td colspan='12'>" +
-                    //        "<div style='text-align:left;padding:8px;'>" +
-                    //            "<b style='font-size:20px;margin-top:2px;margin-bottom:2px;'>" + "The fitment center has to retail the old TV/NTV plate in case of fitment due to conversion,re-assignment." + "</b>" +
-
-                    //        "</div>" +
-                    //    "</td>" +
-                    //"</tr>" 
-
-
-
-
-
 
                     html.Append("</table>");
 
@@ -6249,21 +6190,12 @@ namespace ProductionSheetDashBoard
             DataTable dtECName = Utils.Utils.GetDataTable(stateECShortName, CnnString);
 
             string ShortECname = dtECName.Rows[0]["NewHSRPStateShortName"].ToString();
-            // string HSRPStateShortName = dtECName.Rows[0]["HSRPStateShortName"].ToString();
-
-            //if ((ddlStateName.SelectedValue == "20") || (ddlStateName.SelectedValue == "10") || (ddlStateName.SelectedValue == "17") || (ddlStateName.SelectedValue == "14"))
-            //{
-
-
-            //    stateECQuery = "select distinct a.HSRP_StateID, (select HSRPStateName from hsrpstate c where c.hsrp_stateid=a.hsrp_stateid) as HSRPStateName,(select HSRPStateShortName from hsrpstate d with(nolock) where d.hsrp_stateid='" + ddlStateName.SelectedValue + "') as HSRPStateShortName,   a.Navembid AS  navembcode from hsrprecords a with(nolock) where  NewPdfRunningNo is null and erpassigndate is not null  and (IsBookMyHsrpRecord='Y')  and OrderStatus='New Order' and a.NAVEMBID='" + Navembid + "' and     Navembid not like '%CODO%'  order by  a.HSRP_StateID";
-
-            //    //stateECQuery = "select distinct a.HSRP_StateID, (select HSRPStateName from hsrpstate c where c.hsrp_stateid=a.hsrp_stateid) as HSRPStateName,(select HSRPStateShortName from hsrpstate d where d.hsrp_stateid=a.hsrp_stateid) as HSRPStateShortName, navembcode from hsrprecords a with(nolock),rtolocation b where a.HSRP_StateID ='" + ddlStateName.SelectedValue + "' and   b.Navembcode not like '%CODO%'    and a.rtolocationid=b.rtolocationid and NewPdfRunningNo is null and erpassigndate is not null and OrderStatus='New Order'  order by  a.HSRP_StateID";
-            //}
+         
 
             //else
             //{
                 //stateECQuery = "select distinct a.HSRP_StateID, (select HSRPStateName from hsrpstate c where c.hsrp_stateid=a.hsrp_stateid) as HSRPStateName,(select HSRPStateShortName from hsrpstate d with(nolock) where d.hsrp_stateid='" + ddlStateName.SelectedValue + "') as HSRPStateShortName,   a.Navembid AS  navembcode from hsrprecords a with(nolock) where  left(a.Navembid,4) = '" + ShortECname + "'  and  NewPdfRunningNo is null and erpassigndate is not null  and (IsBookMyHsrpRecord='Y')  and OrderStatus='New Order'   and a.NAVEMBID='" + Navembid + "' and   Navembid not like '%CODO%'   order by  a.HSRP_StateID";
-            stateECQuery = "select distinct a.HSRP_StateID, (select HSRPStateName from hsrpstate c where c.hsrp_stateid=a.hsrp_stateid) as HSRPStateName,(select HSRPStateShortName from hsrpstate d with(nolock) where d.hsrp_stateid='" + ddlStateName.SelectedValue + "') as HSRPStateShortName,   a.Navembid AS  navembcode from hsrprecords a with(nolock) where   NewPdfRunningNo is null and erpassigndate is not null  and (IsBookMyHsrpRecord='Y')  and OrderStatus='New Order'   and a.NAVEMBID='" + Navembid + "' and   Navembid not like '%CODO%'   order by  a.HSRP_StateID";
+            stateECQuery = "select distinct a.HSRP_StateID, (select HSRPStateName from hsrpstate c where c.hsrp_stateid=a.hsrp_stateid) as HSRPStateName,(select HSRPStateShortName from hsrpstate d with(nolock) where d.hsrp_stateid='" + ddlStateName.SelectedValue + "') as HSRPStateShortName,   a.Navembid AS  navembcode from hsrprecords a with(nolock) where   NewPdfRunningNo is null and erpassigndate is not null  and (IsBookMyHsrpRecord='Y')  and OrderStatus='New Order'   and a.NAVEMBID='" + Navembid + "'    order by  a.HSRP_StateID";
 
             DataTable dtSE = Utils.Utils.GetDataTable(stateECQuery, CnnString);
             //}
@@ -6278,9 +6210,7 @@ namespace ProductionSheetDashBoard
                     string HSRP_StateID = dr["HSRP_StateID"].ToString().Trim();
                     string HSRPStateName = dr["HSRPStateName"].ToString().Trim();
                     string HSRPStateShortName = dr["HSRPStateShortName"].ToString().Trim();
-                    //string RTOLocationID = dr["RTOLocationID"].ToString().Trim();
-                    //string RTOLocationName = dr["RTOLocationName"].ToString().Trim();
-                    //string NAVEMBID = dr["NAVEMBID"].ToString().Trim();
+                    
                     string Navembcode = dr["Navembcode"].ToString().Trim();
                     string dir = dirPath + DateTime.Now.ToString("yyyy-MM-dd") + "\\" + HSRPStateShortName + "\\";
 
@@ -6325,8 +6255,7 @@ namespace ProductionSheetDashBoard
                                        "content:element(footer);" +
                                    "}" +
                                "}" +
-                               //"#main-table td:nth-child(1){ width:5%; } #main-table td:nth-child(8),#main-table td:nth-child(9),#main-table td:nth-child(7){ width:6%; } #main-table td:nth-child(10){ width:8%; }" +
-                               //  "#main-table td:nth-child(3),#main-table td:nth-child(5){ width:12%;white-space: nowrap; }" +
+                           
                                "#footer {" +
                                    "position: running(footer);" +
                                "}" +
@@ -6358,7 +6287,7 @@ namespace ProductionSheetDashBoard
                     string fileAppoinmentDate = string.Empty;
                     string maxAppointmentdate = "select distinct  Convert(varchar(10),max(SlotBookingDate),105) as MaxAppointmentdate  " +
                     " from	HSRPrecords H with(nolock) join DealerAffixationCenter d  with(nolock) on H.HSRP_StateID=d.StateID and H.Affix_Id=d.DealerAffixationID  join BookMyHSRPAppointment B on H.orderno=B.orderno  " +
-                   " where   Navembid='" + Navembcode + "'  and Navembid not like '%CODO%'     and  NewPdfRunningNo is null and erpassigndate is not null and  h.OrderStatus='New Order' and  IsBookMyHsrpRecord='Y' and  h.affix_id is not NULL  and   d.TypeofDelivery in('Home','RWA')  and B.IsFrame='Y'";
+                   " where   Navembid='" + Navembcode + "'     and  NewPdfRunningNo is null and erpassigndate is not null and  h.OrderStatus='New Order' and  IsBookMyHsrpRecord='Y' and  h.affix_id is not NULL  and   d.TypeofDelivery in('Home','RWA')  and B.IsFrame='Y'";
                     DataTable dtmax = Utils.Utils.GetDataTable(maxAppointmentdate, CnnString);
 
                     if (dtmax.Rows.Count > 0)
@@ -6372,7 +6301,7 @@ namespace ProductionSheetDashBoard
 
                     oemDealerQuery = "select distinct d.oemid as oemid, (select name  from oemmaster where oemid=d.oemid) as oemname,d.DispatchHub,d.dealerid as dealerid,d.DealerAffixationcenterName as Dealername,  d.DealerAffixationCenterAddress as Address, " +
                      "d.DealerAffixationID as SubDealerId, H.dealerid AS ParentDealerId,SlotBookingDate from	HSRPrecords H with(nolock) join DealerAffixationCenter d  with(nolock) on H.HSRP_StateID=d.StateID and H.Affix_Id=d.DealerAffixationID  join BookMyHSRPAppointment B on H.orderno=B.orderno  " +
-                    " where   Navembid='" + Navembcode + "'  and Navembid not like '%CODO%'     and  NewPdfRunningNo is null and erpassigndate is not null and  h.OrderStatus='New Order' and  IsBookMyHsrpRecord='Y' and  B.IsFrame='Y' and  h.affix_id is not NULL   and  d.TypeofDelivery in('Home','RWA')";
+                    " where   Navembid='" + Navembcode + "'  and   NewPdfRunningNo is null and erpassigndate is not null and  h.OrderStatus='New Order' and  IsBookMyHsrpRecord='Y' and  B.IsFrame='Y' and  h.affix_id is not NULL   and  d.TypeofDelivery in('Home','RWA')";
 
                     #region
                     DataTable dtOD = Utils.Utils.GetDataTable(oemDealerQuery, CnnString);
@@ -6487,7 +6416,7 @@ namespace ProductionSheetDashBoard
 
                                             "<td colspan='3' style='border: 0px; '>" +
                                                //"<div style='text-align:left'><b>Book My HSRP (Home Delivery) </b> " + "</div>" +
-                                               "<div style='text-align:left;font-size:22px;''><b>Book My HSRP (Home Delivery) </b> " + "</div>" +
+                                               "<div style='text-align:left;font-size:22px;''><b> MHHSRP (Home Delivery) </b> " + "</div>" +
                                            "</td>" +
 
 
@@ -6584,7 +6513,7 @@ namespace ProductionSheetDashBoard
                                          "</td>" +
 
                                           "<td colspan='3' style='border: 0px; '>" +
-                                               "<div style='text-align:left;font-size:22px;''><b>Book My HSRP (Home Delivery) </b> " + "</div>" +
+                                               "<div style='text-align:left;font-size:22px;''><b> MHHSRP (Home Delivery) </b> " + "</div>" +
                                          "</td>" +
 
 
@@ -9811,7 +9740,7 @@ namespace ProductionSheetDashBoard
             // string HSRPStateShortName = dtECName.Rows[0]["HSRPStateShortName"].ToString();
 
             //stateECQuery = "select distinct a.HSRP_StateID, (select HSRPStateName from hsrpstate c where c.hsrp_stateid=a.hsrp_stateid) as HSRPStateName,(select HSRPStateShortName from hsrpstate d with(nolock) where d.hsrp_stateid='" + ddlStateName.SelectedValue + "') as HSRPStateShortName,   a.Navembid AS  navembcode from hsrprecords a with(nolock) where  left(a.Navembid,4) = '" + ShortECname + "'  and  a.NAVEMBID='" + Navembid + "' and  NewPdfRunningNo is null and erpassigndate is not null  and (IsBookMyHsrpRecord='Y')  and OrderStatus='New Order' and   a.NAVEMBID='" + Navembid + "' and   Navembid not like '%CODO%'  order by  a.HSRP_StateID";
-            stateECQuery = "select distinct a.HSRP_StateID, (select HSRPStateName from hsrpstate c where c.hsrp_stateid=a.hsrp_stateid) as HSRPStateName,(select HSRPStateShortName from hsrpstate d with(nolock) where d.hsrp_stateid='" + ddlStateName.SelectedValue + "') as HSRPStateShortName,   a.Navembid AS  navembcode from hsrprecords a with(nolock) where    a.NAVEMBID='" + Navembid + "' and  NewPdfRunningNo is null and erpassigndate is not null  and (IsBookMyHsrpRecord='Y')  and OrderStatus='New Order' and   a.NAVEMBID='" + Navembid + "' and   Navembid not like '%CODO%'  order by  a.HSRP_StateID";
+            stateECQuery = "select distinct a.HSRP_StateID, (select HSRPStateName from hsrpstate c where c.hsrp_stateid=a.hsrp_stateid) as HSRPStateName,(select HSRPStateShortName from hsrpstate d with(nolock) where d.hsrp_stateid='" + ddlStateName.SelectedValue + "') as HSRPStateShortName,   a.Navembid AS  navembcode from hsrprecords a with(nolock) where    a.NAVEMBID='" + Navembid + "' and  NewPdfRunningNo is null and erpassigndate is not null  and (IsBookMyHsrpRecord='Y')  and OrderStatus='New Order' and   a.NAVEMBID='" + Navembid + "'   order by  a.HSRP_StateID";
 
             DataTable dtSE = Utils.Utils.GetDataTable(stateECQuery, CnnString);
             //string allStrProductionSheetNo = string.Empty;
@@ -9825,9 +9754,7 @@ namespace ProductionSheetDashBoard
                     string HSRP_StateID = dr["HSRP_StateID"].ToString().Trim();
                     string HSRPStateName = dr["HSRPStateName"].ToString().Trim();
                     string HSRPStateShortName = dr["HSRPStateShortName"].ToString().Trim();
-                    //string RTOLocationID = dr["RTOLocationID"].ToString().Trim();
-                    //string RTOLocationName = dr["RTOLocationName"].ToString().Trim();
-                    //string NAVEMBID = dr["NAVEMBID"].ToString().Trim();
+                   
                     string Navembcode = dr["Navembcode"].ToString().Trim();
                     string dir = dirPath + DateTime.Now.ToString("yyyy-MM-dd") + "\\" + HSRPStateShortName + "\\";
 
@@ -9904,7 +9831,7 @@ namespace ProductionSheetDashBoard
                     string fileAppoinmentDate = string.Empty;
                     string maxAppointmentdate = "select distinct  Convert(varchar(10),max(SlotBookingDate),105) as MaxAppointmentdate  " +
                     " from	HSRPrecords H with(nolock) join DealerAffixationCenter d  with(nolock) on H.HSRP_StateID=d.StateID and H.Affix_Id=d.DealerAffixationID  join BookMyHSRPAppointment B on H.orderno=B.orderno  " +
-                   " where   Navembid='" + Navembcode + "'  and Navembid not like '%CODO%'     and  NewPdfRunningNo is null and erpassigndate is not null and  h.OrderStatus='New Order' and  IsBookMyHsrpRecord='Y' and  h.affix_id is not NULL  and   d.TypeofDelivery in('Home','RWA') and  ((b.IsFrame is null) or (b.IsFrame='N')) ";
+                   " where   Navembid='" + Navembcode + "'      and  NewPdfRunningNo is null and erpassigndate is not null and  h.OrderStatus='New Order' and  IsBookMyHsrpRecord='Y' and  h.affix_id is not NULL  and   d.TypeofDelivery in('Home','RWA') and  ((b.IsFrame is null) or (b.IsFrame='N')) ";
                     DataTable dtmax = Utils.Utils.GetDataTable(maxAppointmentdate, CnnString);
 
                     if (dtmax.Rows.Count > 0)
@@ -9918,7 +9845,7 @@ namespace ProductionSheetDashBoard
 
                     oemDealerQuery = "select distinct d.oemid as oemid, (select name  from oemmaster where oemid=d.oemid) as oemname,d.dealerid as dealerid,d.DispatchHub,d.DealerAffixationcenterName as Dealername,  d.DealerAffixationCenterAddress as Address, " +
                      "d.DealerAffixationID as SubDealerId, H.dealerid AS ParentDealerId,SlotBookingDate from	HSRPrecords H with(nolock) join DealerAffixationCenter d  with(nolock) on H.HSRP_StateID=d.StateID and H.Affix_Id=d.DealerAffixationID  join BookMyHSRPAppointment B on H.orderno=B.orderno  " +
-                    " where   Navembid='" + Navembcode + "'  and Navembid not like '%CODO%'     and  NewPdfRunningNo is null and erpassigndate is not null and  h.OrderStatus='New Order' and  IsBookMyHsrpRecord='Y' and  h.affix_id is not NULL   and  d.TypeofDelivery in('Home','RWA') and  ((b.IsFrame is null) or (b.IsFrame='N')) ";
+                    " where   Navembid='" + Navembcode + "'     and  NewPdfRunningNo is null and erpassigndate is not null and  h.OrderStatus='New Order' and  IsBookMyHsrpRecord='Y' and  h.affix_id is not NULL   and  d.TypeofDelivery in('Home','RWA') and  ((b.IsFrame is null) or (b.IsFrame='N')) ";
 
                     #region
                     DataTable dtOD = Utils.Utils.GetDataTable(oemDealerQuery, CnnString);
@@ -10032,7 +9959,7 @@ namespace ProductionSheetDashBoard
 
                                              "<td colspan='3' style='border: 0px; '>" +
                                                                                                //"<div style='text-align:left'><b>Book My HSRP (Home Delivery) </b> " + "</div>" +
-                                   "<div style='text-align:left;font-size:22px;''><b>Book My HSRP (Home Delivery) </b> " + "</div>" +
+                                   "<div style='text-align:left;font-size:22px;''><b> MHHSRP (Home Delivery) </b> " + "</div>" +
                              "</td>" +
 
 
@@ -10127,7 +10054,7 @@ namespace ProductionSheetDashBoard
 
                                        "<td colspan='3' style='border: 0px; '>" +
                                                                                          //"<div style='text-align:left'><b>Book My HSRP (Home Delivery) </b> " + "</div>" +
-                       "<div style='text-align:left;font-size:22px;''><b>Book My HSRP (Home Delivery) </b> " + "</div>" +
+                       "<div style='text-align:left;font-size:22px;''><b> MHHSRP (Home Delivery) </b> " + "</div>" +
                      "</td>" +
 
 
@@ -10654,10 +10581,7 @@ namespace ProductionSheetDashBoard
             if (filePrefix.Length > 0)
             {
                 SheetGenerationBookMyHSRP();
-               // btnDelivery_Click(sender, e);
-                //SheetGenerationBookMyHSRPHD();
-               // btnDeliveryWFrame_Click(sender, e);
-                //SheetGenerationBookMyHSRPHDWithOutFrames();
+         
             }
         }
 
