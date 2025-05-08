@@ -31,17 +31,17 @@ namespace ProductionSheetDashBoard
 
             //Remove MH  and Back Button in MHHSRP Production sheet
 
-            if (Request.QueryString["UID"] != null)
-            {
-                userId = Request.QueryString["UID"];
-            }
-
-            //if (Request.QueryString["UID"] == null)
+            //if (Request.QueryString["UID"] != null)
             //{
-            //    userId = "32576";
-
-
+            //    userId = Request.QueryString["UID"];
             //}
+
+            if (Request.QueryString["UID"] == null)
+            {
+                userId = "75080";
+
+
+            }
 
 
             //if (Request.QueryString["UID"] == null)
@@ -75,12 +75,8 @@ namespace ProductionSheetDashBoard
          private void FillUserDetails()
 
         {
-           //string sqlQuery = "select top 1 U.HSRP_stateid,Navembid ,EmbCenterName from users u  join RTOlocation r on U.RTOlocationid=r.RTOlocationid where u.UserID  = '26127'";
+         
             string sqlQuery = "select top 1 U.HSRP_stateid,Navembid ,EmbCenterName,U.UserType from users u  join RTOlocation r on U.RTOlocationid=r.RTOlocationid where u.UserID  = '" + userId+"'";
-            //string sqlQuery = "select top 1 U.HSRP_stateid,Navembid ,EmbCenterName from users u  join RTOlocation r on U.RTOlocationid=r.RTOlocationid where u.UserID  = '53164' ";
-
-
-
             DataTable dt = Utils.Utils.GetDataTable(sqlQuery, CnnString);
             if (dt.Rows.Count > 0)
             {
@@ -96,34 +92,7 @@ namespace ProductionSheetDashBoard
         private void FillDDLState()
         {
 
-            //if (userType == "0")
-            //{
-
-
-
-            //    string sqlQuery = "select HSRP_StateID, HSRPStateName from hsrpstate where HSRP_StateID ='" + Hsrp_stateid + "' and ActiveStatus='Y'  order by HSRPStateName";
-            //    DataTable dtState = Utils.Utils.GetDataTable(sqlQuery, CnnString);
-            //    ddlStateName.DataSource = dtState;
-            //    ddlStateName.DataBind();
-            //    ddlStateName.Items.Insert(0, new ListItem("--Select State--", "0"));
-
-            //}
-
-            //else if (userType == "4")
-            //{
-
-            //    // string sqlQuery = "select HSRP_StateID, (select  HSRPStateName  from hsrpstate h where h.HSRP_StateID =hsrp_stateid)  and ActiveStatus='Y'  order by HSRPStateName";
-
-
-            //    string sqlQuery = "select distinct H.HSRP_StateID,  H.HSRPStateName from  UserStateMapping U  join HSRPstate H on U.hsrp_stateid = H.hsrp_stateid  where mapstatus = 'Y'  and USerid = '" + userId + "' order by HSRPStateName";
-            //     DataTable dtState = Utils.Utils.GetDataTable(sqlQuery, CnnString);
-            //    ddlStateName.DataSource = dtState;
-            //    ddlStateName.DataBind();
-            //    ddlStateName.Items.Insert(0, new ListItem("--Select State--", "0"));
-            //}
-
-            //else
-            //{
+           
 
                 string sqlQuery = "select HSRP_StateID, HSRPStateName from hsrpstate where HSRP_StateID ='" + Hsrp_stateid + "' and ActiveStatus='Y'  order by HSRPStateName";
                 DataTable dtState = Utils.Utils.GetDataTable(sqlQuery, CnnString);
@@ -132,36 +101,13 @@ namespace ProductionSheetDashBoard
                 ddlStateName.Items.Insert(0, new ListItem("--Select State--", "0"));
 
 
-            //}
+         
 
 
 
         }
 
-        //private void FilldropDownListOrganization()
-        //{
-        //    if (UserType == "0")
-        //    {
-        //        SQLString = "select HSRPStateName,HSRP_StateID from HSRPState  where ActiveStatus='Y' Order by HSRPStateName";
-        //        Utils.PopulateDropDownList(DropDownListStateName, SQLString.ToString(), CnnString, "--Select State--");
-        //        // DropDownListStateName.SelectedIndex = DropDownListStateName.Items.Count - 1;
-        //    }
-
-        //    else if (UserType == "4")
-        //    {
-        //        SQLString = "select HSRPStateName,a.HSRP_StateID from HSRPState a , UserStateMapping b  where a.hsrp_stateid=b.hsrp_stateid and b.userid='" + strUserID.ToString() + "' and ActiveStatus='Y' Order by HSRPStateName";
-        //        Utils.PopulateDropDownList(DropDownListStateName, SQLString.ToString(), CnnString, "--Select State--");
-        //        // DropDownListStateName.SelectedIndex = DropDownListStateName.Items.Count - 1;
-
-        //    }
-        //    else
-        //    {
-        //        SQLString = "select HSRPStateName,HSRP_StateID from HSRPState  where HSRP_StateID=" + HSRPStateID + " and ActiveStatus='Y' Order by HSRPStateName";
-        //        DataTable dts = Utils.GetDataTable(SQLString, CnnString);
-        //        DropDownListStateName.DataSource = dts;
-        //        DropDownListStateName.DataBind();
-        //    }
-        //}
+     
 
         protected void Search_Click(object sender, EventArgs e)
         {
@@ -192,14 +138,13 @@ namespace ProductionSheetDashBoard
             if (filePrefix.Length > 0)
             {
 
-                SheetGeneration();
-
-                btnRenault_Click(sender, e);
-                btnSuzu_Click(sender, e);
+                //SheetGeneration();                
+                //btnRenault_Click(sender, e);
+                //btnSuzu_Click(sender, e);
                 VICTORY_ELECTRIC(sender, e);
-                btnTVS_Click(sender, e);
-                btnJCB_Click(sender, e);
-                btnExternal_Click(sender, e);
+                //btnTVS_Click(sender, e);
+                //btnJCB_Click(sender, e);
+                //btnExternal_Click(sender, e);
 
 
 
@@ -267,7 +212,7 @@ namespace ProductionSheetDashBoard
 
             // stateECQuery = "select distinct a.HSRP_StateID, (select HSRPStateName from hsrpstate c where c.hsrp_stateid=a.hsrp_stateid) as HSRPStateName,(select HSRPStateShortName from hsrpstate d where d.hsrp_stateid=a.hsrp_stateid) as HSRPStateShortName, navembcode from hsrprecords a,rtolocation b where a.HSRP_StateID ='" + ddlStateName.SelectedValue + "' and   b.Navembcode not like '%CODO%'    and a.rtolocationid=b.rtolocationid and isnull(NewPdfRunningNo,'') = '' and isnull(erpassigndate,'') != ''  order by  a.HSRP_StateID";
 
-            stateECQuery = "select distinct a.HSRP_StateID, (select HSRPStateName from hsrpstate c where c.hsrp_stateid=a.hsrp_stateid) as HSRPStateName,(select HSRPStateShortName from hsrpstate d where d.hsrp_stateid=a.hsrp_stateid) as HSRPStateShortName, d.navembcode from hsrprecords a  with(nolock) join DealerAffixation d with(nolock)  on  a.Affix_Id=d.SubDealerId and NewPdfRunningNo is null and  a.HSRP_StateID ='" + ddlStateName.SelectedValue + "' and d.Navembcode not like '%CODO%'  and erpassigndate is not null   AND d.navembcode='" + Navembid + "' order by  a.HSRP_StateID";
+            stateECQuery = "select distinct a.HSRP_StateID, (select HSRPStateName from hsrpstate c where c.hsrp_stateid=a.hsrp_stateid) as HSRPStateName,(select HSRPStateShortName from hsrpstate d where d.hsrp_stateid=a.hsrp_stateid) as HSRPStateShortName, d.navembcode from hsrprecords a  with(nolock) join DealerAffixation d with(nolock)  on  a.Affix_Id=d.SubDealerId and NewPdfRunningNo is null  and d.Navembcode not like '%CODO%'  and erpassigndate is not null   AND d.navembcode='" + Navembid + "'  and a.hsrp_stateid=37 order by  a.HSRP_StateID";
 
 
             DataTable dtSE = Utils.Utils.GetDataTable(stateECQuery, CnnString);
@@ -351,7 +296,7 @@ namespace ProductionSheetDashBoard
                         "dm.RTOLocationID from oemmaster om with(nolock) " +
                         "left join dealermaster dm with(nolock) on dm.oemid = om.oemid join DealerAffixation d with(nolock) on d.DealerID=dm.DealerId where D.STATE_ID =" + HSRP_StateID + " and   d.Navembcode='" + Navembcode + "' and " +
 
-                        "dm.dealerid in (select distinct dealerid from hsrprecords where NewPdfRunningNo is null and erpassigndate is not null and   affix_id is not null ) and   (( OM.OEMid=1367) or (d.dealerid=45012) or (d.dealerid=92724) or (d.dealerid=94991))";
+                        "dm.dealerid in (select distinct dealerid from hsrprecords where NewPdfRunningNo is null and erpassigndate is not null and   affix_id is not null ) and   (( OM.OEMid=1367) or (d.dealerid=99468) OR (d.dealerid=45012) or (d.dealerid=92724) or (d.dealerid=94991))";
 
 
                     #region
@@ -404,7 +349,7 @@ namespace ProductionSheetDashBoard
                                 findRecord = true;
                                 string strRunningNo = string.Empty;
                                 //string strSel = "select isnull(max(right(newProductionSheetRunningNo,7)),0000000) as maxSheetNo from EmbossingCentersNew where State_Id='" + HSRP_StateID + "' and Emb_Center_Id='" + NAVEMBID + "'";
-                                string strSel = "select isnull(max(right(newProductionSheetRunningNo,7)),0000000) from EmbossingCentersNew with(nolock) where State_Id='" + HSRP_StateID + "' and Emb_Center_Id='" + Navembcode + "'";
+                                string strSel = "select isnull(max(right(newProductionSheetRunningNo,7)),0000000) from EmbossingCentersNew with(nolock) where Emb_Center_Id='" + Navembcode + "'";
                                 string strCom = Utils.Utils.getScalarValue(strSel, CnnString);
                                 //DataTable dtSheetNo = fillDataTable(strSel, CnnString);
                                 if (strCom.Equals(0) || strCom.Length == 0)
@@ -417,7 +362,7 @@ namespace ProductionSheetDashBoard
                                 }
                                 string strRequeNo = "select (prefixtext+right('00000'+ convert(varchar,Lastreqno+1),5)) as Reqno from prefix_Requisition with(nolock)  where hsrp_stateid='" + HSRP_StateID + "' and prefixfor='Req No'";
                                 ReqNum = Utils.Utils.getScalarValue(strRequeNo, CnnString);
-                                string strPRFIX = "select PrefixText from EmbossingCentersNew with(nolock) where State_Id='" + HSRP_StateID + "' and Emb_Center_Id='" + Navembcode + "'";
+                                string strPRFIX = "select PrefixText from EmbossingCentersNew with(nolock) where  Emb_Center_Id='" + Navembcode + "'";
                                 string strPRFIXCom = Utils.Utils.getScalarValue(strPRFIX, CnnString);
                                 strProductionSheetNo = strPRFIXCom + strRunningNo;
 
@@ -858,24 +803,11 @@ namespace ProductionSheetDashBoard
         {
             string stateECQuery = string.Empty;
 
-            //string Navembid = Session["Navembid"].ToString();
             FillUserDetails();
             string ReqNum = string.Empty;
 
-            //if ((ddlStateName.SelectedValue == "20") || (ddlStateName.SelectedValue == "10"))
-            //if ((ddlStateName.SelectedValue == "20") || (ddlStateName.SelectedValue == "10") || (ddlStateName.SelectedValue == "17") || (ddlStateName.SelectedValue == "14"))
-            //{
-
-
-                stateECQuery = "select distinct a.HSRP_StateID, (select HSRPStateName from hsrpstate c where c.hsrp_stateid=a.hsrp_stateid) as HSRPStateName,(select HSRPStateShortName from hsrpstate d where d.hsrp_stateid=a.hsrp_stateid) as HSRPStateShortName, navembcode from hsrprecords a with(nolock),rtolocation b where a.HSRP_StateID ='" + ddlStateName.SelectedValue + "' and   b.Navembcode not like '%CODO%'    and a.rtolocationid=b.rtolocationid and NewPdfRunningNo is null and erpassigndate is not null and OrderStatus='New Order' AND b.NAVEMBID='" + Navembid + "'   order by  a.HSRP_StateID";
-            //}
-            //else
-            //{
-            //    stateECQuery = "select distinct a.HSRP_StateID, (select HSRPStateName from hsrpstate c where c.hsrp_stateid=a.hsrp_stateid) as HSRPStateName,(select HSRPStateShortName from hsrpstate d where d.hsrp_stateid=a.hsrp_stateid) as HSRPStateShortName, navembcode from hsrprecords a with(nolock),rtolocation b where a.HSRP_StateID ='" + ddlStateName.SelectedValue + "' and   b.Navembcode not like '%CODO%'    and a.rtolocationid=b.rtolocationid and NewPdfRunningNo is null and erpassigndate is not null and OrderStatus='New Order' and   b.navembcode like  '%'+(select HSRPStateShortName from hsrpstate d where d.hsrp_stateid=a.hsrp_stateid)+'%'  and b.NAVEMBID='" + Navembid + "'    order by  a.HSRP_StateID";
-
-            //   // stateECQuery = "select distinct a.HSRP_StateID, (select HSRPStateName from hsrpstate c where c.hsrp_stateid=a.hsrp_stateid) as HSRPStateName,(select HSRPStateShortName from hsrpstate d where d.hsrp_stateid=a.hsrp_stateid) as HSRPStateShortName, navembcode from hsrprecords a with(nolock),rtolocation b where a.HSRP_StateID ='" + ddlStateName.SelectedValue + "' and   b.Navembcode  like '%CODO%'    and a.rtolocationid=b.rtolocationid and NewPdfRunningNo is null and erpassigndate is not null and OrderStatus='New Order' and   b.navembcode like  '%'+(select HSRPStateShortName from hsrpstate d where d.hsrp_stateid=a.hsrp_stateid)+'%'  and b.NAVEMBID='" + Navembid + "'    order by  a.HSRP_StateID";
-
-            //}
+            stateECQuery = "select distinct a.HSRP_StateID, (select HSRPStateName from hsrpstate c where c.hsrp_stateid=a.hsrp_stateid) as HSRPStateName,(select HSRPStateShortName from hsrpstate d where d.hsrp_stateid=a.hsrp_stateid) as HSRPStateShortName, navembcode from hsrprecords a with(nolock),rtolocation b where a.HSRP_StateID ='" + ddlStateName.SelectedValue + "' and   b.Navembcode not like '%CODO%'    and a.rtolocationid=b.rtolocationid and NewPdfRunningNo is null and erpassigndate is not null and OrderStatus='New Order' AND b.NAVEMBID='" + Navembid + "'   order by  a.HSRP_StateID";
+        
 
 
             DataTable dtSE = Utils.Utils.GetDataTable(stateECQuery, CnnString);
@@ -1464,6 +1396,7 @@ namespace ProductionSheetDashBoard
             }
 
 
+
             string sqlPrefixQuery = "select top 1 CONVERT(INT, isnull(OrderNo,'0')) + 1 as orderNo from ProductionSheetAutoGenerated_List order by id desc";
             DataTable dtPrefix = Utils.Utils.GetDataTable(sqlPrefixQuery, CnnString);
 
@@ -1495,12 +1428,10 @@ namespace ProductionSheetDashBoard
             {
                 lblErrMess.Text = "Please select  State";
                 return;
-            }
-           
+            }           
 
             string sqlPrefixQuery = "select top 1 CONVERT(INT, isnull(OrderNo,'0')) + 1 as orderNo from ProductionSheetAutoGenerated_List order by id desc";
             DataTable dtPrefix = Utils.Utils.GetDataTable(sqlPrefixQuery, CnnString);
-
             if (dtPrefix.Rows.Count > 0)
             {
                 filePrefix = dtPrefix.Rows[0]["orderNo"].ToString();
@@ -1517,7 +1448,6 @@ namespace ProductionSheetDashBoard
 
                 SheetGenerationRenault();
 
-
             }
 
         }
@@ -1529,587 +1459,597 @@ namespace ProductionSheetDashBoard
            
             FillUserDetails();
 
-            stateECQuery = "select distinct a.HSRP_StateID, (select HSRPStateName from hsrpstate c where c.hsrp_stateid=a.hsrp_stateid) as HSRPStateName,(select HSRPStateShortName from hsrpstate d where d.hsrp_stateid=a.hsrp_stateid) as HSRPStateShortName, d.navembcode from hsrprecords a join DealerAffixation d  on  a.Affix_Id=d.SubDealerId and NewPdfRunningNo is null and  a.HSRP_StateID ='15' and d.Navembcode not like '%CODO%'  and erpassigndate is not null   AND d.navembcode='" + Navembid + "' order by  a.HSRP_StateID";
 
-
-            DataTable dtSE = Utils.Utils.GetDataTable(stateECQuery, CnnString);
-            if (dtSE.Rows.Count > 0)
+            string strIsuzu = "select HSRPrecordid as IsuzuCount from hsrprecords a with(nolock) join DealerAffixation d  with(nolock) on a.Affix_Id = d.SubDealerId and NewPdfRunningNo is null and a.HSRP_StateID = '15' and d.Navembcode not like '%CODO%'  and erpassigndate is not null   AND d.navembcode = '" + Navembid + "' order by  a.HSRP_StateID";
+            DataTable dtIsuzu = Utils.Utils.GetDataTable(strIsuzu, CnnString);
+            if (dtIsuzu.Rows.Count > 0)
             {
-                foreach (DataRow dr in dtSE.Rows)
+
+
+
+                stateECQuery = "select distinct a.HSRP_StateID, (select HSRPStateName from hsrpstate c where c.hsrp_stateid=a.hsrp_stateid) as HSRPStateName,(select HSRPStateShortName from hsrpstate d where d.hsrp_stateid=a.hsrp_stateid) as HSRPStateShortName, d.navembcode from hsrprecords a join DealerAffixation d  on  a.Affix_Id=d.SubDealerId and NewPdfRunningNo is null and  a.HSRP_StateID ='15' and d.Navembcode not like '%CODO%'  and erpassigndate is not null   AND d.navembcode='" + Navembid + "' order by  a.HSRP_StateID";
+
+
+                DataTable dtSE = Utils.Utils.GetDataTable(stateECQuery, CnnString);
+                if (dtSE.Rows.Count > 0)
                 {
-                    #region
-
-                    string HSRP_StateID = dr["HSRP_StateID"].ToString().Trim();
-                    string HSRPStateName = dr["HSRPStateName"].ToString().Trim();
-                    string HSRPStateShortName = dr["HSRPStateShortName"].ToString().Trim();
-                    string Navembcode = dr["Navembcode"].ToString().Trim();
-
-                    string dir = dirPath + DateTime.Now.ToString("yyyy-MM-dd") + "\\" + HSRPStateShortName + "\\";
-                    
-                    string fileName = "Isuzu" + "-" + filePrefix + "-" + Navembcode + ".pdf";
-                    string filePath = dir + fileName;
-                    StringBuilder html = new StringBuilder();
-
-                    Boolean findRecord = false;
-                    string strProductionSheetNo = string.Empty;
-
-                    /*
-                     *  Start body & HTMl Tag
-                     */
-                    #region
-                    html.Append(
-                        "<!DOCTYPE html>" +
-                        "<html>" +
-                        "<head>" +
-                            "<meta charset='UTF-8'><title>Title</title>" +
-                            "<style>" +
-                                "@page {" +
-                                    /* headers*/
-                                    "@top-left {" +
-                                        "content: 'Left header';" +
-                                    "}" +
-                                    "@top-right {" +
-                                        "content: 'Right header';" +
-                                    "}" +
-
-                                    /* footers */
-                                    "@bottom-left {" +
-                                        "content: 'Lorem ipsum';" +
-                                    "} " +
-                                    "@bottom-right {" +
-                                        "content: 'Page ' counter(page) ' of ' counter(pages);" +
-                                    "}" +
-                                    "@bottom-center  {" +
-                                        "content:element(footer);" +
-                                    "}" +
-                                "}" +
-                                 "#footer {" +
-                                    "position: running(footer);" +
-                                "}" +
-                                "table {" +
-                                  "border-collapse: collapse;" +
-                                "}" +
-
-                                "table, th, td {" +
-                                    "border: 1px solid black;" +
-                                    "text-align: left;" +
-                                    "vertical-align: top;" +
-                                    "padding:5px;" +
-                                "}" +
-                            "</style>" +
-                        "</head>" +
-                        "<body>");
-                    #endregion
-
-                    string oemDealerQuery = string.Empty;
-
-
-
-
-                    oemDealerQuery = "select distinct om.oemid as oemid, om.name as oemname, dm.dealerid, d.Subdealername as Dealername, dm.dealercode, d.Address,d.SubDealerId, dm.HSRP_StateID, " +
-                        "dm.RTOLocationID from oemmaster om " +
-                        "left join dealermaster dm on dm.oemid = om.oemid join DealerAffixation d on d.DealerID=dm.DealerId where dm.HSRP_StateID =" + HSRP_StateID + " and   d.Navembcode='" + Navembcode + "' and " +
-
-                        "dm.dealerid in (select distinct dealerid from hsrprecords where NewPdfRunningNo is null and erpassigndate is not null and   affix_id is not null ) and    OM.OEMid in('8')";
-
-
-                    #region
-                    DataTable dtOD = Utils.Utils.GetDataTable(oemDealerQuery, CnnString);
-                    if (dtOD.Rows.Count > 0)
+                    foreach (DataRow dr in dtSE.Rows)
                     {
-                        foreach (DataRow drOD in dtOD.Rows)
+                        #region
+
+                        string HSRP_StateID = dr["HSRP_StateID"].ToString().Trim();
+                        string HSRPStateName = dr["HSRPStateName"].ToString().Trim();
+                        string HSRPStateShortName = dr["HSRPStateShortName"].ToString().Trim();
+                        string Navembcode = dr["Navembcode"].ToString().Trim();
+
+                        string dir = dirPath + DateTime.Now.ToString("yyyy-MM-dd") + "\\" + HSRPStateShortName + "\\";
+
+                        string fileName = "Isuzu" + "-" + filePrefix + "-" + Navembcode + ".pdf";
+                        string filePath = dir + fileName;
+                        StringBuilder html = new StringBuilder();
+
+                        Boolean findRecord = false;
+                        string strProductionSheetNo = string.Empty;
+
+                        /*
+                         *  Start body & HTMl Tag
+                         */
+                        #region
+                        html.Append(
+                            "<!DOCTYPE html>" +
+                            "<html>" +
+                            "<head>" +
+                                "<meta charset='UTF-8'><title>Title</title>" +
+                                "<style>" +
+                                    "@page {" +
+                                        /* headers*/
+                                        "@top-left {" +
+                                            "content: 'Left header';" +
+                                        "}" +
+                                        "@top-right {" +
+                                            "content: 'Right header';" +
+                                        "}" +
+
+                                        /* footers */
+                                        "@bottom-left {" +
+                                            "content: 'Lorem ipsum';" +
+                                        "} " +
+                                        "@bottom-right {" +
+                                            "content: 'Page ' counter(page) ' of ' counter(pages);" +
+                                        "}" +
+                                        "@bottom-center  {" +
+                                            "content:element(footer);" +
+                                        "}" +
+                                    "}" +
+                                     "#footer {" +
+                                        "position: running(footer);" +
+                                    "}" +
+                                    "table {" +
+                                      "border-collapse: collapse;" +
+                                    "}" +
+
+                                    "table, th, td {" +
+                                        "border: 1px solid black;" +
+                                        "text-align: left;" +
+                                        "vertical-align: top;" +
+                                        "padding:5px;" +
+                                    "}" +
+                                "</style>" +
+                            "</head>" +
+                            "<body>");
+                        #endregion
+
+                        string oemDealerQuery = string.Empty;
+
+
+
+
+                        oemDealerQuery = "select distinct om.oemid as oemid, om.name as oemname, dm.dealerid, d.Subdealername as Dealername, dm.dealercode, d.Address,d.SubDealerId, dm.HSRP_StateID, " +
+                            "dm.RTOLocationID from oemmaster om " +
+                            "left join dealermaster dm on dm.oemid = om.oemid join DealerAffixation d on d.DealerID=dm.DealerId where dm.HSRP_StateID =" + HSRP_StateID + " and   d.Navembcode='" + Navembcode + "' and " +
+
+                            "dm.dealerid in (select distinct dealerid from hsrprecords where NewPdfRunningNo is null and erpassigndate is not null and   affix_id is not null ) and    OM.OEMid in('8')";
+
+
+                        #region
+                        DataTable dtOD = Utils.Utils.GetDataTable(oemDealerQuery, CnnString);
+                        if (dtOD.Rows.Count > 0)
                         {
-
-                            string oemid = drOD["oemid"].ToString().Trim();
-                            string dealerid = drOD["dealerid"].ToString().Trim();
-                            string oemname = drOD["oemname"].ToString().Trim();
-                            string dealername = drOD["dealername"].ToString().Trim();
-                            string Address = drOD["Address"].ToString().Trim();
-                            string strsubaffixid = drOD["SubDealerId"].ToString();
-
-                            //start sql query
-                            #region
-                            string productionQuery = string.Empty;
-
-
-                            DataTable dtProduction = new DataTable();
-
-
-
-
-                            #endregion
-                            //end sql query
-
-                            #region
-
-                            SqlConnection con = new SqlConnection(CnnString);
-                            SqlCommand cmd = new SqlCommand("USP_RenaultProductionSheet", con);
-                            cmd.CommandType = CommandType.StoredProcedure;
-                            con.Open();
-                            cmd.Parameters.AddWithValue("@navembid", Navembcode);
-                            cmd.Parameters.AddWithValue("@HSRP_StateID", HSRP_StateID);
-                            cmd.Parameters.AddWithValue("@Dealerid", dealerid);
-                            cmd.Parameters.AddWithValue("@Affix_Id", strsubaffixid);
-                            SqlDataAdapter da = new SqlDataAdapter(cmd);
-                            // dtProduction = new DataTable();
-                            da.Fill(dtProduction);
-                            con.Close();
-
-
-                            // DataTable dtProduction = Utils.Utils.GetDataTable(productionQuery, CnnString);
-                            if (dtProduction.Rows.Count > 0)
+                            foreach (DataRow drOD in dtOD.Rows)
                             {
 
-                                findRecord = true;
-                                string strRunningNo = string.Empty;
-                                //string strSel = "select isnull(max(right(newProductionSheetRunningNo,7)),0000000) as maxSheetNo from EmbossingCentersNew where State_Id='" + HSRP_StateID + "' and Emb_Center_Id='" + NAVEMBID + "'";
-                                string strSel = "select isnull(max(right(newProductionSheetRunningNo,7)),0000000) from EmbossingCentersNew where State_Id='" + HSRP_StateID + "' and Emb_Center_Id='" + Navembcode + "'";
-                                string strCom = Utils.Utils.getScalarValue(strSel, CnnString);
-                                //DataTable dtSheetNo = fillDataTable(strSel, CnnString);
-                                if (strCom.Equals(0) || strCom.Length == 0)
-                                {
-                                    strRunningNo = "0000001";
-                                }
-                                else
-                                {
-                                    strRunningNo = string.Format("{0:0000000}", Convert.ToInt32(strCom) + 1);
-                                }
-                                string strRequeNo = "select (prefixtext+right('00000'+ convert(varchar,Lastreqno+1),5)) as Reqno from prefix_Requisition  where hsrp_stateid='" + HSRP_StateID + "' and prefixfor='Req No'";
-                                ReqNum = Utils.Utils.getScalarValue(strRequeNo, CnnString);
-                                string strPRFIX = "select PrefixText from EmbossingCentersNew where State_Id='" + HSRP_StateID + "' and Emb_Center_Id='" + Navembcode + "'";
-                                string strPRFIXCom = Utils.Utils.getScalarValue(strPRFIX, CnnString);
-                                strProductionSheetNo = strPRFIXCom + strRunningNo;
+                                string oemid = drOD["oemid"].ToString().Trim();
+                                string dealerid = drOD["dealerid"].ToString().Trim();
+                                string oemname = drOD["oemname"].ToString().Trim();
+                                string dealername = drOD["dealername"].ToString().Trim();
+                                string Address = drOD["Address"].ToString().Trim();
+                                string strsubaffixid = drOD["SubDealerId"].ToString();
 
-                                string RTOLocationName = dtProduction.Rows[0]["RTOLocationName"].ToString();
+                                //start sql query
+                                #region
+                                string productionQuery = string.Empty;
+
+
+                                DataTable dtProduction = new DataTable();
+
+
+
+
+                                #endregion
+                                //end sql query
 
                                 #region
 
-                                html.Append("<div style='page-break-before: avoid;page-break-inside: avoid;page-break-after: always;'>" +
-                                        "<table style='width:100%;border: 0px;'>" +
-                                            "<tr style='border: 0px;'>" +
-                                                "<td colspan='3' style='border: 0px;'>" +
-                                                    "<div style='text-align:left'><b>Report Generation Date:</b> " + DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss") + "</div>" +
-                                                "</td>" +
-
-                                                 "<td colspan='3' style='border: 0px;'>" +
-                                                    "<div style='text-align:left'><b>ROSMERTA SAFETY SYSTEMS LIMITED</b> " + "</div>" +
-                                                "</td>" +
-
-
-                                                 "<td colspan='5' style='border: 0px;'>" +
-                                                    "<div style='float:left;width: 500px;word-wrap: break-word;'><b>Production Sheet No:</b> " + strRunningNo + " </div>" +
-                                                "</td>" +
-
-                                            "</tr>" +
-
-                                              "<tr style='border: 0px;'>" +
-                                                "<td colspan='3' style='border: 0px;'>" +
-                                                    "<div style='text-align:left'><b>State:</b> " + HSRPStateName + "</div>" +
-                                                "</td>" +
-
-                                                 "<td colspan='3' style='border: 0px;'>" +
-                                                    "<div style='text-align:left'><b>Production Sheet</b> " + "</div>" +
-                                                "</td>" +
+                                SqlConnection con = new SqlConnection(CnnString);
+                                SqlCommand cmd = new SqlCommand("USP_RenaultProductionSheet", con);
+                                cmd.CommandType = CommandType.StoredProcedure;
+                                con.Open();
+                                cmd.Parameters.AddWithValue("@navembid", Navembcode);
+                                cmd.Parameters.AddWithValue("@HSRP_StateID", HSRP_StateID);
+                                cmd.Parameters.AddWithValue("@Dealerid", dealerid);
+                                cmd.Parameters.AddWithValue("@Affix_Id", strsubaffixid);
+                                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                                // dtProduction = new DataTable();
+                                da.Fill(dtProduction);
+                                con.Close();
 
 
-                                                 "<td colspan='5' style='border: 0px;'>" +
-                                                    "<div style='float:left;width: 500px;word-wrap: break-word;'><b>Dealer ID/Name:</b> " + dealerid + "/" + dealername + "/" + strsubaffixid + " </div>" +
-                                                "</td>" +
+                                // DataTable dtProduction = Utils.Utils.GetDataTable(productionQuery, CnnString);
+                                if (dtProduction.Rows.Count > 0)
+                                {
 
-                                            "</tr>" +
+                                    findRecord = true;
+                                    string strRunningNo = string.Empty;
+                                    //string strSel = "select isnull(max(right(newProductionSheetRunningNo,7)),0000000) as maxSheetNo from EmbossingCentersNew where State_Id='" + HSRP_StateID + "' and Emb_Center_Id='" + NAVEMBID + "'";
+                                    string strSel = "select isnull(max(right(newProductionSheetRunningNo,7)),0000000) from EmbossingCentersNew where State_Id='" + HSRP_StateID + "' and Emb_Center_Id='" + Navembcode + "'";
+                                    string strCom = Utils.Utils.getScalarValue(strSel, CnnString);
+                                    //DataTable dtSheetNo = fillDataTable(strSel, CnnString);
+                                    if (strCom.Equals(0) || strCom.Length == 0)
+                                    {
+                                        strRunningNo = "0000001";
+                                    }
+                                    else
+                                    {
+                                        strRunningNo = string.Format("{0:0000000}", Convert.ToInt32(strCom) + 1);
+                                    }
+                                    string strRequeNo = "select (prefixtext+right('00000'+ convert(varchar,Lastreqno+1),5)) as Reqno from prefix_Requisition  where hsrp_stateid='" + HSRP_StateID + "' and prefixfor='Req No'";
+                                    ReqNum = Utils.Utils.getScalarValue(strRequeNo, CnnString);
+                                    string strPRFIX = "select PrefixText from EmbossingCentersNew where State_Id='" + HSRP_StateID + "' and Emb_Center_Id='" + Navembcode + "'";
+                                    string strPRFIXCom = Utils.Utils.getScalarValue(strPRFIX, CnnString);
+                                    strProductionSheetNo = strPRFIXCom + strRunningNo;
 
+                                    string RTOLocationName = dtProduction.Rows[0]["RTOLocationName"].ToString();
+
+                                    #region
+
+                                    html.Append("<div style='page-break-before: avoid;page-break-inside: avoid;page-break-after: always;'>" +
+                                            "<table style='width:100%;border: 0px;'>" +
                                                 "<tr style='border: 0px;'>" +
-                                                "<td colspan='3' style='border: 0px;'>" +
-                                                    "<div style='text-align:left'><b>EC Location: </b> " + RTOLocationName + "</div>" +
-                                                "</td>" +
-
-                                                 "<td colspan='3' style='border: 0px;'>" +
-                                                    "<div style='style='text-align:left'><b>Oem :</b> " + oemname + "</div>" +
-                                                "</td>" +
-
-
-                                                 "<td colspan='5' style='border: 0px;'>" +
-                                                     "<div style='float:left;width: 500px;word-wrap: break-word;'><b>Dealer Address:</b> " + Address + " </div>" +
-                                                //"<div style='text-align:left'><b>Dealer Address:</b> " + Address + " </div>" +
-                                                "</td>" +
-
-                                            "</tr>" +
-
-
-  "<tr>" +
-                                                "<td style='text-align:center'>Sr. No.</td>" +
-                                                  "<td>Vehicle No.</td>" +
-                                                   "<td>Front Plate Size</td>" +
-                                                "<td>Front Laser No.</td>" +
-
-                                                "<td>Rear Plate Size</td>" +
-                                                "<td>Rear Laser No.</td>" +
-
-                                                "<td>H. S. Foil </td>" +
-                                                "<td>Caution Sticker</td>" +
-                                                "<td>Fuel Type</td>" +
-                                                "<td >VT</td>" +
-                                                "<td >VC</ td>" +
-
-                                            "</tr>");
-
-                                #endregion
-
-                                #region
-                                foreach (DataRow drProduction in dtProduction.Rows)
-                                {
-                                    string HsrprecordID = drProduction["hsrprecordID"].ToString().Trim();
-                                    string SRNo = drProduction["SRNo"].ToString().Trim();
-                                    string ORD = "";// drProduction["ORD"].ToString().Trim();
-                                    string VC = drProduction["VehicleClass"].ToString().Trim();
-                                    string VehicleNo = drProduction["VehicleRegNo"].ToString().Trim();
-                                    // string VehicleNo = "<td style='text-align:center;font-size:20px;'>" + "<b>" + drProduction["VehicleRegNo"].ToString().Trim() + "</b> </td>" +
-                                    string VT = drProduction["VehicleType"].ToString().Trim();
-                                    //string ChassisNo = drProduction["ChassisNo"].ToString().Trim();
-                                    //string EngineNo = drProduction["EngineNo"].ToString().Trim();
-                                    string FuelType = drProduction["FuelType"].ToString().Trim();
-                                    string FrontPSize = drProduction["FrontProductCode"].ToString().Trim();
-                                    // string FrontLaserNo = "<td style='text-align:center;font-size:20px;'>" + "<b>" + drProduction["HSRP_Front_LaserCode"].ToString().Trim() + "</b> </td>" +
-                                    string FrontLaserNo = drProduction["HSRP_Front_LaserCode"].ToString().Trim();
-                                    string RearPSize = drProduction["RearProductCode"].ToString().Trim();
-                                    string RearLaserNo = drProduction["HSRP_Rear_LaserCode"].ToString().Trim();
-                                    //string RearLaserNo = "<td style='text-align:center;font-size:20px;'>" + "<b>" + drProduction["HSRP_Rear_LaserCode"].ToString().Trim() + "</b> </td>" +
-                                    string Amount = drProduction["roundoff_netamount"].ToString().Trim();
-                                    //string OrderStatus = drProduction["OrderStatus"].ToString().Trim();
-                                    string stickerColor = drProduction["stickerColor"].ToString().Trim();
-                                    string HotStampingFoilColour = drProduction["HotStampingFoilColour"].ToString().Trim();
-
-                                    html.Append("<tr>" +
-                                   "<td style='text-align:center'>" + SRNo + "</td>" +
-                                       "<td style='text-align:center;font-size:20px;'>" + "<b>" + VehicleNo + "</b> </td>" +
-
-                                        "<td>" + FrontPSize + "</td>" +
-                                         "<td style='text-align:center;font-size:20px;'>" + "<b>" + FrontLaserNo + "</b> </td>" +
-                                           "<td>" + RearPSize + "</td>" +
-                                         "<td style='text-align:center;font-size:20px;'>" + "<b>" + RearLaserNo + "</b> </td>" +
-
-                                          "<td>" + HotStampingFoilColour + "</td>" +
-                                           "<td>" + stickerColor + "</td>" +
-                                            "<td>" + FuelType + "</td>" +
-                                            "<td>" + VT + "</td>" +
-                                            "<td>" + VC + "</td>" +
-
-
-
-
-
-                               "</tr>");
-
-
-                                    try
-                                    {
-                                        //start updating hsrprecords 
-                                        string sqlUpdateHSRPRecords = "update hsrprecords set sendtoProductionStatus='Y', NAVPDFFlag='1', NewPdfRunningNo='" + strProductionSheetNo + "', Requisitionsheetno='" + ReqNum + "',  " +
-                                              "PdfDownloadDate=GetDate(), pdfFileName='" + fileName + "', PDFDownloadUserID='1' where hsrprecordID='" + HsrprecordID + "' ";
-
-                                        Utils.Utils.ExecNonQuery(sqlUpdateHSRPRecords, CnnString);   // uncomment after testing
-                                    }
-                                    catch (Exception ev)
-                                    {
-                                        Label1.Text = "hsrprecords update error: " + ev.Message;
-                                    }
-                                    //end 
-
-                                }
-                                #endregion
-                                html.Append("</table>");
-
-                                html.Append("</div>");
-
-                                try
-                                {
-                                    string StrSqlUpdateECQuery = "update EmbossingCentersNew set NewProductionSheetRunningNo='" + strProductionSheetNo + "' " +
-                                     "where State_Id='" + HSRP_StateID + "' and Emb_Center_Id='" + Navembcode + "'";
-                                    Utils.Utils.ExecNonQuery(StrSqlUpdateECQuery, CnnString); // uncomment after testing
-                                }
-                                catch (Exception ev)
-                                {
-                                    Label1.Text = "EmbossingCentersNew update error: " + ev.Message;
-                                }
-                            }
-
-                            #endregion
-
-                        }
-                    }// close oemDealerQuery
-                    #endregion
-
-                    #region "Req Generate"
-                    string strComNew = string.Empty;
-                    string strReqNumber = string.Empty;
-                    string strReqNo = string.Empty;
-
-
-
-                    string strSqlQuery1 = "select CompanyName from hsrpstate where hsrp_stateid='" + HSRP_StateID + "'";
-                    strCompanyName = Utils.Utils.getScalarValue(strSqlQuery1, CnnString);
-
-                    string strEMBName = " select EmbCenterName from EmbossingCentersNew where  State_Id='" + HSRP_StateID + "' and Emb_Center_Id='" + Navembcode + "'";
-                    strComNew = Utils.Utils.getScalarValue(strEMBName, CnnString);
-
-                    if (strComNew != "")
-                    {
-
-
-
-                        strReqNo = "select (prefixtext+right('00000'+ convert(varchar,lastno+1),5)) as Reqno from prefix_Requisition  where hsrp_stateid='" + HSRP_StateID + "' and prefixfor='Req No'";
-                        strReqNumber = Utils.Utils.getScalarValue(strReqNo, CnnString);
-
-                        SQLString = "Exec [laserreqSlip1DashBoard]  '" + HSRP_StateID + "','" + Navembcode + "' ,  '" + ReqNum + "'";
-                        DataTable dtResult = Utils.Utils.GetDataTable(SQLString, CnnString);
-
-                        string strQuery = string.Empty;
-                        string strRtoLocationName = string.Empty;
-                        int Itotal = 0;
-
-                        html.Append("<div style='width:100%;height:100%;'>" +
-                                            "<table style='width:100%'>" +
-
-                                                "<tr>" +
-                                                    "<td colspan='12'>" +
-                                                        "<div style='text-align:center;padding:8px;'>" +
-                                                            "<b style='font-size:20px;margin-top:2px;margin-bottom:2px;'>" + strCompanyName + "</b>" +
-
-                                                            "<p style='margin-top:2px;margin-bottom:2px;'>" + " " + "</p>" +
-                                                             "<b style='font-size:20px;'>" + "MATERIAL REQUSITION NOTE" + "</b>" +
-
-                                                        "</div>" +
+                                                    "<td colspan='3' style='border: 0px;'>" +
+                                                        "<div style='text-align:left'><b>Report Generation Date:</b> " + DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss") + "</div>" +
                                                     "</td>" +
+
+                                                     "<td colspan='3' style='border: 0px;'>" +
+                                                        "<div style='text-align:left'><b>ROSMERTA SAFETY SYSTEMS LIMITED</b> " + "</div>" +
+                                                    "</td>" +
+
+
+                                                     "<td colspan='5' style='border: 0px;'>" +
+                                                        "<div style='float:left;width: 500px;word-wrap: break-word;'><b>Production Sheet No:</b> " + strRunningNo + " </div>" +
+                                                    "</td>" +
+
                                                 "</tr>" +
 
-                                                "<tr>" +
-                                                    "<td colspan='12'>" +
-                                                        "<div style='text-align:center;padding:8px;'>" +
-                                                            "<b style='font-size:20px;margin-top:2px;margin-bottom:2px;'>" + "Production Sheet Date :" + DateTime.Now.ToString("dd-MM-yyyy") + "</b>" +
-                                                            "<p style='margin-top:2px;margin-bottom:2px;'>" + " " + "</p>" +
-                                                             "<b style='font-size:20px;'>" + "" + "</b>" +
-                                                        "</div>" +
+                                                  "<tr style='border: 0px;'>" +
+                                                    "<td colspan='3' style='border: 0px;'>" +
+                                                        "<div style='text-align:left'><b>State:</b> " + HSRPStateName + "</div>" +
                                                     "</td>" +
-                                                "</tr>" +
-                                                "<tr>" +
-                                                    "<td colspan='6'>" +
-                                                        "<div style='text-align:left;'>" +
-                                                            "<b style='font-size:20px;margin-top:2px;margin-bottom:2px;'>REQ.NO:-</b>" +
-                                                            "" + strReqNumber + "" +
-                                                        "</div>" +
+
+                                                     "<td colspan='3' style='border: 0px;'>" +
+                                                        "<div style='text-align:left'><b>Production Sheet</b> " + "</div>" +
                                                     "</td>" +
-                                                    "<td colspan='6'>" +
-                                                        "<div style='text-align:left;'>" +
-                                                            "<b style='font-size:20px;margin-top:2px;margin-bottom:2px;'>Embossing Center:</b>" +
-                                                            "" + strComNew + "" +
-                                                        "</div>" +
+
+
+                                                     "<td colspan='5' style='border: 0px;'>" +
+                                                        "<div style='float:left;width: 500px;word-wrap: break-word;'><b>Dealer ID/Name:</b> " + dealerid + "/" + dealername + "/" + strsubaffixid + " </div>" +
                                                     "</td>" +
-                                                "</tr>" +
-                                                "<tr>" +
-                                                    "<td colspan='12'>" +
-                                                        "<div style='text-align:left;padding:2px;'>" +
-                                                            "<b style='font-size:20px;margin-top:2px;margin-bottom:2px;'>" + "State:" + HSRPStateName + "</b>" +
-                                                            "<p style='margin-top:2px;margin-bottom:2px;'>" + " " + "</p>" +
-                                                             "<b style='font-size:20px;'>" + "" + "</b>" +
-                                                        "</div>" +
-                                                    "</td>" +
-                                                "</tr>" +
-                                                 "<tr>" +
-                                                    "<td colspan='12'>" +
-                                                        "<div style='text-align:left;padding:8px;'>" +
-                                                            "<b style='font-size:20px;margin-top:2px;margin-bottom:2px;'>" + " " + "</b>" +
-                                                            "<p style='margin-top:2px;margin-bottom:2px;'>" + " " + "</p>" +
-                                                             "<b style='font-size:20px;'>" + "" + "</b>" +
-                                                        "</div>" +
-                                                    "</td>" +
+
                                                 "</tr>" +
 
-                                                "<tr>" +
-                                                    "<td colspan='1' style='text-align:center'>SR.N.</td>" +
-                                                    "<td colspan='3'>Product Size</td>" +
-                                                    "<td colspan='1'>Laser Count</td>" +
-                                                    "<td colspan='1'>Start Laser No</td>" +
-                                                    "<td colspan='1'>End Laser No</td>" +
+                                                    "<tr style='border: 0px;'>" +
+                                                    "<td colspan='3' style='border: 0px;'>" +
+                                                        "<div style='text-align:left'><b>EC Location: </b> " + RTOLocationName + "</div>" +
+                                                    "</td>" +
+
+                                                     "<td colspan='3' style='border: 0px;'>" +
+                                                        "<div style='style='text-align:left'><b>Oem :</b> " + oemname + "</div>" +
+                                                    "</td>" +
+
+
+                                                     "<td colspan='5' style='border: 0px;'>" +
+                                                         "<div style='float:left;width: 500px;word-wrap: break-word;'><b>Dealer Address:</b> " + Address + " </div>" +
+                                                    //"<div style='text-align:left'><b>Dealer Address:</b> " + Address + " </div>" +
+                                                    "</td>" +
+
+                                                "</tr>" +
+
+
+      "<tr>" +
+                                                    "<td style='text-align:center'>Sr. No.</td>" +
+                                                      "<td>Vehicle No.</td>" +
+                                                       "<td>Front Plate Size</td>" +
+                                                    "<td>Front Laser No.</td>" +
+
+                                                    "<td>Rear Plate Size</td>" +
+                                                    "<td>Rear Laser No.</td>" +
+
+                                                    "<td>H. S. Foil </td>" +
+                                                    "<td>Caution Sticker</td>" +
+                                                    "<td>Fuel Type</td>" +
+                                                    "<td >VT</td>" +
+                                                    "<td >VC</ td>" +
 
                                                 "</tr>");
 
+                                    #endregion
 
-                        if (dtResult.Rows.Count > 0)
-                        {
-                            for (int i = 0; i < dtResult.Rows.Count; i++)
-                            {
-                                string ID = dtResult.Rows[i]["ID"].ToString();
-                                string productcode = dtResult.Rows[i]["productcode"].ToString();
-                                string LaserCount = dtResult.Rows[i]["LaserCount"].ToString();
-                                Itotal = Convert.ToInt32(dtResult.Rows[i]["Total"].ToString());
-                                string BeginLaser = dtResult.Rows[i]["BeginLaser"].ToString();
-                                string EndLaser = dtResult.Rows[i]["EndLaser"].ToString();
+                                    #region
+                                    foreach (DataRow drProduction in dtProduction.Rows)
+                                    {
+                                        string HsrprecordID = drProduction["hsrprecordID"].ToString().Trim();
+                                        string SRNo = drProduction["SRNo"].ToString().Trim();
+                                        string ORD = "";// drProduction["ORD"].ToString().Trim();
+                                        string VC = drProduction["VehicleClass"].ToString().Trim();
+                                        string VehicleNo = drProduction["VehicleRegNo"].ToString().Trim();
+                                        // string VehicleNo = "<td style='text-align:center;font-size:20px;'>" + "<b>" + drProduction["VehicleRegNo"].ToString().Trim() + "</b> </td>" +
+                                        string VT = drProduction["VehicleType"].ToString().Trim();
+                                        //string ChassisNo = drProduction["ChassisNo"].ToString().Trim();
+                                        //string EngineNo = drProduction["EngineNo"].ToString().Trim();
+                                        string FuelType = drProduction["FuelType"].ToString().Trim();
+                                        string FrontPSize = drProduction["FrontProductCode"].ToString().Trim();
+                                        // string FrontLaserNo = "<td style='text-align:center;font-size:20px;'>" + "<b>" + drProduction["HSRP_Front_LaserCode"].ToString().Trim() + "</b> </td>" +
+                                        string FrontLaserNo = drProduction["HSRP_Front_LaserCode"].ToString().Trim();
+                                        string RearPSize = drProduction["RearProductCode"].ToString().Trim();
+                                        string RearLaserNo = drProduction["HSRP_Rear_LaserCode"].ToString().Trim();
+                                        //string RearLaserNo = "<td style='text-align:center;font-size:20px;'>" + "<b>" + drProduction["HSRP_Rear_LaserCode"].ToString().Trim() + "</b> </td>" +
+                                        string Amount = drProduction["roundoff_netamount"].ToString().Trim();
+                                        //string OrderStatus = drProduction["OrderStatus"].ToString().Trim();
+                                        string stickerColor = drProduction["stickerColor"].ToString().Trim();
+                                        string HotStampingFoilColour = drProduction["HotStampingFoilColour"].ToString().Trim();
+
+                                        html.Append("<tr>" +
+                                       "<td style='text-align:center'>" + SRNo + "</td>" +
+                                           "<td style='text-align:center;font-size:20px;'>" + "<b>" + VehicleNo + "</b> </td>" +
+
+                                            "<td>" + FrontPSize + "</td>" +
+                                             "<td style='text-align:center;font-size:20px;'>" + "<b>" + FrontLaserNo + "</b> </td>" +
+                                               "<td>" + RearPSize + "</td>" +
+                                             "<td style='text-align:center;font-size:20px;'>" + "<b>" + RearLaserNo + "</b> </td>" +
+
+                                              "<td>" + HotStampingFoilColour + "</td>" +
+                                               "<td>" + stickerColor + "</td>" +
+                                                "<td>" + FuelType + "</td>" +
+                                                "<td>" + VT + "</td>" +
+                                                "<td>" + VC + "</td>" +
 
 
 
 
-                                html.Append("<tr>" +
-                                   "<td colspan='1' style='text-align:left'>" + ID + "</td>" +
-                                   "<td colspan='3'>" + productcode + "</td>" +
 
-                                   "<td colspan='1'>" + LaserCount + "</td>" +
-                                   "<td colspan='1'>" + BeginLaser + "</td>" +
-                                   "<td colspan='1'>" + EndLaser + "</td>" +
+                                   "</tr>");
 
-                               "</tr>");
+
+                                        try
+                                        {
+                                            //start updating hsrprecords 
+                                            string sqlUpdateHSRPRecords = "update hsrprecords set sendtoProductionStatus='Y', NAVPDFFlag='1', NewPdfRunningNo='" + strProductionSheetNo + "', Requisitionsheetno='" + ReqNum + "',  " +
+                                                  "PdfDownloadDate=GetDate(), pdfFileName='" + fileName + "', PDFDownloadUserID='1' where hsrprecordID='" + HsrprecordID + "' ";
+
+                                            Utils.Utils.ExecNonQuery(sqlUpdateHSRPRecords, CnnString);   // uncomment after testing
+                                        }
+                                        catch (Exception ev)
+                                        {
+                                            Label1.Text = "hsrprecords update error: " + ev.Message;
+                                        }
+                                        //end 
+
+                                    }
+                                    #endregion
+                                    html.Append("</table>");
+
+                                    html.Append("</div>");
+
+                                    try
+                                    {
+                                        string StrSqlUpdateECQuery = "update EmbossingCentersNew set NewProductionSheetRunningNo='" + strProductionSheetNo + "' " +
+                                         "where State_Id='" + HSRP_StateID + "' and Emb_Center_Id='" + Navembcode + "'";
+                                        Utils.Utils.ExecNonQuery(StrSqlUpdateECQuery, CnnString); // uncomment after testing
+                                    }
+                                    catch (Exception ev)
+                                    {
+                                        Label1.Text = "EmbossingCentersNew update error: " + ev.Message;
+                                    }
+                                }
+
+                                #endregion
+
                             }
-                        }
-                        html.Append("<tr>" +
-                                 "<td colspan='1' style='text-align:center' > " + "<b>Grand Total:</b>" + "</td>" +
-                                 "<td colspan='3'>" + "" + "</td>" +
+                        }// close oemDealerQuery
+                        #endregion
 
-                                 "<td colspan='1'>" + Itotal + "</td>" +
-                                 "<td colspan='1'>" + " " + "</td>" +
-                                 "<td colspan='1'>" + " " + "</td>" +
-
-                             "</tr>");
+                        #region "Req Generate"
+                        string strComNew = string.Empty;
+                        string strReqNumber = string.Empty;
+                        string strReqNo = string.Empty;
 
 
 
+                        string strSqlQuery1 = "select CompanyName from hsrpstate where hsrp_stateid='" + HSRP_StateID + "'";
+                        strCompanyName = Utils.Utils.getScalarValue(strSqlQuery1, CnnString);
 
-                        html.Append("<tr>" +
-                         "<td colspan='2' > " + "<b>REQUESTED BY </b>" + "</td>" +
-                         "<td colspan='2'>" + "<b>AUTHORIZED BY </b>" + "</td>" +
+                        string strEMBName = " select EmbCenterName from EmbossingCentersNew where  State_Id='" + HSRP_StateID + "' and Emb_Center_Id='" + Navembcode + "'";
+                        strComNew = Utils.Utils.getScalarValue(strEMBName, CnnString);
 
-                         "<td colspan='2'>" + "<b>ISSUED BY </b>" + "</td>" +
-                         "<td colspan='2'>" + "<b>RECEIVED BY</b>" + "</td>" +
+                        if (strComNew != "")
+                        {
 
 
-                     "</tr>");
 
-                        html.Append("<tr>" +
+                            strReqNo = "select (prefixtext+right('00000'+ convert(varchar,lastno+1),5)) as Reqno from prefix_Requisition  where hsrp_stateid='" + HSRP_StateID + "' and prefixfor='Req No'";
+                            strReqNumber = Utils.Utils.getScalarValue(strReqNo, CnnString);
+
+                            SQLString = "Exec [laserreqSlip1DashBoard]  '" + HSRP_StateID + "','" + Navembcode + "' ,  '" + ReqNum + "'";
+                            DataTable dtResult = Utils.Utils.GetDataTable(SQLString, CnnString);
+
+                            string strQuery = string.Empty;
+                            string strRtoLocationName = string.Empty;
+                            int Itotal = 0;
+
+                            html.Append("<div style='width:100%;height:100%;'>" +
+                                                "<table style='width:100%'>" +
+
+                                                    "<tr>" +
+                                                        "<td colspan='12'>" +
+                                                            "<div style='text-align:center;padding:8px;'>" +
+                                                                "<b style='font-size:20px;margin-top:2px;margin-bottom:2px;'>" + strCompanyName + "</b>" +
+
+                                                                "<p style='margin-top:2px;margin-bottom:2px;'>" + " " + "</p>" +
+                                                                 "<b style='font-size:20px;'>" + "MATERIAL REQUSITION NOTE" + "</b>" +
+
+                                                            "</div>" +
+                                                        "</td>" +
+                                                    "</tr>" +
+
+                                                    "<tr>" +
+                                                        "<td colspan='12'>" +
+                                                            "<div style='text-align:center;padding:8px;'>" +
+                                                                "<b style='font-size:20px;margin-top:2px;margin-bottom:2px;'>" + "Production Sheet Date :" + DateTime.Now.ToString("dd-MM-yyyy") + "</b>" +
+                                                                "<p style='margin-top:2px;margin-bottom:2px;'>" + " " + "</p>" +
+                                                                 "<b style='font-size:20px;'>" + "" + "</b>" +
+                                                            "</div>" +
+                                                        "</td>" +
+                                                    "</tr>" +
+                                                    "<tr>" +
+                                                        "<td colspan='6'>" +
+                                                            "<div style='text-align:left;'>" +
+                                                                "<b style='font-size:20px;margin-top:2px;margin-bottom:2px;'>REQ.NO:-</b>" +
+                                                                "" + strReqNumber + "" +
+                                                            "</div>" +
+                                                        "</td>" +
+                                                        "<td colspan='6'>" +
+                                                            "<div style='text-align:left;'>" +
+                                                                "<b style='font-size:20px;margin-top:2px;margin-bottom:2px;'>Embossing Center:</b>" +
+                                                                "" + strComNew + "" +
+                                                            "</div>" +
+                                                        "</td>" +
+                                                    "</tr>" +
+                                                    "<tr>" +
+                                                        "<td colspan='12'>" +
+                                                            "<div style='text-align:left;padding:2px;'>" +
+                                                                "<b style='font-size:20px;margin-top:2px;margin-bottom:2px;'>" + "State:" + HSRPStateName + "</b>" +
+                                                                "<p style='margin-top:2px;margin-bottom:2px;'>" + " " + "</p>" +
+                                                                 "<b style='font-size:20px;'>" + "" + "</b>" +
+                                                            "</div>" +
+                                                        "</td>" +
+                                                    "</tr>" +
+                                                     "<tr>" +
+                                                        "<td colspan='12'>" +
+                                                            "<div style='text-align:left;padding:8px;'>" +
+                                                                "<b style='font-size:20px;margin-top:2px;margin-bottom:2px;'>" + " " + "</b>" +
+                                                                "<p style='margin-top:2px;margin-bottom:2px;'>" + " " + "</p>" +
+                                                                 "<b style='font-size:20px;'>" + "" + "</b>" +
+                                                            "</div>" +
+                                                        "</td>" +
+                                                    "</tr>" +
+
+                                                    "<tr>" +
+                                                        "<td colspan='1' style='text-align:center'>SR.N.</td>" +
+                                                        "<td colspan='3'>Product Size</td>" +
+                                                        "<td colspan='1'>Laser Count</td>" +
+                                                        "<td colspan='1'>Start Laser No</td>" +
+                                                        "<td colspan='1'>End Laser No</td>" +
+
+                                                    "</tr>");
+
+
+                            if (dtResult.Rows.Count > 0)
+                            {
+                                for (int i = 0; i < dtResult.Rows.Count; i++)
+                                {
+                                    string ID = dtResult.Rows[i]["ID"].ToString();
+                                    string productcode = dtResult.Rows[i]["productcode"].ToString();
+                                    string LaserCount = dtResult.Rows[i]["LaserCount"].ToString();
+                                    Itotal = Convert.ToInt32(dtResult.Rows[i]["Total"].ToString());
+                                    string BeginLaser = dtResult.Rows[i]["BeginLaser"].ToString();
+                                    string EndLaser = dtResult.Rows[i]["EndLaser"].ToString();
+
+
+
+
+                                    html.Append("<tr>" +
+                                       "<td colspan='1' style='text-align:left'>" + ID + "</td>" +
+                                       "<td colspan='3'>" + productcode + "</td>" +
+
+                                       "<td colspan='1'>" + LaserCount + "</td>" +
+                                       "<td colspan='1'>" + BeginLaser + "</td>" +
+                                       "<td colspan='1'>" + EndLaser + "</td>" +
+
+                                   "</tr>");
+                                }
+                            }
+                            html.Append("<tr>" +
+                                     "<td colspan='1' style='text-align:center' > " + "<b>Grand Total:</b>" + "</td>" +
+                                     "<td colspan='3'>" + "" + "</td>" +
+
+                                     "<td colspan='1'>" + Itotal + "</td>" +
+                                     "<td colspan='1'>" + " " + "</td>" +
+                                     "<td colspan='1'>" + " " + "</td>" +
+
+                                 "</tr>");
+
+
+
+
+                            html.Append("<tr>" +
+                             "<td colspan='2' > " + "<b>REQUESTED BY </b>" + "</td>" +
+                             "<td colspan='2'>" + "<b>AUTHORIZED BY </b>" + "</td>" +
+
+                             "<td colspan='2'>" + "<b>ISSUED BY </b>" + "</td>" +
+                             "<td colspan='2'>" + "<b>RECEIVED BY</b>" + "</td>" +
+
+
+                         "</tr>");
+
+                            html.Append("<tr>" +
+                                                      "<td colspan='12'>" +
+                                                          "<div style='text-align:left;padding:2px;'>" +
+                                                              "<b style='font-size:20px;margin-top:2px;margin-bottom:2px;'>" + "Name" + "</b>" +
+
+                                                          "</div>" +
+                                                      "</td>" +
+                                                  "</tr>");
+
+                            html.Append("<tr>" +
+                                                     "<td colspan='12'>" +
+                                                         "<div style='text-align:left;padding:2px;'>" +
+                                                             "<b style='font-size:20px;margin-top:2px;margin-bottom:2px;'>" + "Designation" + "</b>" +
+
+                                                         "</div>" +
+                                                     "</td>" +
+                                                 "</tr>");
+
+                            html.Append("<tr>" +
+                                                   "<td colspan='12'>" +
+                                                       "<div style='text-align:right;padding:8px;'>" +
+                                                           "<b style='font-size:20px;margin-top:2px;margin-bottom:2px;'>" + "Download By: Admin " + "</b>" +
+
+                                                       "</div>" +
+                                                   "</td>" +
+                                               "</tr>");
+
+                            html.Append("<tr>" +
                                                   "<td colspan='12'>" +
-                                                      "<div style='text-align:left;padding:2px;'>" +
-                                                          "<b style='font-size:20px;margin-top:2px;margin-bottom:2px;'>" + "Name" + "</b>" +
+                                                      "<div style='text-align:right;padding:8px;'>" +
+                                                          "<b style='font-size:20px;margin-top:2px;margin-bottom:2px;'>" + "Sheet Generated By :" + DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss") + "</b>" +
 
                                                       "</div>" +
                                                   "</td>" +
                                               "</tr>");
 
-                        html.Append("<tr>" +
-                                                 "<td colspan='12'>" +
-                                                     "<div style='text-align:left;padding:2px;'>" +
-                                                         "<b style='font-size:20px;margin-top:2px;margin-bottom:2px;'>" + "Designation" + "</b>" +
-
-                                                     "</div>" +
-                                                 "</td>" +
-                                             "</tr>");
-
-                        html.Append("<tr>" +
-                                               "<td colspan='12'>" +
-                                                   "<div style='text-align:right;padding:8px;'>" +
-                                                       "<b style='font-size:20px;margin-top:2px;margin-bottom:2px;'>" + "Download By: Admin " + "</b>" +
-
-                                                   "</div>" +
-                                               "</td>" +
-                                           "</tr>");
-
-                        html.Append("<tr>" +
-                                              "<td colspan='12'>" +
-                                                  "<div style='text-align:right;padding:8px;'>" +
-                                                      "<b style='font-size:20px;margin-top:2px;margin-bottom:2px;'>" + "Sheet Generated By :" + DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss") + "</b>" +
-
-                                                  "</div>" +
-                                              "</td>" +
-                                          "</tr>");
 
 
 
 
 
 
+                            html.Append("</table>");
 
-                        html.Append("</table>");
+                            html.Append("</div>");
 
-                        html.Append("</div>");
-
-                        try
-                        {
-                            //start updating hsrprecords 
-                            string Query = "update prefix_Requisition set lastno=lastno+1,Lastreqno=Lastreqno+1 where hsrp_stateid='" + HSRP_StateID + "' and prefixfor='Req No'";
-                            Utils.Utils.ExecNonQuery(Query, CnnString);
-                        }
-                        catch (Exception ev)
-                        {
-                            Label1.Text = "prefix Requisition update error: " + ev.Message;
-                        }
-                    }
-
-
-                    #endregion
-
-                    /*
-                     * Close body & HTMl Tag
-                     */
-                    html.Append("</body>" +
-                        "</html>");
-
-
-                    if (findRecord)
-                    {
-
-                        string strSaveSQlQuery = "insert into ProductionSheetAutoGenerated_List (HSRP_StateID, State_Code, RTO_ID, Emb_Center_Id, FileName, Productiondate, ProductionTime, OrderNo) values " +
-                                    "('" + HSRP_StateID + "', '" + HSRPStateShortName + "', '', '" + Navembcode + "', '" + fileName + "', '" + DateTime.Now.ToString("yyyy-MM-dd") + "', '" + DateTime.Now.ToString("HH:mm:ss") + "', '" + filePrefix + "') ";
-                        Utils.Utils.ExecNonQuery(strSaveSQlQuery, CnnString); // uncomment after testing
-                        Label1.Text = Label1.Text + "successfully created production sheet of State: " + HSRPStateShortName + ", , Emb_Center_Id: " + Navembcode + Environment.NewLine;
-
-                        //lblLog.Text = lblLog.Text + Environment.NewLine + "Start Production Query at:" + DateTime.Now;
-                        #region
-                        try
-                        {
-                            if (!Directory.Exists(dir))
+                            try
                             {
+                                //start updating hsrprecords 
+                                string Query = "update prefix_Requisition set lastno=lastno+1,Lastreqno=Lastreqno+1 where hsrp_stateid='" + HSRP_StateID + "' and prefixfor='Req No'";
+                                Utils.Utils.ExecNonQuery(Query, CnnString);
+                            }
+                            catch (Exception ev)
+                            {
+                                Label1.Text = "prefix Requisition update error: " + ev.Message;
+                            }
+                        }
 
 
-                                Directory.CreateDirectory(dir);
+                        #endregion
+
+                        /*
+                         * Close body & HTMl Tag
+                         */
+                        html.Append("</body>" +
+                            "</html>");
+
+
+                        if (findRecord)
+                        {
+
+                            string strSaveSQlQuery = "insert into ProductionSheetAutoGenerated_List (HSRP_StateID, State_Code, RTO_ID, Emb_Center_Id, FileName, Productiondate, ProductionTime, OrderNo) values " +
+                                        "('" + HSRP_StateID + "', '" + HSRPStateShortName + "', '', '" + Navembcode + "', '" + fileName + "', '" + DateTime.Now.ToString("yyyy-MM-dd") + "', '" + DateTime.Now.ToString("HH:mm:ss") + "', '" + filePrefix + "') ";
+                            Utils.Utils.ExecNonQuery(strSaveSQlQuery, CnnString); // uncomment after testing
+                            Label1.Text = Label1.Text + "successfully created production sheet of State: " + HSRPStateShortName + ", , Emb_Center_Id: " + Navembcode + Environment.NewLine;
+
+                            //lblLog.Text = lblLog.Text + Environment.NewLine + "Start Production Query at:" + DateTime.Now;
+                            #region
+                            try
+                            {
+                                if (!Directory.Exists(dir))
+                                {
+
+
+                                    Directory.CreateDirectory(dir);
+
+                                }
 
                             }
+                            catch (Exception ev)
+                            {
+                                // Fail silently
+                                Label1.Text = ev.Message;
+                            }
 
-                        }
-                        catch (Exception ev)
-                        {
-                            // Fail silently
-                            Label1.Text = ev.Message;
-                        }
+                            try
+                            {
+                                var pdf = Pdf
+                                        .From(html.ToString())
+                                        .OfSize(PaperSize.A4)
+                                        .WithTitle("Title")
+                                        .WithoutOutline()
+                                        .WithMargins(1.25.Centimeters())
+                                         .Landscape()
+                                        .Comressed()
+                                        .Content();
 
-                        try
-                        {
-                            var pdf = Pdf
-                                    .From(html.ToString())
-                                    .OfSize(PaperSize.A4)
-                                    .WithTitle("Title")
-                                    .WithoutOutline()
-                                    .WithMargins(1.25.Centimeters())
-                                     .Landscape()
-                                    .Comressed()
-                                    .Content();
+                                FileStream readStream = File.Create(filePath);
+                                BinaryWriter binaryWriter = new BinaryWriter(readStream);
 
-                            FileStream readStream = File.Create(filePath);
-                            BinaryWriter binaryWriter = new BinaryWriter(readStream);
+                                // Write the binary data to the file
+                                binaryWriter.Write(pdf);
+                                binaryWriter.Close();
+                                readStream.Close();
+                            }
+                            catch (Exception ev)
+                            {
+                                // Fail silently
+                                Label1.Text = ev.Message;
+                            }
 
-                            // Write the binary data to the file
-                            binaryWriter.Write(pdf);
-                            binaryWriter.Close();
-                            readStream.Close();
-                        }
-                        catch (Exception ev)
-                        {
-                            // Fail silently
-                            Label1.Text = ev.Message;
+                            #endregion
                         }
 
                         #endregion
-                    }
 
-                    #endregion
-
-                }//close foreach stateEcQuery
+                    }//close foreach stateEcQuery
+                }
             }
+            
         }
 
         private void SheetGenerationRenault()
@@ -2119,599 +2059,603 @@ namespace ProductionSheetDashBoard
             //string Navembid = Session["Navembid"].ToString();
             FillUserDetails();
 
-
-            // stateECQuery = "select distinct a.HSRP_StateID, (select HSRPStateName from hsrpstate c where c.hsrp_stateid=a.hsrp_stateid) as HSRPStateName,(select HSRPStateShortName from hsrpstate d where d.hsrp_stateid=a.hsrp_stateid) as HSRPStateShortName, navembcode from hsrprecords a,rtolocation b where a.HSRP_StateID ='" + ddlStateName.SelectedValue + "' and   b.Navembcode not like '%CODO%'    and a.rtolocationid=b.rtolocationid and isnull(NewPdfRunningNo,'') = '' and isnull(erpassigndate,'') != ''  order by  a.HSRP_StateID";
-
-            stateECQuery = "select distinct a.HSRP_StateID, (select HSRPStateName from hsrpstate c where c.hsrp_stateid=a.hsrp_stateid) as HSRPStateName,(select HSRPStateShortName from hsrpstate d where d.hsrp_stateid=a.hsrp_stateid) as HSRPStateShortName, d.navembcode from hsrprecords a join DealerAffixation d  on  a.Affix_Id=d.SubDealerId and isnull(NewPdfRunningNo,'') = '' and  a.HSRP_StateID ='19' and d.Navembcode not like '%CODO%'  and isnull(erpassigndate,'') != ''   AND d.navembcode='" + Navembid + "' order by  a.HSRP_StateID";
-
-
-            DataTable dtSE = Utils.Utils.GetDataTable(stateECQuery, CnnString);
-            if (dtSE.Rows.Count > 0)
+            string strRenault = "select HSRPrecordid as RenaultCount from hsrprecords a with(nolock) join DealerAffixation d  with(nolock) on a.Affix_Id = d.SubDealerId and NewPdfRunningNo is null  and a.HSRP_StateID = '19' and d.Navembcode not like '%CODO%' and erpassigndate is null   AND d.navembcode = '" + Navembid + "'";
+            DataTable dtRenault = Utils.Utils.GetDataTable(strRenault, CnnString);
+            if (dtRenault.Rows.Count > 0)
             {
-                foreach (DataRow dr in dtSE.Rows)
+
+
+               stateECQuery = "select distinct a.HSRP_StateID, (select HSRPStateName from hsrpstate c where c.hsrp_stateid=a.hsrp_stateid) as HSRPStateName,(select HSRPStateShortName from hsrpstate d where d.hsrp_stateid=a.hsrp_stateid) as HSRPStateShortName, d.navembcode from hsrprecords a with(nolock) join DealerAffixation d with(nolock)  on  a.Affix_Id=d.SubDealerId and NewPdfRunningNo is null and  a.HSRP_StateID ='19' and d.Navembcode not like '%CODO%'  and erpassigndate is null   AND d.navembcode='" + Navembid + "' order by  a.HSRP_StateID";
+
+
+                DataTable dtSE = Utils.Utils.GetDataTable(stateECQuery, CnnString);
+                if (dtSE.Rows.Count > 0)
                 {
-                    #region
-
-                    string HSRP_StateID = dr["HSRP_StateID"].ToString().Trim();
-                    string HSRPStateName = dr["HSRPStateName"].ToString().Trim();
-                    string HSRPStateShortName = dr["HSRPStateShortName"].ToString().Trim();
-                    string Navembcode = dr["Navembcode"].ToString().Trim();
-
-                    string dir = dirPath + DateTime.Now.ToString("yyyy-MM-dd") + "\\" + HSRPStateShortName + "\\";
-                    //string dir = dirPath + "/" + DateTime.Now.ToString("yyyy-MM-dd") + "/" + HSRPStateShortName + "/";
-                    //string fileName = filePrefix + "-" + Navembcode + ".pdf";
-                    string fileName = "Renault" + "-" + filePrefix + "-" + Navembcode + ".pdf";
-                    string filePath = dir + fileName;
-
-                    //string folderpath = ConfigurationManager.AppSettings["InvoiceFolder"].ToString() + "/" + FinYear + "/" + oemid + "/" + HSRPStateID + "/";
-
-                    StringBuilder html = new StringBuilder();
-
-                    Boolean findRecord = false;
-                    string strProductionSheetNo = string.Empty;
-
-                    /*
-                     *  Start body & HTMl Tag
-                     */
-                    #region
-                    html.Append(
-                        "<!DOCTYPE html>" +
-                        "<html>" +
-                        "<head>" +
-                            "<meta charset='UTF-8'><title>Title</title>" +
-                            "<style>" +
-                                "@page {" +
-                                    /* headers*/
-                                    "@top-left {" +
-                                        "content: 'Left header';" +
-                                    "}" +
-                                    "@top-right {" +
-                                        "content: 'Right header';" +
-                                    "}" +
-
-                                    /* footers */
-                                    "@bottom-left {" +
-                                        "content: 'Lorem ipsum';" +
-                                    "} " +
-                                    "@bottom-right {" +
-                                        "content: 'Page ' counter(page) ' of ' counter(pages);" +
-                                    "}" +
-                                    "@bottom-center  {" +
-                                        "content:element(footer);" +
-                                    "}" +
-                                "}" +
-                                 "#footer {" +
-                                    "position: running(footer);" +
-                                "}" +
-                                "table {" +
-                                  "border-collapse: collapse;" +
-                                "}" +
-
-                                "table, th, td {" +
-                                    "border: 1px solid black;" +
-                                    "text-align: left;" +
-                                    "vertical-align: top;" +
-                                    "padding:5px;" +
-                                "}" +
-                            "</style>" +
-                        "</head>" +
-                        "<body>");
-                    #endregion
-
-                    string oemDealerQuery = string.Empty;
-
-
-
-                    //oemDealerQuery = "select distinct om.oemid as oemid, om.name as oemname, dm.dealerid, dm.dealername, dm.dealercode, dm.Address, dm.HSRP_StateID, " +
-                    //    "dm.RTOLocationID from oemmaster om " +
-                    //    "left join dealermaster dm on dm.oemid = om.oemid where dm.HSRP_StateID =" + HSRP_StateID + " and " +
-                    //    "dm.RTOLocationID in (select RTOLocationID from rtolocation where Navembcode='" + Navembcode + "' ) and " +
-                    //    "dm.dealerid in (select distinct dealerid from hsrprecords where isnull(NewPdfRunningNo,'') = '' and isnull(erpassigndate,'') != '' and HSRP_StateID =" + HSRP_StateID + ") and Om.OEMID   in('21','43')";
-
-
-                    oemDealerQuery = "select distinct om.oemid as oemid, om.name as oemname, dm.dealerid, d.Subdealername as Dealername, dm.dealercode, d.Address,d.SubDealerId, dm.HSRP_StateID, " +
-                        "dm.RTOLocationID from oemmaster om " +
-                        "left join dealermaster dm on dm.oemid = om.oemid join DealerAffixation d on d.DealerID=dm.DealerId where dm.HSRP_StateID =" + HSRP_StateID + " and   d.Navembcode='" + Navembcode + "' and " +
-
-                        "dm.dealerid in (select distinct dealerid from hsrprecords where isnull(NewPdfRunningNo,'') = '' and isnull(erpassigndate,'') != '' and   isnull(affix_id,'')!='' ) and    OM.OEMid in('43')";
-
-
-                    #region
-                    DataTable dtOD = Utils.Utils.GetDataTable(oemDealerQuery, CnnString);
-                    if (dtOD.Rows.Count > 0)
+                    foreach (DataRow dr in dtSE.Rows)
                     {
-                        foreach (DataRow drOD in dtOD.Rows)
+                        #region
+
+                        string HSRP_StateID = dr["HSRP_StateID"].ToString().Trim();
+                        string HSRPStateName = dr["HSRPStateName"].ToString().Trim();
+                        string HSRPStateShortName = dr["HSRPStateShortName"].ToString().Trim();
+                        string Navembcode = dr["Navembcode"].ToString().Trim();
+
+                        string dir = dirPath + DateTime.Now.ToString("yyyy-MM-dd") + "\\" + HSRPStateShortName + "\\";
+                        //string dir = dirPath + "/" + DateTime.Now.ToString("yyyy-MM-dd") + "/" + HSRPStateShortName + "/";
+                        //string fileName = filePrefix + "-" + Navembcode + ".pdf";
+                        string fileName = "Renault" + "-" + filePrefix + "-" + Navembcode + ".pdf";
+                        string filePath = dir + fileName;
+
+                        //string folderpath = ConfigurationManager.AppSettings["InvoiceFolder"].ToString() + "/" + FinYear + "/" + oemid + "/" + HSRPStateID + "/";
+
+                        StringBuilder html = new StringBuilder();
+
+                        Boolean findRecord = false;
+                        string strProductionSheetNo = string.Empty;
+
+                        /*
+                         *  Start body & HTMl Tag
+                         */
+                        #region
+                        html.Append(
+                            "<!DOCTYPE html>" +
+                            "<html>" +
+                            "<head>" +
+                                "<meta charset='UTF-8'><title>Title</title>" +
+                                "<style>" +
+                                    "@page {" +
+                                        /* headers*/
+                                        "@top-left {" +
+                                            "content: 'Left header';" +
+                                        "}" +
+                                        "@top-right {" +
+                                            "content: 'Right header';" +
+                                        "}" +
+
+                                        /* footers */
+                                        "@bottom-left {" +
+                                            "content: 'Lorem ipsum';" +
+                                        "} " +
+                                        "@bottom-right {" +
+                                            "content: 'Page ' counter(page) ' of ' counter(pages);" +
+                                        "}" +
+                                        "@bottom-center  {" +
+                                            "content:element(footer);" +
+                                        "}" +
+                                    "}" +
+                                     "#footer {" +
+                                        "position: running(footer);" +
+                                    "}" +
+                                    "table {" +
+                                      "border-collapse: collapse;" +
+                                    "}" +
+
+                                    "table, th, td {" +
+                                        "border: 1px solid black;" +
+                                        "text-align: left;" +
+                                        "vertical-align: top;" +
+                                        "padding:5px;" +
+                                    "}" +
+                                "</style>" +
+                            "</head>" +
+                            "<body>");
+                        #endregion
+
+                        string oemDealerQuery = string.Empty;
+
+
+
+                        //oemDealerQuery = "select distinct om.oemid as oemid, om.name as oemname, dm.dealerid, dm.dealername, dm.dealercode, dm.Address, dm.HSRP_StateID, " +
+                        //    "dm.RTOLocationID from oemmaster om " +
+                        //    "left join dealermaster dm on dm.oemid = om.oemid where dm.HSRP_StateID =" + HSRP_StateID + " and " +
+                        //    "dm.RTOLocationID in (select RTOLocationID from rtolocation where Navembcode='" + Navembcode + "' ) and " +
+                        //    "dm.dealerid in (select distinct dealerid from hsrprecords where isnull(NewPdfRunningNo,'') = '' and isnull(erpassigndate,'') != '' and HSRP_StateID =" + HSRP_StateID + ") and Om.OEMID   in('21','43')";
+
+
+                        oemDealerQuery = "select distinct om.oemid as oemid, om.name as oemname, dm.dealerid, d.Subdealername as Dealername, dm.dealercode, d.Address,d.SubDealerId, dm.HSRP_StateID, " +
+                            "dm.RTOLocationID from oemmaster om " +
+                            "left join dealermaster dm on dm.oemid = om.oemid join DealerAffixation d on d.DealerID=dm.DealerId where dm.HSRP_StateID =" + HSRP_StateID + " and   d.Navembcode='" + Navembcode + "' and " +
+
+                            "dm.dealerid in (select distinct dealerid from hsrprecords where isnull(NewPdfRunningNo,'') = '' and isnull(erpassigndate,'') != '' and   isnull(affix_id,'')!='' ) and    OM.OEMid in('43')";
+
+
+                        #region
+                        DataTable dtOD = Utils.Utils.GetDataTable(oemDealerQuery, CnnString);
+                        if (dtOD.Rows.Count > 0)
                         {
-
-                            string oemid = drOD["oemid"].ToString().Trim();
-                            string dealerid = drOD["dealerid"].ToString().Trim();
-                            string oemname = drOD["oemname"].ToString().Trim();
-                            string dealername = drOD["dealername"].ToString().Trim();
-                            string Address = drOD["Address"].ToString().Trim();
-                            string strsubaffixid = drOD["SubDealerId"].ToString();
-
-                            //start sql query
-                            #region
-                            string productionQuery = string.Empty;
-
-
-                            DataTable dtProduction = new DataTable();
-
-                          
-
-
-                            #endregion
-                            //end sql query
-
-                            #region
-
-                            SqlConnection con = new SqlConnection(CnnString);
-                            SqlCommand cmd = new SqlCommand("USP_RenaultProductionSheet", con);
-                            cmd.CommandType = CommandType.StoredProcedure;
-                            con.Open();
-                            cmd.Parameters.AddWithValue("@navembid", Navembcode);
-                            cmd.Parameters.AddWithValue("@HSRP_StateID", HSRP_StateID);
-                            cmd.Parameters.AddWithValue("@Dealerid", dealerid);
-                            cmd.Parameters.AddWithValue("@Affix_Id", strsubaffixid);
-                            SqlDataAdapter da = new SqlDataAdapter(cmd);
-                            // dtProduction = new DataTable();
-                            da.Fill(dtProduction);
-                            con.Close();
-
-
-                            // DataTable dtProduction = Utils.Utils.GetDataTable(productionQuery, CnnString);
-                            if (dtProduction.Rows.Count > 0)
+                            foreach (DataRow drOD in dtOD.Rows)
                             {
 
-                                findRecord = true;
-                                string strRunningNo = string.Empty;
-                                //string strSel = "select isnull(max(right(newProductionSheetRunningNo,7)),0000000) as maxSheetNo from EmbossingCentersNew where State_Id='" + HSRP_StateID + "' and Emb_Center_Id='" + NAVEMBID + "'";
-                                string strSel = "select isnull(max(right(newProductionSheetRunningNo,7)),0000000) from EmbossingCentersNew where State_Id='" + HSRP_StateID + "' and Emb_Center_Id='" + Navembcode + "'";
-                                string strCom = Utils.Utils.getScalarValue(strSel, CnnString);
-                                //DataTable dtSheetNo = fillDataTable(strSel, CnnString);
-                                if (strCom.Equals(0) || strCom.Length == 0)
-                                {
-                                    strRunningNo = "0000001";
-                                }
-                                else
-                                {
-                                    strRunningNo = string.Format("{0:0000000}", Convert.ToInt32(strCom) + 1);
-                                }
-                                string strRequeNo = "select (prefixtext+right('00000'+ convert(varchar,Lastreqno+1),5)) as Reqno from prefix_Requisition  where hsrp_stateid='" + HSRP_StateID + "' and prefixfor='Req No'";
-                                ReqNum = Utils.Utils.getScalarValue(strRequeNo, CnnString);
-                                string strPRFIX = "select PrefixText from EmbossingCentersNew where State_Id='" + HSRP_StateID + "' and Emb_Center_Id='" + Navembcode + "'";
-                                string strPRFIXCom = Utils.Utils.getScalarValue(strPRFIX, CnnString);
-                                strProductionSheetNo = strPRFIXCom + strRunningNo;
+                                string oemid = drOD["oemid"].ToString().Trim();
+                                string dealerid = drOD["dealerid"].ToString().Trim();
+                                string oemname = drOD["oemname"].ToString().Trim();
+                                string dealername = drOD["dealername"].ToString().Trim();
+                                string Address = drOD["Address"].ToString().Trim();
+                                string strsubaffixid = drOD["SubDealerId"].ToString();
 
-                                string RTOLocationName = dtProduction.Rows[0]["RTOLocationName"].ToString();
+                                //start sql query
+                                #region
+                                string productionQuery = string.Empty;
+
+
+                                DataTable dtProduction = new DataTable();
+
+
+
+
+                                #endregion
+                                //end sql query
 
                                 #region
 
-                                html.Append("<div style='page-break-before: avoid;page-break-inside: avoid;page-break-after: always;'>" +
-                                        "<table style='width:100%;border: 0px;'>" +
-                                            "<tr style='border: 0px;'>" +
-                                                "<td colspan='3' style='border: 0px;'>" +
-                                                    "<div style='text-align:left'><b>Report Generation Date:</b> " + DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss") + "</div>" +
-                                                "</td>" +
-
-                                                 "<td colspan='3' style='border: 0px;'>" +
-                                                    "<div style='text-align:left'><b>ROSMERTA SAFETY SYSTEMS LIMITED</b> " + "</div>" +
-                                                "</td>" +
-
-
-                                                 "<td colspan='5' style='border: 0px;'>" +
-                                                    "<div style='float:left;width: 500px;word-wrap: break-word;'><b>Production Sheet No:</b> " + strRunningNo + " </div>" +
-                                                "</td>" +
-
-                                            "</tr>" +
-
-                                              "<tr style='border: 0px;'>" +
-                                                "<td colspan='3' style='border: 0px;'>" +
-                                                    "<div style='text-align:left'><b>State:</b> " + HSRPStateName + "</div>" +
-                                                "</td>" +
-
-                                                 "<td colspan='3' style='border: 0px;'>" +
-                                                    "<div style='text-align:left'><b>Production Sheet</b> " + "</div>" +
-                                                "</td>" +
+                                SqlConnection con = new SqlConnection(CnnString);
+                                SqlCommand cmd = new SqlCommand("USP_RenaultProductionSheet", con);
+                                cmd.CommandType = CommandType.StoredProcedure;
+                                con.Open();
+                                cmd.Parameters.AddWithValue("@navembid", Navembcode);
+                                cmd.Parameters.AddWithValue("@HSRP_StateID", HSRP_StateID);
+                                cmd.Parameters.AddWithValue("@Dealerid", dealerid);
+                                cmd.Parameters.AddWithValue("@Affix_Id", strsubaffixid);
+                                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                                // dtProduction = new DataTable();
+                                da.Fill(dtProduction);
+                                con.Close();
 
 
-                                                 "<td colspan='5' style='border: 0px;'>" +
-                                                    "<div style='float:left;width: 500px;word-wrap: break-word;'><b>Dealer ID/Name:</b> " + dealerid + "/" + dealername + "/" + strsubaffixid + " </div>" +
-                                                "</td>" +
+                                // DataTable dtProduction = Utils.Utils.GetDataTable(productionQuery, CnnString);
+                                if (dtProduction.Rows.Count > 0)
+                                {
 
-                                            "</tr>" +
+                                    findRecord = true;
+                                    string strRunningNo = string.Empty;
+                                    //string strSel = "select isnull(max(right(newProductionSheetRunningNo,7)),0000000) as maxSheetNo from EmbossingCentersNew where State_Id='" + HSRP_StateID + "' and Emb_Center_Id='" + NAVEMBID + "'";
+                                    string strSel = "select isnull(max(right(newProductionSheetRunningNo,7)),0000000) from EmbossingCentersNew where State_Id='" + HSRP_StateID + "' and Emb_Center_Id='" + Navembcode + "'";
+                                    string strCom = Utils.Utils.getScalarValue(strSel, CnnString);
+                                    //DataTable dtSheetNo = fillDataTable(strSel, CnnString);
+                                    if (strCom.Equals(0) || strCom.Length == 0)
+                                    {
+                                        strRunningNo = "0000001";
+                                    }
+                                    else
+                                    {
+                                        strRunningNo = string.Format("{0:0000000}", Convert.ToInt32(strCom) + 1);
+                                    }
+                                    string strRequeNo = "select (prefixtext+right('00000'+ convert(varchar,Lastreqno+1),5)) as Reqno from prefix_Requisition  where hsrp_stateid='" + HSRP_StateID + "' and prefixfor='Req No'";
+                                    ReqNum = Utils.Utils.getScalarValue(strRequeNo, CnnString);
+                                    string strPRFIX = "select PrefixText from EmbossingCentersNew where State_Id='" + HSRP_StateID + "' and Emb_Center_Id='" + Navembcode + "'";
+                                    string strPRFIXCom = Utils.Utils.getScalarValue(strPRFIX, CnnString);
+                                    strProductionSheetNo = strPRFIXCom + strRunningNo;
 
+                                    string RTOLocationName = dtProduction.Rows[0]["RTOLocationName"].ToString();
+
+                                    #region
+
+                                    html.Append("<div style='page-break-before: avoid;page-break-inside: avoid;page-break-after: always;'>" +
+                                            "<table style='width:100%;border: 0px;'>" +
                                                 "<tr style='border: 0px;'>" +
-                                                "<td colspan='3' style='border: 0px;'>" +
-                                                    "<div style='text-align:left'><b>EC Location: </b> " + RTOLocationName + "</div>" +
-                                                "</td>" +
-
-                                                 "<td colspan='3' style='border: 0px;'>" +
-                                                    "<div style='style='text-align:left'><b>Oem :</b> " + oemname + "</div>" +
-                                                "</td>" +
-
-
-                                                 "<td colspan='5' style='border: 0px;'>" +
-                                                     "<div style='float:left;width: 500px;word-wrap: break-word;'><b>Dealer Address:</b> " + Address + " </div>" +
-                                                //"<div style='text-align:left'><b>Dealer Address:</b> " + Address + " </div>" +
-                                                "</td>" +
-
-                                            "</tr>" +
-
-
-  "<tr>" +
-                                                "<td style='text-align:center'>Sr. No.</td>" +
-                                                  "<td>Vehicle No.</td>" +
-                                                   "<td>Front Plate Size</td>" +
-                                                "<td>Front Laser No.</td>" +
-
-                                                "<td>Rear Plate Size</td>" +
-                                                "<td>Rear Laser No.</td>" +
-
-                                                "<td>H. S. Foil </td>" +
-                                                "<td>Caution Sticker</td>" +
-                                                "<td>Fuel Type</td>" +
-                                                "<td >VT</td>" +
-                                                "<td >VC</ td>" +
-
-                                            "</tr>");
-
-                                #endregion
-
-                                #region
-                                foreach (DataRow drProduction in dtProduction.Rows)
-                                {
-                                    string HsrprecordID = drProduction["hsrprecordID"].ToString().Trim();
-                                    string SRNo = drProduction["SRNo"].ToString().Trim();
-                                    string ORD = "";// drProduction["ORD"].ToString().Trim();
-                                    string VC = drProduction["VehicleClass"].ToString().Trim();
-                                    string VehicleNo = drProduction["VehicleRegNo"].ToString().Trim();
-                                   // string VehicleNo = "<td style='text-align:center;font-size:20px;'>" + "<b>" + drProduction["VehicleRegNo"].ToString().Trim() + "</b> </td>" +
-                                    string VT = drProduction["VehicleType"].ToString().Trim();
-                                    //string ChassisNo = drProduction["ChassisNo"].ToString().Trim();
-                                    //string EngineNo = drProduction["EngineNo"].ToString().Trim();
-                                    string FuelType = drProduction["FuelType"].ToString().Trim();
-                                    string FrontPSize = drProduction["FrontProductCode"].ToString().Trim();
-                                   // string FrontLaserNo = "<td style='text-align:center;font-size:20px;'>" + "<b>" + drProduction["HSRP_Front_LaserCode"].ToString().Trim() + "</b> </td>" +
-                                   string FrontLaserNo = drProduction["HSRP_Front_LaserCode"].ToString().Trim();
-                                    string RearPSize = drProduction["RearProductCode"].ToString().Trim();
-                                    string RearLaserNo = drProduction["HSRP_Rear_LaserCode"].ToString().Trim();
-                                    //string RearLaserNo = "<td style='text-align:center;font-size:20px;'>" + "<b>" + drProduction["HSRP_Rear_LaserCode"].ToString().Trim() + "</b> </td>" +
-                                    string Amount = drProduction["roundoff_netamount"].ToString().Trim();
-                                    //string OrderStatus = drProduction["OrderStatus"].ToString().Trim();
-                                    string stickerColor = drProduction["stickerColor"].ToString().Trim();
-                                    string HotStampingFoilColour = drProduction["HotStampingFoilColour"].ToString().Trim();
-
-                                    html.Append("<tr>" +
-                                   "<td style='text-align:center'>" + SRNo + "</td>" +
-                                       "<td style='text-align:center;font-size:20px;'>" + "<b>" + VehicleNo + "</b> </td>" +
-
-                                        "<td>" + FrontPSize + "</td>" +
-                                         "<td style='text-align:center;font-size:20px;'>" + "<b>" + FrontLaserNo + "</b> </td>" +
-                                           "<td>" + RearPSize + "</td>" +
-                                         "<td style='text-align:center;font-size:20px;'>" + "<b>" + RearLaserNo + "</b> </td>" +
-
-                                          "<td>" + HotStampingFoilColour + "</td>" +
-                                           "<td>" + stickerColor + "</td>" +
-                                            "<td>" + FuelType + "</td>" +
-                                            "<td>" + VT + "</td>" +
-                                            "<td>" + VC + "</td>" +
-
-
-
-
-
-                               "</tr>");
-
-
-                                    try
-                                    {
-                                        //start updating hsrprecords 
-                                        string sqlUpdateHSRPRecords = "update hsrprecords set sendtoProductionStatus='Y', NAVPDFFlag='1', NewPdfRunningNo='" + strProductionSheetNo + "', Requisitionsheetno='" + ReqNum + "',  " +
-                                              "PdfDownloadDate=GetDate(), pdfFileName='" + fileName + "', PDFDownloadUserID='1' where hsrprecordID='" + HsrprecordID + "' ";
-
-                                        Utils.Utils.ExecNonQuery(sqlUpdateHSRPRecords, CnnString);   // uncomment after testing
-                                    }
-                                    catch (Exception ev)
-                                    {
-                                        Label1.Text = "hsrprecords update error: " + ev.Message;
-                                    }
-                                    //end 
-
-                                }
-                                #endregion
-                                html.Append("</table>");
-
-                                html.Append("</div>");
-
-                                try
-                                {
-                                    string StrSqlUpdateECQuery = "update EmbossingCentersNew set NewProductionSheetRunningNo='" + strProductionSheetNo + "' " +
-                                     "where State_Id='" + HSRP_StateID + "' and Emb_Center_Id='" + Navembcode + "'";
-                                    Utils.Utils.ExecNonQuery(StrSqlUpdateECQuery, CnnString); // uncomment after testing
-                                }
-                                catch (Exception ev)
-                                {
-                                    Label1.Text = "EmbossingCentersNew update error: " + ev.Message;
-                                }
-                            }
-
-                            #endregion
-
-                        }
-                    }// close oemDealerQuery
-                    #endregion
-
-                    #region "Req Generate"
-                    string strComNew = string.Empty;
-                    string strReqNumber = string.Empty;
-                    string strReqNo = string.Empty;
-
-
-
-                    string strSqlQuery1 = "select CompanyName from hsrpstate where hsrp_stateid='" + HSRP_StateID + "'";
-                    strCompanyName = Utils.Utils.getScalarValue(strSqlQuery1, CnnString);
-
-                    string strEMBName = " select EmbCenterName from EmbossingCentersNew where  State_Id='" + HSRP_StateID + "' and Emb_Center_Id='" + Navembcode + "'";
-                    strComNew = Utils.Utils.getScalarValue(strEMBName, CnnString);
-
-                    if (strComNew != "")
-                    {
-
-
-
-                        strReqNo = "select (prefixtext+right('00000'+ convert(varchar,lastno+1),5)) as Reqno from prefix_Requisition  where hsrp_stateid='" + HSRP_StateID + "' and prefixfor='Req No'";
-                        strReqNumber = Utils.Utils.getScalarValue(strReqNo, CnnString);
-
-                        SQLString = "Exec [laserreqSlip1DashBoard]  '" + HSRP_StateID + "','" + Navembcode + "' ,  '" + ReqNum + "'";
-                        DataTable dtResult = Utils.Utils.GetDataTable(SQLString, CnnString);
-
-                        string strQuery = string.Empty;
-                        string strRtoLocationName = string.Empty;
-                        int Itotal = 0;
-
-                        html.Append("<div style='width:100%;height:100%;'>" +
-                                            "<table style='width:100%'>" +
-
-                                                "<tr>" +
-                                                    "<td colspan='12'>" +
-                                                        "<div style='text-align:center;padding:8px;'>" +
-                                                            "<b style='font-size:20px;margin-top:2px;margin-bottom:2px;'>" + strCompanyName + "</b>" +
-
-                                                            "<p style='margin-top:2px;margin-bottom:2px;'>" + " " + "</p>" +
-                                                             "<b style='font-size:20px;'>" + "MATERIAL REQUSITION NOTE" + "</b>" +
-
-                                                        "</div>" +
+                                                    "<td colspan='3' style='border: 0px;'>" +
+                                                        "<div style='text-align:left'><b>Report Generation Date:</b> " + DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss") + "</div>" +
                                                     "</td>" +
+
+                                                     "<td colspan='3' style='border: 0px;'>" +
+                                                        "<div style='text-align:left'><b>ROSMERTA SAFETY SYSTEMS LIMITED</b> " + "</div>" +
+                                                    "</td>" +
+
+
+                                                     "<td colspan='5' style='border: 0px;'>" +
+                                                        "<div style='float:left;width: 500px;word-wrap: break-word;'><b>Production Sheet No:</b> " + strRunningNo + " </div>" +
+                                                    "</td>" +
+
                                                 "</tr>" +
 
-                                                "<tr>" +
-                                                    "<td colspan='12'>" +
-                                                        "<div style='text-align:center;padding:8px;'>" +
-                                                            "<b style='font-size:20px;margin-top:2px;margin-bottom:2px;'>" + "Production Sheet Date :" + DateTime.Now.ToString("dd-MM-yyyy") + "</b>" +
-                                                            "<p style='margin-top:2px;margin-bottom:2px;'>" + " " + "</p>" +
-                                                             "<b style='font-size:20px;'>" + "" + "</b>" +
-                                                        "</div>" +
+                                                  "<tr style='border: 0px;'>" +
+                                                    "<td colspan='3' style='border: 0px;'>" +
+                                                        "<div style='text-align:left'><b>State:</b> " + HSRPStateName + "</div>" +
                                                     "</td>" +
-                                                "</tr>" +
-                                                "<tr>" +
-                                                    "<td colspan='6'>" +
-                                                        "<div style='text-align:left;'>" +
-                                                            "<b style='font-size:20px;margin-top:2px;margin-bottom:2px;'>REQ.NO:-</b>" +
-                                                            "" + strReqNumber + "" +
-                                                        "</div>" +
+
+                                                     "<td colspan='3' style='border: 0px;'>" +
+                                                        "<div style='text-align:left'><b>Production Sheet</b> " + "</div>" +
                                                     "</td>" +
-                                                    "<td colspan='6'>" +
-                                                        "<div style='text-align:left;'>" +
-                                                            "<b style='font-size:20px;margin-top:2px;margin-bottom:2px;'>Embossing Center:</b>" +
-                                                            "" + strComNew + "" +
-                                                        "</div>" +
+
+
+                                                     "<td colspan='5' style='border: 0px;'>" +
+                                                        "<div style='float:left;width: 500px;word-wrap: break-word;'><b>Dealer ID/Name:</b> " + dealerid + "/" + dealername + "/" + strsubaffixid + " </div>" +
                                                     "</td>" +
-                                                "</tr>" +
-                                                "<tr>" +
-                                                    "<td colspan='12'>" +
-                                                        "<div style='text-align:left;padding:2px;'>" +
-                                                            "<b style='font-size:20px;margin-top:2px;margin-bottom:2px;'>" + "State:" + HSRPStateName + "</b>" +
-                                                            "<p style='margin-top:2px;margin-bottom:2px;'>" + " " + "</p>" +
-                                                             "<b style='font-size:20px;'>" + "" + "</b>" +
-                                                        "</div>" +
-                                                    "</td>" +
-                                                "</tr>" +
-                                                 "<tr>" +
-                                                    "<td colspan='12'>" +
-                                                        "<div style='text-align:left;padding:8px;'>" +
-                                                            "<b style='font-size:20px;margin-top:2px;margin-bottom:2px;'>" + " " + "</b>" +
-                                                            "<p style='margin-top:2px;margin-bottom:2px;'>" + " " + "</p>" +
-                                                             "<b style='font-size:20px;'>" + "" + "</b>" +
-                                                        "</div>" +
-                                                    "</td>" +
+
                                                 "</tr>" +
 
-                                                "<tr>" +
-                                                    "<td colspan='1' style='text-align:center'>SR.N.</td>" +
-                                                    "<td colspan='3'>Product Size</td>" +
-                                                    "<td colspan='1'>Laser Count</td>" +
-                                                    "<td colspan='1'>Start Laser No</td>" +
-                                                    "<td colspan='1'>End Laser No</td>" +
+                                                    "<tr style='border: 0px;'>" +
+                                                    "<td colspan='3' style='border: 0px;'>" +
+                                                        "<div style='text-align:left'><b>EC Location: </b> " + RTOLocationName + "</div>" +
+                                                    "</td>" +
+
+                                                     "<td colspan='3' style='border: 0px;'>" +
+                                                        "<div style='style='text-align:left'><b>Oem :</b> " + oemname + "</div>" +
+                                                    "</td>" +
+
+
+                                                     "<td colspan='5' style='border: 0px;'>" +
+                                                         "<div style='float:left;width: 500px;word-wrap: break-word;'><b>Dealer Address:</b> " + Address + " </div>" +
+                                                    //"<div style='text-align:left'><b>Dealer Address:</b> " + Address + " </div>" +
+                                                    "</td>" +
+
+                                                "</tr>" +
+
+
+      "<tr>" +
+                                                    "<td style='text-align:center'>Sr. No.</td>" +
+                                                      "<td>Vehicle No.</td>" +
+                                                       "<td>Front Plate Size</td>" +
+                                                    "<td>Front Laser No.</td>" +
+
+                                                    "<td>Rear Plate Size</td>" +
+                                                    "<td>Rear Laser No.</td>" +
+
+                                                    "<td>H. S. Foil </td>" +
+                                                    "<td>Caution Sticker</td>" +
+                                                    "<td>Fuel Type</td>" +
+                                                    "<td >VT</td>" +
+                                                    "<td >VC</ td>" +
 
                                                 "</tr>");
 
+                                    #endregion
 
-                        if (dtResult.Rows.Count > 0)
-                        {
-                            for (int i = 0; i < dtResult.Rows.Count; i++)
-                            {
-                                string ID = dtResult.Rows[i]["ID"].ToString();
-                                string productcode = dtResult.Rows[i]["productcode"].ToString();
-                                string LaserCount = dtResult.Rows[i]["LaserCount"].ToString();
-                                Itotal = Convert.ToInt32(dtResult.Rows[i]["Total"].ToString());
-                                string BeginLaser = dtResult.Rows[i]["BeginLaser"].ToString();
-                                string EndLaser = dtResult.Rows[i]["EndLaser"].ToString();
+                                    #region
+                                    foreach (DataRow drProduction in dtProduction.Rows)
+                                    {
+                                        string HsrprecordID = drProduction["hsrprecordID"].ToString().Trim();
+                                        string SRNo = drProduction["SRNo"].ToString().Trim();
+                                        string ORD = "";// drProduction["ORD"].ToString().Trim();
+                                        string VC = drProduction["VehicleClass"].ToString().Trim();
+                                        string VehicleNo = drProduction["VehicleRegNo"].ToString().Trim();
+                                        // string VehicleNo = "<td style='text-align:center;font-size:20px;'>" + "<b>" + drProduction["VehicleRegNo"].ToString().Trim() + "</b> </td>" +
+                                        string VT = drProduction["VehicleType"].ToString().Trim();
+                                        //string ChassisNo = drProduction["ChassisNo"].ToString().Trim();
+                                        //string EngineNo = drProduction["EngineNo"].ToString().Trim();
+                                        string FuelType = drProduction["FuelType"].ToString().Trim();
+                                        string FrontPSize = drProduction["FrontProductCode"].ToString().Trim();
+                                        // string FrontLaserNo = "<td style='text-align:center;font-size:20px;'>" + "<b>" + drProduction["HSRP_Front_LaserCode"].ToString().Trim() + "</b> </td>" +
+                                        string FrontLaserNo = drProduction["HSRP_Front_LaserCode"].ToString().Trim();
+                                        string RearPSize = drProduction["RearProductCode"].ToString().Trim();
+                                        string RearLaserNo = drProduction["HSRP_Rear_LaserCode"].ToString().Trim();
+                                        //string RearLaserNo = "<td style='text-align:center;font-size:20px;'>" + "<b>" + drProduction["HSRP_Rear_LaserCode"].ToString().Trim() + "</b> </td>" +
+                                        string Amount = drProduction["roundoff_netamount"].ToString().Trim();
+                                        //string OrderStatus = drProduction["OrderStatus"].ToString().Trim();
+                                        string stickerColor = drProduction["stickerColor"].ToString().Trim();
+                                        string HotStampingFoilColour = drProduction["HotStampingFoilColour"].ToString().Trim();
+
+                                        html.Append("<tr>" +
+                                       "<td style='text-align:center'>" + SRNo + "</td>" +
+                                           "<td style='text-align:center;font-size:20px;'>" + "<b>" + VehicleNo + "</b> </td>" +
+
+                                            "<td>" + FrontPSize + "</td>" +
+                                             "<td style='text-align:center;font-size:20px;'>" + "<b>" + FrontLaserNo + "</b> </td>" +
+                                               "<td>" + RearPSize + "</td>" +
+                                             "<td style='text-align:center;font-size:20px;'>" + "<b>" + RearLaserNo + "</b> </td>" +
+
+                                              "<td>" + HotStampingFoilColour + "</td>" +
+                                               "<td>" + stickerColor + "</td>" +
+                                                "<td>" + FuelType + "</td>" +
+                                                "<td>" + VT + "</td>" +
+                                                "<td>" + VC + "</td>" +
 
 
 
 
-                                html.Append("<tr>" +
-                                   "<td colspan='1' style='text-align:left'>" + ID + "</td>" +
-                                   "<td colspan='3'>" + productcode + "</td>" +
 
-                                   "<td colspan='1'>" + LaserCount + "</td>" +
-                                   "<td colspan='1'>" + BeginLaser + "</td>" +
-                                   "<td colspan='1'>" + EndLaser + "</td>" +
+                                   "</tr>");
 
-                               "</tr>");
+
+                                        try
+                                        {
+                                            //start updating hsrprecords 
+                                            string sqlUpdateHSRPRecords = "update hsrprecords set sendtoProductionStatus='Y', NAVPDFFlag='1', NewPdfRunningNo='" + strProductionSheetNo + "', Requisitionsheetno='" + ReqNum + "',  " +
+                                                  "PdfDownloadDate=GetDate(), pdfFileName='" + fileName + "', PDFDownloadUserID='1' where hsrprecordID='" + HsrprecordID + "' ";
+
+                                            Utils.Utils.ExecNonQuery(sqlUpdateHSRPRecords, CnnString);   // uncomment after testing
+                                        }
+                                        catch (Exception ev)
+                                        {
+                                            Label1.Text = "hsrprecords update error: " + ev.Message;
+                                        }
+                                        //end 
+
+                                    }
+                                    #endregion
+                                    html.Append("</table>");
+
+                                    html.Append("</div>");
+
+                                    try
+                                    {
+                                        string StrSqlUpdateECQuery = "update EmbossingCentersNew set NewProductionSheetRunningNo='" + strProductionSheetNo + "' " +
+                                         "where State_Id='" + HSRP_StateID + "' and Emb_Center_Id='" + Navembcode + "'";
+                                        Utils.Utils.ExecNonQuery(StrSqlUpdateECQuery, CnnString); // uncomment after testing
+                                    }
+                                    catch (Exception ev)
+                                    {
+                                        Label1.Text = "EmbossingCentersNew update error: " + ev.Message;
+                                    }
+                                }
+
+                                #endregion
+
                             }
-                        }
-                        html.Append("<tr>" +
-                                 "<td colspan='1' style='text-align:center' > " + "<b>Grand Total:</b>" + "</td>" +
-                                 "<td colspan='3'>" + "" + "</td>" +
+                        }// close oemDealerQuery
+                        #endregion
 
-                                 "<td colspan='1'>" + Itotal + "</td>" +
-                                 "<td colspan='1'>" + " " + "</td>" +
-                                 "<td colspan='1'>" + " " + "</td>" +
-
-                             "</tr>");
+                        #region "Req Generate"
+                        string strComNew = string.Empty;
+                        string strReqNumber = string.Empty;
+                        string strReqNo = string.Empty;
 
 
 
+                        string strSqlQuery1 = "select CompanyName from hsrpstate where hsrp_stateid='" + HSRP_StateID + "'";
+                        strCompanyName = Utils.Utils.getScalarValue(strSqlQuery1, CnnString);
 
-                        html.Append("<tr>" +
-                         "<td colspan='2' > " + "<b>REQUESTED BY </b>" + "</td>" +
-                         "<td colspan='2'>" + "<b>AUTHORIZED BY </b>" + "</td>" +
+                        string strEMBName = " select EmbCenterName from EmbossingCentersNew where  State_Id='" + HSRP_StateID + "' and Emb_Center_Id='" + Navembcode + "'";
+                        strComNew = Utils.Utils.getScalarValue(strEMBName, CnnString);
 
-                         "<td colspan='2'>" + "<b>ISSUED BY </b>" + "</td>" +
-                         "<td colspan='2'>" + "<b>RECEIVED BY</b>" + "</td>" +
+                        if (strComNew != "")
+                        {
 
 
-                     "</tr>");
 
-                        html.Append("<tr>" +
+                            strReqNo = "select (prefixtext+right('00000'+ convert(varchar,lastno+1),5)) as Reqno from prefix_Requisition  where hsrp_stateid='" + HSRP_StateID + "' and prefixfor='Req No'";
+                            strReqNumber = Utils.Utils.getScalarValue(strReqNo, CnnString);
+
+                            SQLString = "Exec [laserreqSlip1DashBoard]  '" + HSRP_StateID + "','" + Navembcode + "' ,  '" + ReqNum + "'";
+                            DataTable dtResult = Utils.Utils.GetDataTable(SQLString, CnnString);
+
+                            string strQuery = string.Empty;
+                            string strRtoLocationName = string.Empty;
+                            int Itotal = 0;
+
+                            html.Append("<div style='width:100%;height:100%;'>" +
+                                                "<table style='width:100%'>" +
+
+                                                    "<tr>" +
+                                                        "<td colspan='12'>" +
+                                                            "<div style='text-align:center;padding:8px;'>" +
+                                                                "<b style='font-size:20px;margin-top:2px;margin-bottom:2px;'>" + strCompanyName + "</b>" +
+
+                                                                "<p style='margin-top:2px;margin-bottom:2px;'>" + " " + "</p>" +
+                                                                 "<b style='font-size:20px;'>" + "MATERIAL REQUSITION NOTE" + "</b>" +
+
+                                                            "</div>" +
+                                                        "</td>" +
+                                                    "</tr>" +
+
+                                                    "<tr>" +
+                                                        "<td colspan='12'>" +
+                                                            "<div style='text-align:center;padding:8px;'>" +
+                                                                "<b style='font-size:20px;margin-top:2px;margin-bottom:2px;'>" + "Production Sheet Date :" + DateTime.Now.ToString("dd-MM-yyyy") + "</b>" +
+                                                                "<p style='margin-top:2px;margin-bottom:2px;'>" + " " + "</p>" +
+                                                                 "<b style='font-size:20px;'>" + "" + "</b>" +
+                                                            "</div>" +
+                                                        "</td>" +
+                                                    "</tr>" +
+                                                    "<tr>" +
+                                                        "<td colspan='6'>" +
+                                                            "<div style='text-align:left;'>" +
+                                                                "<b style='font-size:20px;margin-top:2px;margin-bottom:2px;'>REQ.NO:-</b>" +
+                                                                "" + strReqNumber + "" +
+                                                            "</div>" +
+                                                        "</td>" +
+                                                        "<td colspan='6'>" +
+                                                            "<div style='text-align:left;'>" +
+                                                                "<b style='font-size:20px;margin-top:2px;margin-bottom:2px;'>Embossing Center:</b>" +
+                                                                "" + strComNew + "" +
+                                                            "</div>" +
+                                                        "</td>" +
+                                                    "</tr>" +
+                                                    "<tr>" +
+                                                        "<td colspan='12'>" +
+                                                            "<div style='text-align:left;padding:2px;'>" +
+                                                                "<b style='font-size:20px;margin-top:2px;margin-bottom:2px;'>" + "State:" + HSRPStateName + "</b>" +
+                                                                "<p style='margin-top:2px;margin-bottom:2px;'>" + " " + "</p>" +
+                                                                 "<b style='font-size:20px;'>" + "" + "</b>" +
+                                                            "</div>" +
+                                                        "</td>" +
+                                                    "</tr>" +
+                                                     "<tr>" +
+                                                        "<td colspan='12'>" +
+                                                            "<div style='text-align:left;padding:8px;'>" +
+                                                                "<b style='font-size:20px;margin-top:2px;margin-bottom:2px;'>" + " " + "</b>" +
+                                                                "<p style='margin-top:2px;margin-bottom:2px;'>" + " " + "</p>" +
+                                                                 "<b style='font-size:20px;'>" + "" + "</b>" +
+                                                            "</div>" +
+                                                        "</td>" +
+                                                    "</tr>" +
+
+                                                    "<tr>" +
+                                                        "<td colspan='1' style='text-align:center'>SR.N.</td>" +
+                                                        "<td colspan='3'>Product Size</td>" +
+                                                        "<td colspan='1'>Laser Count</td>" +
+                                                        "<td colspan='1'>Start Laser No</td>" +
+                                                        "<td colspan='1'>End Laser No</td>" +
+
+                                                    "</tr>");
+
+
+                            if (dtResult.Rows.Count > 0)
+                            {
+                                for (int i = 0; i < dtResult.Rows.Count; i++)
+                                {
+                                    string ID = dtResult.Rows[i]["ID"].ToString();
+                                    string productcode = dtResult.Rows[i]["productcode"].ToString();
+                                    string LaserCount = dtResult.Rows[i]["LaserCount"].ToString();
+                                    Itotal = Convert.ToInt32(dtResult.Rows[i]["Total"].ToString());
+                                    string BeginLaser = dtResult.Rows[i]["BeginLaser"].ToString();
+                                    string EndLaser = dtResult.Rows[i]["EndLaser"].ToString();
+
+
+
+
+                                    html.Append("<tr>" +
+                                       "<td colspan='1' style='text-align:left'>" + ID + "</td>" +
+                                       "<td colspan='3'>" + productcode + "</td>" +
+
+                                       "<td colspan='1'>" + LaserCount + "</td>" +
+                                       "<td colspan='1'>" + BeginLaser + "</td>" +
+                                       "<td colspan='1'>" + EndLaser + "</td>" +
+
+                                   "</tr>");
+                                }
+                            }
+                            html.Append("<tr>" +
+                                     "<td colspan='1' style='text-align:center' > " + "<b>Grand Total:</b>" + "</td>" +
+                                     "<td colspan='3'>" + "" + "</td>" +
+
+                                     "<td colspan='1'>" + Itotal + "</td>" +
+                                     "<td colspan='1'>" + " " + "</td>" +
+                                     "<td colspan='1'>" + " " + "</td>" +
+
+                                 "</tr>");
+
+
+
+
+                            html.Append("<tr>" +
+                             "<td colspan='2' > " + "<b>REQUESTED BY </b>" + "</td>" +
+                             "<td colspan='2'>" + "<b>AUTHORIZED BY </b>" + "</td>" +
+
+                             "<td colspan='2'>" + "<b>ISSUED BY </b>" + "</td>" +
+                             "<td colspan='2'>" + "<b>RECEIVED BY</b>" + "</td>" +
+
+
+                         "</tr>");
+
+                            html.Append("<tr>" +
+                                                      "<td colspan='12'>" +
+                                                          "<div style='text-align:left;padding:2px;'>" +
+                                                              "<b style='font-size:20px;margin-top:2px;margin-bottom:2px;'>" + "Name" + "</b>" +
+
+                                                          "</div>" +
+                                                      "</td>" +
+                                                  "</tr>");
+
+                            html.Append("<tr>" +
+                                                     "<td colspan='12'>" +
+                                                         "<div style='text-align:left;padding:2px;'>" +
+                                                             "<b style='font-size:20px;margin-top:2px;margin-bottom:2px;'>" + "Designation" + "</b>" +
+
+                                                         "</div>" +
+                                                     "</td>" +
+                                                 "</tr>");
+
+                            html.Append("<tr>" +
+                                                   "<td colspan='12'>" +
+                                                       "<div style='text-align:right;padding:8px;'>" +
+                                                           "<b style='font-size:20px;margin-top:2px;margin-bottom:2px;'>" + "Download By: Admin " + "</b>" +
+
+                                                       "</div>" +
+                                                   "</td>" +
+                                               "</tr>");
+
+                            html.Append("<tr>" +
                                                   "<td colspan='12'>" +
-                                                      "<div style='text-align:left;padding:2px;'>" +
-                                                          "<b style='font-size:20px;margin-top:2px;margin-bottom:2px;'>" + "Name" + "</b>" +
+                                                      "<div style='text-align:right;padding:8px;'>" +
+                                                          "<b style='font-size:20px;margin-top:2px;margin-bottom:2px;'>" + "Sheet Generated By :" + DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss") + "</b>" +
 
                                                       "</div>" +
                                                   "</td>" +
                                               "</tr>");
 
-                        html.Append("<tr>" +
-                                                 "<td colspan='12'>" +
-                                                     "<div style='text-align:left;padding:2px;'>" +
-                                                         "<b style='font-size:20px;margin-top:2px;margin-bottom:2px;'>" + "Designation" + "</b>" +
-
-                                                     "</div>" +
-                                                 "</td>" +
-                                             "</tr>");
-
-                        html.Append("<tr>" +
-                                               "<td colspan='12'>" +
-                                                   "<div style='text-align:right;padding:8px;'>" +
-                                                       "<b style='font-size:20px;margin-top:2px;margin-bottom:2px;'>" + "Download By: Admin " + "</b>" +
-
-                                                   "</div>" +
-                                               "</td>" +
-                                           "</tr>");
-
-                        html.Append("<tr>" +
-                                              "<td colspan='12'>" +
-                                                  "<div style='text-align:right;padding:8px;'>" +
-                                                      "<b style='font-size:20px;margin-top:2px;margin-bottom:2px;'>" + "Sheet Generated By :" + DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss") + "</b>" +
-
-                                                  "</div>" +
-                                              "</td>" +
-                                          "</tr>");
 
 
 
 
 
 
+                            html.Append("</table>");
 
-                        html.Append("</table>");
+                            html.Append("</div>");
 
-                        html.Append("</div>");
-
-                        try
-                        {
-                            //start updating hsrprecords 
-                            string Query = "update prefix_Requisition set lastno=lastno+1,Lastreqno=Lastreqno+1 where hsrp_stateid='" + HSRP_StateID + "' and prefixfor='Req No'";
-                            Utils.Utils.ExecNonQuery(Query, CnnString);
-                        }
-                        catch (Exception ev)
-                        {
-                            Label1.Text = "prefix Requisition update error: " + ev.Message;
-                        }
-                    }
-
-
-                    #endregion
-
-                    /*
-                     * Close body & HTMl Tag
-                     */
-                    html.Append("</body>" +
-                        "</html>");
-
-
-                    if (findRecord)
-                    {
-
-                        string strSaveSQlQuery = "insert into ProductionSheetAutoGenerated_List (HSRP_StateID, State_Code, RTO_ID, Emb_Center_Id, FileName, Productiondate, ProductionTime, OrderNo) values " +
-                                    "('" + HSRP_StateID + "', '" + HSRPStateShortName + "', '', '" + Navembcode + "', '" + fileName + "', '" + DateTime.Now.ToString("yyyy-MM-dd") + "', '" + DateTime.Now.ToString("HH:mm:ss") + "', '" + filePrefix + "') ";
-                        Utils.Utils.ExecNonQuery(strSaveSQlQuery, CnnString); // uncomment after testing
-                        Label1.Text = Label1.Text + "successfully created production sheet of State: " + HSRPStateShortName + ", , Emb_Center_Id: " + Navembcode + Environment.NewLine;
-
-                        //lblLog.Text = lblLog.Text + Environment.NewLine + "Start Production Query at:" + DateTime.Now;
-                        #region
-                        try
-                        {
-                            if (!Directory.Exists(dir))
+                            try
                             {
+                                //start updating hsrprecords 
+                                string Query = "update prefix_Requisition set lastno=lastno+1,Lastreqno=Lastreqno+1 where hsrp_stateid='" + HSRP_StateID + "' and prefixfor='Req No'";
+                                Utils.Utils.ExecNonQuery(Query, CnnString);
+                            }
+                            catch (Exception ev)
+                            {
+                                Label1.Text = "prefix Requisition update error: " + ev.Message;
+                            }
+                        }
 
 
-                                Directory.CreateDirectory(dir);
+                        #endregion
+
+                        /*
+                         * Close body & HTMl Tag
+                         */
+                        html.Append("</body>" +
+                            "</html>");
+
+
+                        if (findRecord)
+                        {
+
+                            string strSaveSQlQuery = "insert into ProductionSheetAutoGenerated_List (HSRP_StateID, State_Code, RTO_ID, Emb_Center_Id, FileName, Productiondate, ProductionTime, OrderNo) values " +
+                                        "('" + HSRP_StateID + "', '" + HSRPStateShortName + "', '', '" + Navembcode + "', '" + fileName + "', '" + DateTime.Now.ToString("yyyy-MM-dd") + "', '" + DateTime.Now.ToString("HH:mm:ss") + "', '" + filePrefix + "') ";
+                            Utils.Utils.ExecNonQuery(strSaveSQlQuery, CnnString); // uncomment after testing
+                            Label1.Text = Label1.Text + "successfully created production sheet of State: " + HSRPStateShortName + ", , Emb_Center_Id: " + Navembcode + Environment.NewLine;
+
+                            //lblLog.Text = lblLog.Text + Environment.NewLine + "Start Production Query at:" + DateTime.Now;
+                            #region
+                            try
+                            {
+                                if (!Directory.Exists(dir))
+                                {
+
+
+                                    Directory.CreateDirectory(dir);
+
+                                }
 
                             }
+                            catch (Exception ev)
+                            {
+                                // Fail silently
+                                Label1.Text = ev.Message;
+                            }
 
-                        }
-                        catch (Exception ev)
-                        {
-                            // Fail silently
-                            Label1.Text = ev.Message;
-                        }
+                            try
+                            {
+                                var pdf = Pdf
+                                        .From(html.ToString())
+                                        .OfSize(PaperSize.A4)
+                                        .WithTitle("Title")
+                                        .WithoutOutline()
+                                        .WithMargins(1.25.Centimeters())
+                                         .Landscape()
+                                        .Comressed()
+                                        .Content();
 
-                        try
-                        {
-                            var pdf = Pdf
-                                    .From(html.ToString())
-                                    .OfSize(PaperSize.A4)
-                                    .WithTitle("Title")
-                                    .WithoutOutline()
-                                    .WithMargins(1.25.Centimeters())
-                                     .Landscape()
-                                    .Comressed()
-                                    .Content();
+                                FileStream readStream = File.Create(filePath);
+                                BinaryWriter binaryWriter = new BinaryWriter(readStream);
 
-                            FileStream readStream = File.Create(filePath);
-                            BinaryWriter binaryWriter = new BinaryWriter(readStream);
+                                // Write the binary data to the file
+                                binaryWriter.Write(pdf);
+                                binaryWriter.Close();
+                                readStream.Close();
+                            }
+                            catch (Exception ev)
+                            {
+                                // Fail silently
+                                Label1.Text = ev.Message;
+                            }
 
-                            // Write the binary data to the file
-                            binaryWriter.Write(pdf);
-                            binaryWriter.Close();
-                            readStream.Close();
-                        }
-                        catch (Exception ev)
-                        {
-                            // Fail silently
-                            Label1.Text = ev.Message;
+                            #endregion
                         }
 
                         #endregion
-                    }
 
-                    #endregion
-
-                }//close foreach stateEcQuery
+                    }//close foreach stateEcQuery
+                }
             }
         }
 
@@ -2761,610 +2705,614 @@ namespace ProductionSheetDashBoard
             //string Navembid = Session["Navembid"].ToString();
             FillUserDetails();
 
-
-            stateECQuery = "select distinct a.HSRP_StateID, (select HSRPStateName from hsrpstate c where c.hsrp_stateid=a.hsrp_stateid) as HSRPStateName,(select HSRPStateShortName from hsrpstate d where d.hsrp_stateid=a.hsrp_stateid) as HSRPStateShortName, navembcode from hsrprecords a,rtolocation b where a.HSRP_StateID ='" + ddlStateName.SelectedValue + "'  and a.rtolocationid=b.rtolocationid and  NewPdfRunningNo is null and erpassigndate is not null  and Dealerid in(select dealerid from dealermaster where oemid='40') and OrderStatus='New Order' and    b.Navembcode not like '%CODO%' and b.NAVEMBID='" + Navembid + "'  order by  a.HSRP_StateID";
-
-
-            DataTable dtSE = Utils.Utils.GetDataTable(stateECQuery, CnnString);
-            if (dtSE.Rows.Count > 0)
+           string strTvs="select HSRPrecordid from hsrprecords a  with(nolock) ,rtolocation b where a.HSRP_StateID = '" + ddlStateName.SelectedValue + "'  and a.rtolocationid = b.rtolocationid and NewPdfRunningNo is null and erpassigndate is not null and Dealerid in(select dealerid from dealermaster where oemid = '40') and OrderStatus = 'New Order' and b.Navembcode not like '%CODO%' and b.NAVEMBID = '" + Navembid + "'  order by  a.HSRP_StateID";
+           DataTable dtTvs = Utils.Utils.GetDataTable(strTvs, CnnString);
+            if (dtTvs.Rows.Count > 0)
             {
-                foreach (DataRow dr in dtSE.Rows)
+                stateECQuery = "select distinct a.HSRP_StateID, (select HSRPStateName from hsrpstate c where c.hsrp_stateid=a.hsrp_stateid) as HSRPStateName,(select HSRPStateShortName from hsrpstate d where d.hsrp_stateid=a.hsrp_stateid) as HSRPStateShortName, navembcode from hsrprecords a,rtolocation b where a.HSRP_StateID ='" + ddlStateName.SelectedValue + "'  and a.rtolocationid=b.rtolocationid and  NewPdfRunningNo is null and erpassigndate is not null  and Dealerid in(select dealerid from dealermaster where oemid='40') and OrderStatus='New Order' and    b.Navembcode not like '%CODO%' and b.NAVEMBID='" + Navembid + "'  order by  a.HSRP_StateID";
+
+
+                DataTable dtSE = Utils.Utils.GetDataTable(stateECQuery, CnnString);
+                if (dtSE.Rows.Count > 0)
                 {
-                    #region
-
-                    string HSRP_StateID = dr["HSRP_StateID"].ToString().Trim();
-                    string HSRPStateName = dr["HSRPStateName"].ToString().Trim();
-                    string HSRPStateShortName = dr["HSRPStateShortName"].ToString().Trim();
-                    string Navembcode = dr["Navembcode"].ToString().Trim();
-
-                    string dir = dirPath + DateTime.Now.ToString("yyyy-MM-dd") + "\\" + HSRPStateShortName + "\\";
-                    //string dir = dirPath + "/" + DateTime.Now.ToString("yyyy-MM-dd") + "/" + HSRPStateShortName + "/";
-                    string fileName = "FAL" + "-" + filePrefix + "-" + Navembcode + ".pdf";
-                    string filePath = dir + fileName;
-
-                    //string folderpath = ConfigurationManager.AppSettings["InvoiceFolder"].ToString() + "/" + FinYear + "/" + oemid + "/" + HSRPStateID + "/";
-
-                    StringBuilder html = new StringBuilder();
-
-                    Boolean findRecord = false;
-                    string strProductionSheetNo = string.Empty;
-
-                    /*
-                     *  Start body & HTMl Tag
-                     */
-                    #region
-                    html.Append(
-                        "<!DOCTYPE html>" +
-                        "<html>" +
-                        "<head>" +
-                            "<meta charset='UTF-8'><title>Title</title>" +
-                            "<style>" +
-                                "@page {" +
-                                    /* headers*/
-                                    "@top-left {" +
-                                        "content: 'Left header';" +
-                                    "}" +
-                                    "@top-right {" +
-                                        "content: 'Right header';" +
-                                    "}" +
-
-                                    /* footers */
-                                    "@bottom-left {" +
-                                        "content: 'Lorem ipsum';" +
-                                    "} " +
-                                    "@bottom-right {" +
-                                        "content: 'Page ' counter(page) ' of ' counter(pages);" +
-                                    "}" +
-                                    "@bottom-center  {" +
-                                        "content:element(footer);" +
-                                    "}" +
-                                "}" +
-                                 "#footer {" +
-                                    "position: running(footer);" +
-                                "}" +
-                                "table {" +
-                                  "border-collapse: collapse;" +
-                                "}" +
-
-                                "table, th, td {" +
-                                    "border: 1px solid black;" +
-                                    "text-align: left;" +
-                                    "vertical-align: top;" +
-                                    "padding:5px;" +
-                                "}" +
-                            "</style>" +
-                        "</head>" +
-                        "<body>");
-                    #endregion
-
-                    string oemDealerQuery = string.Empty;
-
-
-
-                    oemDealerQuery = "select distinct om.oemid as oemid, om.name as oemname, dm.dealerid, dm.dealername, dm.dealercode, dm.Address, dm.HSRP_StateID, " +
-                        "dm.RTOLocationID from oemmaster om " +
-                        "left join dealermaster dm on dm.oemid = om.oemid where dm.HSRP_StateID =" + HSRP_StateID + " and " +
-                        "dm.RTOLocationID in (select RTOLocationID from rtolocation where Navembcode='" + Navembcode + "' ) and " +
-                        "dm.dealerid in (select distinct dealerid from hsrprecords where NewPdfRunningNo is null and erpassigndate is not null and OrderStatus='New Order' and HSRP_StateID =" + HSRP_StateID + " and  Dealerid in(select dealerid from Dealermaster where oemid='40')) and Om.OEMID   in('40')";
-
-
-                    #region
-                    DataTable dtOD = Utils.Utils.GetDataTable(oemDealerQuery, CnnString);
-                    if (dtOD.Rows.Count > 0)
+                    foreach (DataRow dr in dtSE.Rows)
                     {
-                        foreach (DataRow drOD in dtOD.Rows)
+                        #region
+
+                        string HSRP_StateID = dr["HSRP_StateID"].ToString().Trim();
+                        string HSRPStateName = dr["HSRPStateName"].ToString().Trim();
+                        string HSRPStateShortName = dr["HSRPStateShortName"].ToString().Trim();
+                        string Navembcode = dr["Navembcode"].ToString().Trim();
+
+                        string dir = dirPath + DateTime.Now.ToString("yyyy-MM-dd") + "\\" + HSRPStateShortName + "\\";
+                        //string dir = dirPath + "/" + DateTime.Now.ToString("yyyy-MM-dd") + "/" + HSRPStateShortName + "/";
+                        string fileName = "FAL" + "-" + filePrefix + "-" + Navembcode + ".pdf";
+                        string filePath = dir + fileName;
+
+                        //string folderpath = ConfigurationManager.AppSettings["InvoiceFolder"].ToString() + "/" + FinYear + "/" + oemid + "/" + HSRPStateID + "/";
+
+                        StringBuilder html = new StringBuilder();
+
+                        Boolean findRecord = false;
+                        string strProductionSheetNo = string.Empty;
+
+                        /*
+                         *  Start body & HTMl Tag
+                         */
+                        #region
+                        html.Append(
+                            "<!DOCTYPE html>" +
+                            "<html>" +
+                            "<head>" +
+                                "<meta charset='UTF-8'><title>Title</title>" +
+                                "<style>" +
+                                    "@page {" +
+                                        /* headers*/
+                                        "@top-left {" +
+                                            "content: 'Left header';" +
+                                        "}" +
+                                        "@top-right {" +
+                                            "content: 'Right header';" +
+                                        "}" +
+
+                                        /* footers */
+                                        "@bottom-left {" +
+                                            "content: 'Lorem ipsum';" +
+                                        "} " +
+                                        "@bottom-right {" +
+                                            "content: 'Page ' counter(page) ' of ' counter(pages);" +
+                                        "}" +
+                                        "@bottom-center  {" +
+                                            "content:element(footer);" +
+                                        "}" +
+                                    "}" +
+                                     "#footer {" +
+                                        "position: running(footer);" +
+                                    "}" +
+                                    "table {" +
+                                      "border-collapse: collapse;" +
+                                    "}" +
+
+                                    "table, th, td {" +
+                                        "border: 1px solid black;" +
+                                        "text-align: left;" +
+                                        "vertical-align: top;" +
+                                        "padding:5px;" +
+                                    "}" +
+                                "</style>" +
+                            "</head>" +
+                            "<body>");
+                        #endregion
+
+                        string oemDealerQuery = string.Empty;
+
+
+
+                        oemDealerQuery = "select distinct om.oemid as oemid, om.name as oemname, dm.dealerid, dm.dealername, dm.dealercode, dm.Address, dm.HSRP_StateID, " +
+                            "dm.RTOLocationID from oemmaster om " +
+                            "left join dealermaster dm on dm.oemid = om.oemid where dm.HSRP_StateID =" + HSRP_StateID + " and " +
+                            "dm.RTOLocationID in (select RTOLocationID from rtolocation where Navembcode='" + Navembcode + "' ) and " +
+                            "dm.dealerid in (select distinct dealerid from hsrprecords where NewPdfRunningNo is null and erpassigndate is not null and OrderStatus='New Order' and HSRP_StateID =" + HSRP_StateID + " and  Dealerid in(select dealerid from Dealermaster where oemid='40')) and Om.OEMID   in('40')";
+
+
+                        #region
+                        DataTable dtOD = Utils.Utils.GetDataTable(oemDealerQuery, CnnString);
+                        if (dtOD.Rows.Count > 0)
                         {
-
-                            string oemid = drOD["oemid"].ToString().Trim();
-                            string dealerid = drOD["dealerid"].ToString().Trim();
-                            string oemname = drOD["oemname"].ToString().Trim();
-                            string dealername = drOD["dealername"].ToString().Trim();
-                            string Address = drOD["Address"].ToString().Trim();
-
-                            //start sql query
-                            #region
-                            string productionQuery = string.Empty;
-                            DataTable dtProduction = new DataTable();
-
-
-
-
-                            SqlConnection con = new SqlConnection(CnnString);
-                            SqlCommand cmd = new SqlCommand("USP_TVSProductionSheet", con);
-                            cmd.CommandType = CommandType.StoredProcedure;
-                            con.Open();
-                            cmd.Parameters.AddWithValue("@navembid", Navembcode);
-                            cmd.Parameters.AddWithValue("@HSRP_StateID", HSRP_StateID);
-                            cmd.Parameters.AddWithValue("@Dealerid", dealerid);
-                            //cmd.Parameters.AddWithValue("@Affix_Id", strsubaffixid);
-                            SqlDataAdapter da = new SqlDataAdapter(cmd);
-                            // dtProduction = new DataTable();
-                            da.Fill(dtProduction);
-                            con.Close();
-
-
-                            #endregion
-                            //end sql query
-
-                            #region
-                            //DataTable dtProduction = Utils.Utils.GetDataTable(productionQuery, CnnString);
-                            if (dtProduction.Rows.Count > 0)
+                            foreach (DataRow drOD in dtOD.Rows)
                             {
 
-                                findRecord = true;
-                                string strRunningNo = string.Empty;
-                                //string strSel = "select isnull(max(right(newProductionSheetRunningNo,7)),0000000) as maxSheetNo from EmbossingCentersNew where State_Id='" + HSRP_StateID + "' and Emb_Center_Id='" + NAVEMBID + "'";
-                                string strSel = "select isnull(max(right(newProductionSheetRunningNo,7)),0000000) from EmbossingCentersNew where State_Id='" + HSRP_StateID + "' and Emb_Center_Id='" + Navembcode + "' ";
-                                string strCom = Utils.Utils.getScalarValue(strSel, CnnString);
-                                //DataTable dtSheetNo = fillDataTable(strSel, CnnString);
-                                if (strCom.Equals(0) || strCom.Length == 0)
-                                {
-                                    strRunningNo = "0000001";
-                                }
-                                else
-                                {
-                                    strRunningNo = string.Format("{0:0000000}", Convert.ToInt32(strCom) + 1);
-                                }
+                                string oemid = drOD["oemid"].ToString().Trim();
+                                string dealerid = drOD["dealerid"].ToString().Trim();
+                                string oemname = drOD["oemname"].ToString().Trim();
+                                string dealername = drOD["dealername"].ToString().Trim();
+                                string Address = drOD["Address"].ToString().Trim();
 
-                                string strRequeNo = "select (prefixtext+right('00000'+ convert(varchar,Lastreqno+1),5)) as Reqno from prefix_Requisition  where hsrp_stateid='" + HSRP_StateID + "' and prefixfor='Req No'";
-                                ReqNum = Utils.Utils.getScalarValue(strRequeNo, CnnString);
-
-                                string strPRFIX = "select PrefixText from EmbossingCentersNew where State_Id='" + HSRP_StateID + "' and Emb_Center_Id='" + Navembcode + "'";
-                                string strPRFIXCom = Utils.Utils.getScalarValue(strPRFIX, CnnString);
-                                strProductionSheetNo = strPRFIXCom + strRunningNo;
-
-                                string RTOLocationName = dtProduction.Rows[0]["RTOLocationName"].ToString();
-
+                                //start sql query
                                 #region
-                                html.Append("<div style='page-break-before: avoid;page-break-inside: avoid;page-break-after: always;'>" +
-                                        "<table style='width:100%;border: 0px;'>" +
-                                            "<tr style='border: 0px;'>" +
-                                                "<td colspan='9' style='border: 0px;'>" +
-                                                    "<div style='text-align:left'><b>Report Generation Date:</b> " + DateTime.Now.ToString("dd-MM-yyyy") + "</div>" +
-                                                "</td>" +
-                                                "<td colspan='3' style='border: 0px;'>" +
-                                                    "<div style='float:right;width: 500px;word-wrap: break-word;'>" +
-                                                        "<b>Production Sheet No:</b> " + strRunningNo + "<br />" +
-                                                        "<b>Dealer ID/Name:</b> " + dealerid + "/" + dealername + "<br />" +
-                                                        "<b>Dealer Address:</b> " + Address + "<br />" +
-                                                    "</div>" +
-                                                "</td>" +
-                                            "</tr>" +
-                                            "<tr style='border: 0px;'>" +
-                                                "<td colspan='12' style='border: 0px;'>" +
-                                                    "<div style='text-align:center;font-size:26px;'><b>Future Accessories LLP Production Sheet : -</b> ROSMERTA SAFETY SYSTEMS LIMITED</div>" +
-                                                "</td>" +
-                                            "</tr>" +
-                                            "<tr style='border: 0px;'>" +
-                                                "<td colspan='9' style='border: 0px;'>" +
-                                                    "<table style='border:0px;width:100%;'>" +
-                                                        "<tr style='border:0px;'>" +
-                                                            "<td style='border:0px;'><b>State Name :</b> " + HSRPStateName + "</td>" +
-                                                            "<td style='border:0px;'><b>Oem Name :</b> " + oemname + "</td>" +
-                                                            "<td style='border:0px;'><b>Report Date:</b> " + DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss") + "</td>" +
-                                                        "</tr>" +
-                                                    "</table>" +
-                                                "</td>" +
-                                                "<td colspan='2' style='border: 0px;'>" +
-                                                    "<div style='float:right'>" +
-                                                        "ORD:Order Open Date<br />" +
-                                                        "VC:Vehicle Class<br />" +
-                                                        "VT:Vehicle Type<br />" +
-                                                        "Front PS:Front Plate Size<br />" +
-                                                        "Rear PS:Rear Plate Size<br />" +
-                                                        "OS: Order Satus(New Order/Embossing Done/Closed)" +
-                                                    "</div>" +
-                                                "</td>" +
-                                                "<td style='border: 0px;'></td>" +
-                                            "</tr>" +
-                                            "<tr style='border: 0px;'>" +
-                                                 "<td colspan='14' style='border: 0px;'>" +
-                                                    "<div style='text-align:left'>Location Name : " + RTOLocationName + " TVSPONO :  " + dtProduction.Rows[0]["TVSMPONO"].ToString() + "</div>" +
-                                                "</td>" +
-                                            "</tr>" +
-                                            "<tr>" +
-                                                "<td style='text-align:center'>SR.No</td>" +
-                                                  "<td>TVSPONO</td>" +
-                                                  "<td>VC</td>" +
-                                                "<td>Vehicle No</td>" +
-                                                "<td>VT</td>" +
-                                                "<td>Chassis No</td>" +
-                                                "<td>EngineNo</td>" +
-                                                "<td>Fuel Type</td>" +
-                                                "<td>Front PS</td>" +
-                                                "<td>Front Laser No</td>" +
-                                                "<td>Rear PS</td>" +
-                                                "<td>Rear Laser No.</td>" +
+                                string productionQuery = string.Empty;
+                                DataTable dtProduction = new DataTable();
 
 
-                                                    "<td>PartNo</td>" +
-                                              
-                                                   "<td style='text-align:center'>OS</td>" +
 
-                                                 "<td style='text-align:center'>Sticker Color</td>" +
-                                            "</tr>");
+
+                                SqlConnection con = new SqlConnection(CnnString);
+                                SqlCommand cmd = new SqlCommand("USP_TVSProductionSheet", con);
+                                cmd.CommandType = CommandType.StoredProcedure;
+                                con.Open();
+                                cmd.Parameters.AddWithValue("@navembid", Navembcode);
+                                cmd.Parameters.AddWithValue("@HSRP_StateID", HSRP_StateID);
+                                cmd.Parameters.AddWithValue("@Dealerid", dealerid);
+                                //cmd.Parameters.AddWithValue("@Affix_Id", strsubaffixid);
+                                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                                // dtProduction = new DataTable();
+                                da.Fill(dtProduction);
+                                con.Close();
+
+
                                 #endregion
+                                //end sql query
 
                                 #region
-                                string strtvspono = "";
-                                int j = 0;
-                                for (int i = 0; i <= dtProduction.Rows.Count - 1; i++)
+                                //DataTable dtProduction = Utils.Utils.GetDataTable(productionQuery, CnnString);
+                                if (dtProduction.Rows.Count > 0)
                                 {
 
-                                    string HsrprecordID = dtProduction.Rows[i]["hsrprecordID"].ToString().Trim();
-                                    string SRNo = dtProduction.Rows[i]["SRNo"].ToString().Trim();
-                                    //if (strtvspono == "")
-                                    //{
-                                    //    html.Append("<tr style='border:0px;'><td colspan='14' style='border:0px;'><br/><b>TVSPONO.: " + dtProduction.Rows[0]["TVSMPONO"].ToString() + "</b></td></tr>");
-                                    //}
-
-                                    if (strtvspono.ToString() == "")
+                                    findRecord = true;
+                                    string strRunningNo = string.Empty;
+                                    //string strSel = "select isnull(max(right(newProductionSheetRunningNo,7)),0000000) as maxSheetNo from EmbossingCentersNew where State_Id='" + HSRP_StateID + "' and Emb_Center_Id='" + NAVEMBID + "'";
+                                    string strSel = "select isnull(max(right(newProductionSheetRunningNo,7)),0000000) from EmbossingCentersNew where State_Id='" + HSRP_StateID + "' and Emb_Center_Id='" + Navembcode + "' ";
+                                    string strCom = Utils.Utils.getScalarValue(strSel, CnnString);
+                                    //DataTable dtSheetNo = fillDataTable(strSel, CnnString);
+                                    if (strCom.Equals(0) || strCom.Length == 0)
                                     {
-                                        strtvspono = dtProduction.Rows[i]["TVSMPONO"].ToString();
-                                        //html.Append("<tr style='border:0px;'><td colspan='14' style='border:0px;'><br/><b>TVSPONO.: " + strtvspono + "</b></td></tr>");
+                                        strRunningNo = "0000001";
+                                    }
+                                    else
+                                    {
+                                        strRunningNo = string.Format("{0:0000000}", Convert.ToInt32(strCom) + 1);
                                     }
 
+                                    string strRequeNo = "select (prefixtext+right('00000'+ convert(varchar,Lastreqno+1),5)) as Reqno from prefix_Requisition  where hsrp_stateid='" + HSRP_StateID + "' and prefixfor='Req No'";
+                                    ReqNum = Utils.Utils.getScalarValue(strRequeNo, CnnString);
+
+                                    string strPRFIX = "select PrefixText from EmbossingCentersNew where State_Id='" + HSRP_StateID + "' and Emb_Center_Id='" + Navembcode + "'";
+                                    string strPRFIXCom = Utils.Utils.getScalarValue(strPRFIX, CnnString);
+                                    strProductionSheetNo = strPRFIXCom + strRunningNo;
+
+                                    string RTOLocationName = dtProduction.Rows[0]["RTOLocationName"].ToString();
+
+                                    #region
+                                    html.Append("<div style='page-break-before: avoid;page-break-inside: avoid;page-break-after: always;'>" +
+                                            "<table style='width:100%;border: 0px;'>" +
+                                                "<tr style='border: 0px;'>" +
+                                                    "<td colspan='9' style='border: 0px;'>" +
+                                                        "<div style='text-align:left'><b>Report Generation Date:</b> " + DateTime.Now.ToString("dd-MM-yyyy") + "</div>" +
+                                                    "</td>" +
+                                                    "<td colspan='3' style='border: 0px;'>" +
+                                                        "<div style='float:right;width: 500px;word-wrap: break-word;'>" +
+                                                            "<b>Production Sheet No:</b> " + strRunningNo + "<br />" +
+                                                            "<b>Dealer ID/Name:</b> " + dealerid + "/" + dealername + "<br />" +
+                                                            "<b>Dealer Address:</b> " + Address + "<br />" +
+                                                        "</div>" +
+                                                    "</td>" +
+                                                "</tr>" +
+                                                "<tr style='border: 0px;'>" +
+                                                    "<td colspan='12' style='border: 0px;'>" +
+                                                        "<div style='text-align:center;font-size:26px;'><b>Future Accessories LLP Production Sheet : -</b> ROSMERTA SAFETY SYSTEMS LIMITED</div>" +
+                                                    "</td>" +
+                                                "</tr>" +
+                                                "<tr style='border: 0px;'>" +
+                                                    "<td colspan='9' style='border: 0px;'>" +
+                                                        "<table style='border:0px;width:100%;'>" +
+                                                            "<tr style='border:0px;'>" +
+                                                                "<td style='border:0px;'><b>State Name :</b> " + HSRPStateName + "</td>" +
+                                                                "<td style='border:0px;'><b>Oem Name :</b> " + oemname + "</td>" +
+                                                                "<td style='border:0px;'><b>Report Date:</b> " + DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss") + "</td>" +
+                                                            "</tr>" +
+                                                        "</table>" +
+                                                    "</td>" +
+                                                    "<td colspan='2' style='border: 0px;'>" +
+                                                        "<div style='float:right'>" +
+                                                            "ORD:Order Open Date<br />" +
+                                                            "VC:Vehicle Class<br />" +
+                                                            "VT:Vehicle Type<br />" +
+                                                            "Front PS:Front Plate Size<br />" +
+                                                            "Rear PS:Rear Plate Size<br />" +
+                                                            "OS: Order Satus(New Order/Embossing Done/Closed)" +
+                                                        "</div>" +
+                                                    "</td>" +
+                                                    "<td style='border: 0px;'></td>" +
+                                                "</tr>" +
+                                                "<tr style='border: 0px;'>" +
+                                                     "<td colspan='14' style='border: 0px;'>" +
+                                                        "<div style='text-align:left'>Location Name : " + RTOLocationName + " TVSPONO :  " + dtProduction.Rows[0]["TVSMPONO"].ToString() + "</div>" +
+                                                    "</td>" +
+                                                "</tr>" +
+                                                "<tr>" +
+                                                    "<td style='text-align:center'>SR.No</td>" +
+                                                      "<td>TVSPONO</td>" +
+                                                      "<td>VC</td>" +
+                                                    "<td>Vehicle No</td>" +
+                                                    "<td>VT</td>" +
+                                                    "<td>Chassis No</td>" +
+                                                    "<td>EngineNo</td>" +
+                                                    "<td>Fuel Type</td>" +
+                                                    "<td>Front PS</td>" +
+                                                    "<td>Front Laser No</td>" +
+                                                    "<td>Rear PS</td>" +
+                                                    "<td>Rear Laser No.</td>" +
 
 
-                                    j = j + 1;
-                                    if (strtvspono.ToString() != dtProduction.Rows[i]["TVSMPONO"].ToString())
+                                                        "<td>PartNo</td>" +
+
+                                                       "<td style='text-align:center'>OS</td>" +
+
+                                                     "<td style='text-align:center'>Sticker Color</td>" +
+                                                "</tr>");
+                                    #endregion
+
+                                    #region
+                                    string strtvspono = "";
+                                    int j = 0;
+                                    for (int i = 0; i <= dtProduction.Rows.Count - 1; i++)
                                     {
 
+                                        string HsrprecordID = dtProduction.Rows[i]["hsrprecordID"].ToString().Trim();
+                                        string SRNo = dtProduction.Rows[i]["SRNo"].ToString().Trim();
+                                        //if (strtvspono == "")
+                                        //{
+                                        //    html.Append("<tr style='border:0px;'><td colspan='14' style='border:0px;'><br/><b>TVSPONO.: " + dtProduction.Rows[0]["TVSMPONO"].ToString() + "</b></td></tr>");
+                                        //}
 
-                                        string TVSMPONO = dtProduction.Rows[i]["TVSMPONO"].ToString().Trim();
-                                        string ORD = "";// drProduction["ORD"].ToString().Trim();
-                                        string VC = dtProduction.Rows[i]["VehicleClass"].ToString().Trim();
-                                        string VehicleNo = dtProduction.Rows[i]["VehicleRegNo"].ToString().Trim();
-                                        string VT = dtProduction.Rows[i]["VehicleType"].ToString().Trim();
-                                        string ChassisNo = dtProduction.Rows[i]["ChassisNo"].ToString().Trim();
-                                        string EngineNo = dtProduction.Rows[i]["EngineNo"].ToString().Trim();
-                                        string FuelType = dtProduction.Rows[i]["FuelType"].ToString().Trim();
-                                        string FrontPSize = dtProduction.Rows[i]["FrontProductCode"].ToString().Trim();
-                                        string FrontLaserNo = dtProduction.Rows[i]["HSRP_Front_LaserCode"].ToString().Trim();
-                                        string RearPSize = dtProduction.Rows[i]["RearProductCode"].ToString().Trim();
-                                        string RearLaserNo = dtProduction.Rows[i]["HSRP_Rear_LaserCode"].ToString().Trim();
-                                        // string Amount = drProduction["roundoff_netamount"].ToString().Trim();
-                                        string PartNo = dtProduction.Rows[i]["PartNo"].ToString().Trim();
-
-                                        string OrderStatus = dtProduction.Rows[i]["OrderStatus"].ToString().Trim();
-                                        string stickerColor = dtProduction.Rows[i]["stickerColor"].ToString().Trim();
-                                        j = 1;
-                                        strtvspono = dtProduction.Rows[i]["TVSMPONO"].ToString();
+                                        if (strtvspono.ToString() == "")
+                                        {
+                                            strtvspono = dtProduction.Rows[i]["TVSMPONO"].ToString();
+                                            //html.Append("<tr style='border:0px;'><td colspan='14' style='border:0px;'><br/><b>TVSPONO.: " + strtvspono + "</b></td></tr>");
+                                        }
 
 
-                                        html.Append("<tr style='border:0px;'><td colspan='14' style='border:0px;'><br/><b>TVSPONO.: " + strtvspono + "</b></td></tr>");
 
+                                        j = j + 1;
+                                        if (strtvspono.ToString() != dtProduction.Rows[i]["TVSMPONO"].ToString())
+                                        {
+
+
+                                            string TVSMPONO = dtProduction.Rows[i]["TVSMPONO"].ToString().Trim();
+                                            string ORD = "";// drProduction["ORD"].ToString().Trim();
+                                            string VC = dtProduction.Rows[i]["VehicleClass"].ToString().Trim();
+                                            string VehicleNo = dtProduction.Rows[i]["VehicleRegNo"].ToString().Trim();
+                                            string VT = dtProduction.Rows[i]["VehicleType"].ToString().Trim();
+                                            string ChassisNo = dtProduction.Rows[i]["ChassisNo"].ToString().Trim();
+                                            string EngineNo = dtProduction.Rows[i]["EngineNo"].ToString().Trim();
+                                            string FuelType = dtProduction.Rows[i]["FuelType"].ToString().Trim();
+                                            string FrontPSize = dtProduction.Rows[i]["FrontProductCode"].ToString().Trim();
+                                            string FrontLaserNo = dtProduction.Rows[i]["HSRP_Front_LaserCode"].ToString().Trim();
+                                            string RearPSize = dtProduction.Rows[i]["RearProductCode"].ToString().Trim();
+                                            string RearLaserNo = dtProduction.Rows[i]["HSRP_Rear_LaserCode"].ToString().Trim();
+                                            // string Amount = drProduction["roundoff_netamount"].ToString().Trim();
+                                            string PartNo = dtProduction.Rows[i]["PartNo"].ToString().Trim();
+
+                                            string OrderStatus = dtProduction.Rows[i]["OrderStatus"].ToString().Trim();
+                                            string stickerColor = dtProduction.Rows[i]["stickerColor"].ToString().Trim();
+                                            j = 1;
+                                            strtvspono = dtProduction.Rows[i]["TVSMPONO"].ToString();
+
+
+                                            html.Append("<tr style='border:0px;'><td colspan='14' style='border:0px;'><br/><b>TVSPONO.: " + strtvspono + "</b></td></tr>");
+
+
+
+                                            html.Append("<tr>" +
+                                                    "<td style='text-align:center'>SR.No</td>" +
+                                                      "<td>TVSPONO</td>" +
+                                                      "<td>VC</td>" +
+                                                    "<td>Vehicle No</td>" +
+                                                    "<td>VT</td>" +
+                                                    "<td>Chassis No</td>" +
+                                                    "<td>EngineNo</td>" +
+                                                    "<td>Fuel Type</td>" +
+                                                    "<td>Front PS</td>" +
+                                                    "<td>Front Laser No</td>" +
+                                                    "<td>Rear PS</td>" +
+                                                    "<td>Rear Laser No.</td>" +
+                                                    "<td>PartNo</td>" +
+                                                    "<td style='text-align:center'>OS</td>" +
+                                                     "<td style='text-align:center'>stickerColor</td>" +
+
+                                                "</tr>");
+
+                                        }
 
 
                                         html.Append("<tr>" +
-                                                "<td style='text-align:center'>SR.No</td>" +
-                                                  "<td>TVSPONO</td>" +
-                                                  "<td>VC</td>" +
-                                                "<td>Vehicle No</td>" +
-                                                "<td>VT</td>" +
-                                                "<td>Chassis No</td>" +
-                                                "<td>EngineNo</td>" +
-                                                "<td>Fuel Type</td>" +
-                                                "<td>Front PS</td>" +
-                                                "<td>Front Laser No</td>" +
-                                                "<td>Rear PS</td>" +
-                                                "<td>Rear Laser No.</td>" +
-                                                "<td>PartNo</td>" +
-                                                "<td style='text-align:center'>OS</td>" +
-                                                 "<td style='text-align:center'>stickerColor</td>" +
+                                           "<td style='text-align:center'>" + j + "</td>" +
+                                           "<td>" + dtProduction.Rows[i]["TVSMPONO"].ToString().Trim() + "</td>" +
+                                           "<td>" + dtProduction.Rows[i]["VehicleClass"].ToString().Trim() + "</td>" +
+                                                        // "<td>" + dtProduction.Rows[i]["VehicleRegNo"].ToString().Trim() + "</td>" +
+                                                        "<td style='text-align:left;font-size:20px;'>" + "<b>" + dtProduction.Rows[i]["VehicleRegNo"].ToString().Trim() + "</b> </td>" +
+                                           "<td>" + dtProduction.Rows[i]["VehicleType"].ToString().Trim() + "</td>" +
+                                           "<td>" + dtProduction.Rows[i]["ChassisNo"].ToString().Trim() + "</td>" +
+                                           "<td>" + dtProduction.Rows[i]["EngineNo"].ToString().Trim() + "</td>" +
+                                           "<td>" + dtProduction.Rows[i]["FuelType"].ToString().Trim() + "</td>" +
+                                           "<td>" + dtProduction.Rows[i]["FrontProductCode"].ToString().Trim() + "</td>" +
+                                             //"<td>" + dtProduction.Rows[i]["HSRP_Front_LaserCode"] + "</td>" +
+                                             "<td style='text-align:left;font-size:20px;'>" + "<b>" + dtProduction.Rows[i]["HSRP_Front_LaserCode"].ToString().Trim() + "</b> </td>" +
+                                           "<td>" + dtProduction.Rows[i]["RearProductCode"].ToString().Trim() + "</td>" +
+                                            // "<td>" + dtProduction.Rows[i]["HSRP_Rear_LaserCode"].ToString().Trim() + "</td>" +
+                                            "<td style='text-align:left;font-size:20px;'>" + "<b>" + dtProduction.Rows[i]["HSRP_Rear_LaserCode"].ToString().Trim() + "</b> </td>" +
 
-                                            "</tr>");
+                                            "<td>" + dtProduction.Rows[i]["PartNo"].ToString().Trim() + "</td>" +
+                                           "<td>" + dtProduction.Rows[i]["OrderStatus"].ToString().Trim() + "</td>" +
+                                           "<td>" + dtProduction.Rows[i]["stickerColor"].ToString().Trim() + "</td>" +
+                                       "</tr>");
 
+                                        //start updating hsrprecords 
+                                        string sqlUpdateHSRPRecords = "update hsrprecords set sendtoProductionStatus='Y', NAVPDFFlag='1', NewPdfRunningNo='" + strProductionSheetNo + "',  Requisitionsheetno='" + ReqNum + "',  " +
+                                               "PdfDownloadDate=GetDate(), pdfFileName='" + fileName + "', PDFDownloadUserID='1' where hsrprecordID='" + HsrprecordID + "' ";
+                                        Utils.Utils.ExecNonQuery(sqlUpdateHSRPRecords, CnnString);   // uncomment after testing
+                                                                                                     //end 
                                     }
 
 
-                                    html.Append("<tr>" +
-                                       "<td style='text-align:center'>" + j + "</td>" +
-                                       "<td>" + dtProduction.Rows[i]["TVSMPONO"].ToString().Trim() + "</td>" +
-                                       "<td>" + dtProduction.Rows[i]["VehicleClass"].ToString().Trim() + "</td>" +
-                                                    // "<td>" + dtProduction.Rows[i]["VehicleRegNo"].ToString().Trim() + "</td>" +
-                                                    "<td style='text-align:left;font-size:20px;'>" + "<b>" + dtProduction.Rows[i]["VehicleRegNo"].ToString().Trim() + "</b> </td>" +
-                                       "<td>" + dtProduction.Rows[i]["VehicleType"].ToString().Trim() + "</td>" +
-                                       "<td>" + dtProduction.Rows[i]["ChassisNo"].ToString().Trim() + "</td>" +
-                                       "<td>" + dtProduction.Rows[i]["EngineNo"].ToString().Trim() + "</td>" +
-                                       "<td>" + dtProduction.Rows[i]["FuelType"].ToString().Trim() + "</td>" +
-                                       "<td>" + dtProduction.Rows[i]["FrontProductCode"].ToString().Trim() + "</td>" +
-                                         //"<td>" + dtProduction.Rows[i]["HSRP_Front_LaserCode"] + "</td>" +
-                                         "<td style='text-align:left;font-size:20px;'>" + "<b>" + dtProduction.Rows[i]["HSRP_Front_LaserCode"].ToString().Trim() + "</b> </td>" +
-                                       "<td>" + dtProduction.Rows[i]["RearProductCode"].ToString().Trim() + "</td>" +
-                                        // "<td>" + dtProduction.Rows[i]["HSRP_Rear_LaserCode"].ToString().Trim() + "</td>" +
-                                        "<td style='text-align:left;font-size:20px;'>" + "<b>" + dtProduction.Rows[i]["HSRP_Rear_LaserCode"].ToString().Trim() + "</b> </td>" +
+                                    #endregion
+                                    html.Append("</table>");
 
-                                        "<td>" + dtProduction.Rows[i]["PartNo"].ToString().Trim() + "</td>" +
-                                       "<td>" + dtProduction.Rows[i]["OrderStatus"].ToString().Trim() + "</td>" +
-                                       "<td>" + dtProduction.Rows[i]["stickerColor"].ToString().Trim() + "</td>" +
-                                   "</tr>");
+                                    html.Append("</div>");
 
-                                    //start updating hsrprecords 
-                                    string sqlUpdateHSRPRecords = "update hsrprecords set sendtoProductionStatus='Y', NAVPDFFlag='1', NewPdfRunningNo='" + strProductionSheetNo + "',  Requisitionsheetno='" + ReqNum + "',  " +
-                                           "PdfDownloadDate=GetDate(), pdfFileName='" + fileName + "', PDFDownloadUserID='1' where hsrprecordID='" + HsrprecordID + "' ";
-                                    Utils.Utils.ExecNonQuery(sqlUpdateHSRPRecords, CnnString);   // uncomment after testing
-                                    //end 
+                                    string StrSqlUpdateECQuery = "update EmbossingCentersNew set NewProductionSheetRunningNo='" + strProductionSheetNo + "' " +
+                                     "where State_Id='" + HSRP_StateID + "' and Emb_Center_Id='" + Navembcode + "'";
+                                    Utils.Utils.ExecNonQuery(StrSqlUpdateECQuery, CnnString); // uncomment after testing
                                 }
 
-
                                 #endregion
-                                html.Append("</table>");
 
-                                html.Append("</div>");
-
-                                string StrSqlUpdateECQuery = "update EmbossingCentersNew set NewProductionSheetRunningNo='" + strProductionSheetNo + "' " +
-                                 "where State_Id='" + HSRP_StateID + "' and Emb_Center_Id='" + Navembcode + "'";
-                                Utils.Utils.ExecNonQuery(StrSqlUpdateECQuery, CnnString); // uncomment after testing
                             }
+                        }// close oemDealerQuery
+                        #endregion
 
-                            #endregion
+                        #region "Req Generate"
+                        string strSqlQuery1 = "select CompanyName from hsrpstate where hsrp_stateid='" + HSRP_StateID + "'";
+                        strCompanyName = Utils.Utils.getScalarValue(strSqlQuery1, CnnString);
 
-                        }
-                    }// close oemDealerQuery
-                    #endregion
+                        string strEMBName = " select EmbCenterName from EmbossingCentersNew where  State_Id='" + HSRP_StateID + "' and Emb_Center_Id='" + Navembcode + "'";
+                        string strComNew = Utils.Utils.getScalarValue(strEMBName, CnnString);
 
-                    #region "Req Generate"
-                    string strSqlQuery1 = "select CompanyName from hsrpstate where hsrp_stateid='" + HSRP_StateID + "'";
-                    strCompanyName = Utils.Utils.getScalarValue(strSqlQuery1, CnnString);
+                        string strReqNo = "select (prefixtext+right('00000'+ convert(varchar,lastno+1),5)) as Reqno from prefix_Requisition  where hsrp_stateid='" + HSRP_StateID + "' and prefixfor='Req No'";
+                        string strReqNumber = Utils.Utils.getScalarValue(strReqNo, CnnString);
 
-                    string strEMBName = " select EmbCenterName from EmbossingCentersNew where  State_Id='" + HSRP_StateID + "' and Emb_Center_Id='" + Navembcode + "'";
-                    string strComNew = Utils.Utils.getScalarValue(strEMBName, CnnString);
+                        SQLString = "Exec [laserreqSlip1DashBoard]  '" + HSRP_StateID + "','" + Navembcode + "' ,  '" + ReqNum + "'";
+                        DataTable dtResult = Utils.Utils.GetDataTable(SQLString, CnnString);
+                        string strQuery = string.Empty;
+                        string strRtoLocationName = string.Empty;
+                        int Itotal = 0;
 
-                    string strReqNo = "select (prefixtext+right('00000'+ convert(varchar,lastno+1),5)) as Reqno from prefix_Requisition  where hsrp_stateid='" + HSRP_StateID + "' and prefixfor='Req No'";
-                    string strReqNumber = Utils.Utils.getScalarValue(strReqNo, CnnString);
+                        html.Append("<div style='width:100%;height:100%;'>" +
+                                            "<table style='width:100%'>" +
 
-                    SQLString = "Exec [laserreqSlip1DashBoard]  '" + HSRP_StateID + "','" + Navembcode + "' ,  '" + ReqNum + "'";
-                    DataTable dtResult = Utils.Utils.GetDataTable(SQLString, CnnString);
-                    string strQuery = string.Empty;
-                    string strRtoLocationName = string.Empty;
-                    int Itotal = 0;
+                                                "<tr>" +
+                                                    "<td colspan='12'>" +
+                                                        "<div style='text-align:center;padding:8px;'>" +
+                                                            "<b style='font-size:20px;margin-top:2px;margin-bottom:2px;'>" + strCompanyName + "</b>" +
 
-                    html.Append("<div style='width:100%;height:100%;'>" +
-                                        "<table style='width:100%'>" +
+                                                            "<p style='margin-top:2px;margin-bottom:2px;'>" + " " + "</p>" +
+                                                             "<b style='font-size:20px;'>" + "MATERIAL REQUSITION NOTE" + "</b>" +
 
-                                            "<tr>" +
-                                                "<td colspan='12'>" +
-                                                    "<div style='text-align:center;padding:8px;'>" +
-                                                        "<b style='font-size:20px;margin-top:2px;margin-bottom:2px;'>" + strCompanyName + "</b>" +
+                                                        "</div>" +
+                                                    "</td>" +
+                                                "</tr>" +
 
-                                                        "<p style='margin-top:2px;margin-bottom:2px;'>" + " " + "</p>" +
-                                                         "<b style='font-size:20px;'>" + "MATERIAL REQUSITION NOTE" + "</b>" +
+                                                "<tr>" +
+                                                    "<td colspan='12'>" +
+                                                        "<div style='text-align:center;padding:8px;'>" +
+                                                            "<b style='font-size:20px;margin-top:2px;margin-bottom:2px;'>" + "Production Sheet Date :" + DateTime.Now.ToString("dd-MM-yyyy") + "</b>" +
+                                                            "<p style='margin-top:2px;margin-bottom:2px;'>" + " " + "</p>" +
+                                                             "<b style='font-size:20px;'>" + "" + "</b>" +
+                                                        "</div>" +
+                                                    "</td>" +
+                                                "</tr>" +
+                                                "<tr>" +
+                                                    "<td colspan='6'>" +
+                                                        "<div style='text-align:left;'>" +
+                                                            "<b style='font-size:20px;margin-top:2px;margin-bottom:2px;'>REQ.NO:-</b>" +
+                                                            "" + strReqNumber + "" +
+                                                        "</div>" +
+                                                    "</td>" +
+                                                    "<td colspan='6'>" +
+                                                        "<div style='text-align:left;'>" +
+                                                            "<b style='font-size:20px;margin-top:2px;margin-bottom:2px;'>Embossing Center:</b>" +
+                                                            "" + strComNew + "" +
+                                                        "</div>" +
+                                                    "</td>" +
+                                                "</tr>" +
+                                                "<tr>" +
+                                                    "<td colspan='12'>" +
+                                                        "<div style='text-align:left;padding:2px;'>" +
+                                                            "<b style='font-size:20px;margin-top:2px;margin-bottom:2px;'>" + "State:" + HSRPStateName + "</b>" +
+                                                            "<p style='margin-top:2px;margin-bottom:2px;'>" + " " + "</p>" +
+                                                             "<b style='font-size:20px;'>" + "" + "</b>" +
+                                                        "</div>" +
+                                                    "</td>" +
+                                                "</tr>" +
+                                                 "<tr>" +
+                                                    "<td colspan='12'>" +
+                                                        "<div style='text-align:left;padding:8px;'>" +
+                                                            "<b style='font-size:20px;margin-top:2px;margin-bottom:2px;'>" + " " + "</b>" +
+                                                            "<p style='margin-top:2px;margin-bottom:2px;'>" + " " + "</p>" +
+                                                             "<b style='font-size:20px;'>" + "" + "</b>" +
+                                                        "</div>" +
+                                                    "</td>" +
+                                                "</tr>" +
 
-                                                    "</div>" +
-                                                "</td>" +
-                                            "</tr>" +
+                                                "<tr>" +
+                                                    "<td colspan='1' style='text-align:center'>SR.N.</td>" +
+                                                    "<td colspan='3'>Product Size</td>" +
+                                                    "<td colspan='1'>Laser Count</td>" +
+                                                    "<td colspan='1'>Start Laser No</td>" +
+                                                    "<td colspan='1'>End Laser No</td>" +
 
-                                            "<tr>" +
-                                                "<td colspan='12'>" +
-                                                    "<div style='text-align:center;padding:8px;'>" +
-                                                        "<b style='font-size:20px;margin-top:2px;margin-bottom:2px;'>" + "Production Sheet Date :" + DateTime.Now.ToString("dd-MM-yyyy") + "</b>" +
-                                                        "<p style='margin-top:2px;margin-bottom:2px;'>" + " " + "</p>" +
-                                                         "<b style='font-size:20px;'>" + "" + "</b>" +
-                                                    "</div>" +
-                                                "</td>" +
-                                            "</tr>" +
-                                            "<tr>" +
-                                                "<td colspan='6'>" +
-                                                    "<div style='text-align:left;'>" +
-                                                        "<b style='font-size:20px;margin-top:2px;margin-bottom:2px;'>REQ.NO:-</b>" +
-                                                        "" + strReqNumber + "" +
-                                                    "</div>" +
-                                                "</td>" +
-                                                "<td colspan='6'>" +
-                                                    "<div style='text-align:left;'>" +
-                                                        "<b style='font-size:20px;margin-top:2px;margin-bottom:2px;'>Embossing Center:</b>" +
-                                                        "" + strComNew + "" +
-                                                    "</div>" +
-                                                "</td>" +
-                                            "</tr>" +
-                                            "<tr>" +
-                                                "<td colspan='12'>" +
-                                                    "<div style='text-align:left;padding:2px;'>" +
-                                                        "<b style='font-size:20px;margin-top:2px;margin-bottom:2px;'>" + "State:" + HSRPStateName + "</b>" +
-                                                        "<p style='margin-top:2px;margin-bottom:2px;'>" + " " + "</p>" +
-                                                         "<b style='font-size:20px;'>" + "" + "</b>" +
-                                                    "</div>" +
-                                                "</td>" +
-                                            "</tr>" +
-                                             "<tr>" +
-                                                "<td colspan='12'>" +
-                                                    "<div style='text-align:left;padding:8px;'>" +
-                                                        "<b style='font-size:20px;margin-top:2px;margin-bottom:2px;'>" + " " + "</b>" +
-                                                        "<p style='margin-top:2px;margin-bottom:2px;'>" + " " + "</p>" +
-                                                         "<b style='font-size:20px;'>" + "" + "</b>" +
-                                                    "</div>" +
-                                                "</td>" +
-                                            "</tr>" +
-
-                                            "<tr>" +
-                                                "<td colspan='1' style='text-align:center'>SR.N.</td>" +
-                                                "<td colspan='3'>Product Size</td>" +
-                                                "<td colspan='1'>Laser Count</td>" +
-                                                "<td colspan='1'>Start Laser No</td>" +
-                                                "<td colspan='1'>End Laser No</td>" +
-
-                                            "</tr>");
+                                                "</tr>");
 
 
-                    if (dtResult.Rows.Count > 0)
-                    {
-                        for (int i = 0; i < dtResult.Rows.Count; i++)
+                        if (dtResult.Rows.Count > 0)
                         {
-                            string ID = dtResult.Rows[i]["ID"].ToString();
-                            string productcode = dtResult.Rows[i]["productcode"].ToString();
-                            string LaserCount = dtResult.Rows[i]["LaserCount"].ToString();
-                            Itotal = Convert.ToInt32(dtResult.Rows[i]["Total"].ToString());
-                            string BeginLaser = dtResult.Rows[i]["BeginLaser"].ToString();
-                            string EndLaser = dtResult.Rows[i]["EndLaser"].ToString();
+                            for (int i = 0; i < dtResult.Rows.Count; i++)
+                            {
+                                string ID = dtResult.Rows[i]["ID"].ToString();
+                                string productcode = dtResult.Rows[i]["productcode"].ToString();
+                                string LaserCount = dtResult.Rows[i]["LaserCount"].ToString();
+                                Itotal = Convert.ToInt32(dtResult.Rows[i]["Total"].ToString());
+                                string BeginLaser = dtResult.Rows[i]["BeginLaser"].ToString();
+                                string EndLaser = dtResult.Rows[i]["EndLaser"].ToString();
 
 
 
 
-                            html.Append("<tr>" +
-                               "<td colspan='1' style='text-align:left'>" + ID + "</td>" +
-                               "<td colspan='3'>" + productcode + "</td>" +
+                                html.Append("<tr>" +
+                                   "<td colspan='1' style='text-align:left'>" + ID + "</td>" +
+                                   "<td colspan='3'>" + productcode + "</td>" +
 
-                               "<td colspan='1'>" + LaserCount + "</td>" +
-                               "<td colspan='1'>" + BeginLaser + "</td>" +
-                               "<td colspan='1'>" + EndLaser + "</td>" +
+                                   "<td colspan='1'>" + LaserCount + "</td>" +
+                                   "<td colspan='1'>" + BeginLaser + "</td>" +
+                                   "<td colspan='1'>" + EndLaser + "</td>" +
 
-                           "</tr>");
+                               "</tr>");
+                            }
                         }
-                    }
-                    html.Append("<tr>" +
-                             "<td colspan='1' style='text-align:center' > " + "<b>Grand Total:</b>" + "</td>" +
-                             "<td colspan='3'>" + "" + "</td>" +
+                        html.Append("<tr>" +
+                                 "<td colspan='1' style='text-align:center' > " + "<b>Grand Total:</b>" + "</td>" +
+                                 "<td colspan='3'>" + "" + "</td>" +
 
-                             "<td colspan='1'>" + Itotal + "</td>" +
-                             "<td colspan='1'>" + " " + "</td>" +
-                             "<td colspan='1'>" + " " + "</td>" +
+                                 "<td colspan='1'>" + Itotal + "</td>" +
+                                 "<td colspan='1'>" + " " + "</td>" +
+                                 "<td colspan='1'>" + " " + "</td>" +
 
-                         "</tr>");
-
+                             "</tr>");
 
 
 
-                    html.Append("<tr>" +
-                     "<td colspan='2' > " + "<b>REQUESTED BY </b>" + "</td>" +
-                     "<td colspan='2'>" + "<b>AUTHORIZED BY </b>" + "</td>" +
 
-                     "<td colspan='2'>" + "<b>ISSUED BY </b>" + "</td>" +
-                     "<td colspan='2'>" + "<b>RECEIVED BY</b>" + "</td>" +
+                        html.Append("<tr>" +
+                         "<td colspan='2' > " + "<b>REQUESTED BY </b>" + "</td>" +
+                         "<td colspan='2'>" + "<b>AUTHORIZED BY </b>" + "</td>" +
+
+                         "<td colspan='2'>" + "<b>ISSUED BY </b>" + "</td>" +
+                         "<td colspan='2'>" + "<b>RECEIVED BY</b>" + "</td>" +
 
 
-                 "</tr>");
+                     "</tr>");
 
-                    html.Append("<tr>" +
+                        html.Append("<tr>" +
+                                                  "<td colspan='12'>" +
+                                                      "<div style='text-align:left;padding:2px;'>" +
+                                                          "<b style='font-size:20px;margin-top:2px;margin-bottom:2px;'>" + "Name" + "</b>" +
+
+                                                      "</div>" +
+                                                  "</td>" +
+                                              "</tr>");
+
+                        html.Append("<tr>" +
+                                                 "<td colspan='12'>" +
+                                                     "<div style='text-align:left;padding:2px;'>" +
+                                                         "<b style='font-size:20px;margin-top:2px;margin-bottom:2px;'>" + "Designation" + "</b>" +
+
+                                                     "</div>" +
+                                                 "</td>" +
+                                             "</tr>");
+
+                        html.Append("<tr>" +
+                                               "<td colspan='12'>" +
+                                                   "<div style='text-align:right;padding:8px;'>" +
+                                                       "<b style='font-size:20px;margin-top:2px;margin-bottom:2px;'>" + "Download By: Admin " + "</b>" +
+
+                                                   "</div>" +
+                                               "</td>" +
+                                           "</tr>");
+
+                        html.Append("<tr>" +
                                               "<td colspan='12'>" +
-                                                  "<div style='text-align:left;padding:2px;'>" +
-                                                      "<b style='font-size:20px;margin-top:2px;margin-bottom:2px;'>" + "Name" + "</b>" +
+                                                  "<div style='text-align:right;padding:8px;'>" +
+                                                      "<b style='font-size:20px;margin-top:2px;margin-bottom:2px;'>" + "Sheet Generated By :" + DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss") + "</b>" +
 
                                                   "</div>" +
                                               "</td>" +
                                           "</tr>");
 
-                    html.Append("<tr>" +
-                                             "<td colspan='12'>" +
-                                                 "<div style='text-align:left;padding:2px;'>" +
-                                                     "<b style='font-size:20px;margin-top:2px;margin-bottom:2px;'>" + "Designation" + "</b>" +
-
-                                                 "</div>" +
-                                             "</td>" +
-                                         "</tr>");
-
-                    html.Append("<tr>" +
-                                           "<td colspan='12'>" +
-                                               "<div style='text-align:right;padding:8px;'>" +
-                                                   "<b style='font-size:20px;margin-top:2px;margin-bottom:2px;'>" + "Download By: Admin " + "</b>" +
-
-                                               "</div>" +
-                                           "</td>" +
-                                       "</tr>");
-
-                    html.Append("<tr>" +
-                                          "<td colspan='12'>" +
-                                              "<div style='text-align:right;padding:8px;'>" +
-                                                  "<b style='font-size:20px;margin-top:2px;margin-bottom:2px;'>" + "Sheet Generated By :" + DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss") + "</b>" +
-
-                                              "</div>" +
-                                          "</td>" +
-                                      "</tr>");
 
 
 
 
 
+                        html.Append("</table>");
 
-                    html.Append("</table>");
-
-                    html.Append("</div>");
-
-
-                    try
-                    {
-                        //start updating hsrprecords 
-                        string Query = "update prefix_Requisition set lastno=lastno+1,Lastreqno=Lastreqno+1 where hsrp_stateid='" + HSRP_StateID + "' and prefixfor='Req No'";
-                        Utils.Utils.ExecNonQuery(Query, CnnString);
-                    }
-                    catch (Exception ev)
-                    {
-                        Label1.Text = "prefix Requisition update error: " + ev.Message;
-                    }
+                        html.Append("</div>");
 
 
-                    #endregion
-
-                    /*
-                     * Close body & HTMl Tag
-                     */
-                    html.Append("</body>" +
-                        "</html>");
-
-
-                    if (findRecord)
-                    {
-
-
-                        string strSaveSQlQuery = "insert into ProductionSheetAutoGenerated_List (HSRP_StateID, State_Code, RTO_ID, Emb_Center_Id, FileName, Productiondate, ProductionTime, OrderNo) values " +
-                                    "('" + HSRP_StateID + "', '" + HSRPStateShortName + "', '', '" + Navembcode + "', '" + fileName + "', '" + DateTime.Now.ToString("yyyy-MM-dd") + "', '" + DateTime.Now.ToString("HH:mm:ss") + "', '" + filePrefix + "') ";
-                        Utils.Utils.ExecNonQuery(strSaveSQlQuery, CnnString); // uncomment after testing
-                        Label1.Text = Label1.Text + "successfully created production sheet of State: " + HSRPStateShortName + ", , Emb_Center_Id: " + Navembcode + Environment.NewLine;
-
-                        //lblLog.Text = lblLog.Text + Environment.NewLine + "Start Production Query at:" + DateTime.Now;
-
-
-
-                        #region
                         try
                         {
-                            if (!Directory.Exists(dir))
+                            //start updating hsrprecords 
+                            string Query = "update prefix_Requisition set lastno=lastno+1,Lastreqno=Lastreqno+1 where hsrp_stateid='" + HSRP_StateID + "' and prefixfor='Req No'";
+                            Utils.Utils.ExecNonQuery(Query, CnnString);
+                        }
+                        catch (Exception ev)
+                        {
+                            Label1.Text = "prefix Requisition update error: " + ev.Message;
+                        }
+
+
+                        #endregion
+
+                        /*
+                         * Close body & HTMl Tag
+                         */
+                        html.Append("</body>" +
+                            "</html>");
+
+
+                        if (findRecord)
+                        {
+
+
+                            string strSaveSQlQuery = "insert into ProductionSheetAutoGenerated_List (HSRP_StateID, State_Code, RTO_ID, Emb_Center_Id, FileName, Productiondate, ProductionTime, OrderNo) values " +
+                                        "('" + HSRP_StateID + "', '" + HSRPStateShortName + "', '', '" + Navembcode + "', '" + fileName + "', '" + DateTime.Now.ToString("yyyy-MM-dd") + "', '" + DateTime.Now.ToString("HH:mm:ss") + "', '" + filePrefix + "') ";
+                            Utils.Utils.ExecNonQuery(strSaveSQlQuery, CnnString); // uncomment after testing
+                            Label1.Text = Label1.Text + "successfully created production sheet of State: " + HSRPStateShortName + ", , Emb_Center_Id: " + Navembcode + Environment.NewLine;
+
+                            //lblLog.Text = lblLog.Text + Environment.NewLine + "Start Production Query at:" + DateTime.Now;
+
+
+
+                            #region
+                            try
                             {
+                                if (!Directory.Exists(dir))
+                                {
 
 
-                                Directory.CreateDirectory(dir);
+                                    Directory.CreateDirectory(dir);
+
+                                }
 
                             }
+                            catch (Exception ev)
+                            {
+                                // Fail silently
+                                Label1.Text = ev.Message;
+                            }
 
-                        }
-                        catch (Exception ev)
-                        {
-                            // Fail silently
-                            Label1.Text = ev.Message;
-                        }
+                            try
+                            {
+                                var pdf = Pdf
+                                        .From(html.ToString())
+                                        .OfSize(PaperSize.A4)
+                                        .WithTitle("Title")
+                                        .WithoutOutline()
+                                        .WithMargins(1.25.Centimeters())
+                                          .Landscape()
+                                        .Comressed()
+                                        .Content();
 
-                        try
-                        {
-                            var pdf = Pdf
-                                    .From(html.ToString())
-                                    .OfSize(PaperSize.A4)
-                                    .WithTitle("Title")
-                                    .WithoutOutline()
-                                    .WithMargins(1.25.Centimeters())
-                                      .Landscape()
-                                    .Comressed()
-                                    .Content();
+                                FileStream readStream = File.Create(filePath);
+                                BinaryWriter binaryWriter = new BinaryWriter(readStream);
 
-                            FileStream readStream = File.Create(filePath);
-                            BinaryWriter binaryWriter = new BinaryWriter(readStream);
+                                // Write the binary data to the file
+                                binaryWriter.Write(pdf);
+                                binaryWriter.Close();
+                                readStream.Close();
+                            }
+                            catch (Exception ev)
+                            {
+                                // Fail silently
+                                Label1.Text = ev.Message;
+                            }
 
-                            // Write the binary data to the file
-                            binaryWriter.Write(pdf);
-                            binaryWriter.Close();
-                            readStream.Close();
-                        }
-                        catch (Exception ev)
-                        {
-                            // Fail silently
-                            Label1.Text = ev.Message;
+                            #endregion
                         }
 
                         #endregion
-                    }
 
-                    #endregion
-
-                }//close foreach stateEcQuery
+                    }//close foreach stateEcQuery
+                }
             }
         }
 
@@ -3414,568 +3362,575 @@ namespace ProductionSheetDashBoard
 
             //string Navembid = Session["Navembid"].ToString();
             FillUserDetails();
-            stateECQuery = "select distinct a.HSRP_StateID, (select HSRPStateName from hsrpstate c where c.hsrp_stateid=a.hsrp_stateid) as HSRPStateName,(select HSRPStateShortName from hsrpstate d where d.hsrp_stateid=a.hsrp_stateid) as HSRPStateShortName, navembcode from hsrprecords a with(nolock) join Dealeraffixation b with(nolock) on a.affix_id=b.subdealerid where a.HSRP_StateID ='" + ddlStateName.SelectedValue + "'  and  NewPdfRunningNo is null and erpassigndate is not null  and a.Dealerid in(select dealerid from dealermaster where oemid='21') and OrderStatus='New Order' and    b.Navembcode not like '%CODO%' and b.Navembcode='" + Navembid + "'  order by  a.HSRP_StateID";
-            DataTable dtSE = Utils.Utils.GetDataTable(stateECQuery, CnnString);
-
-            if (dtSE.Rows.Count > 0)
+            string strJcb= "select HSRPrecordid from hsrprecords a with(nolock) join Dealeraffixation b with(nolock) on a.affix_id=b.subdealerid where a.HSRP_StateID ='" + ddlStateName.SelectedValue + "'  and  NewPdfRunningNo is null and erpassigndate is not null  and a.Dealerid in(select dealerid from dealermaster where oemid='21') and OrderStatus='New Order' and    b.Navembcode not like '%CODO%' and b.Navembcode='" + Navembid + "'  order by  a.HSRP_StateID"; 
+            DataTable dtJcb = Utils.Utils.GetDataTable(strJcb, CnnString);
+            if (dtJcb.Rows.Count > 0)
             {
-                foreach (DataRow dr in dtSE.Rows)
+                stateECQuery = "select distinct a.HSRP_StateID, (select HSRPStateName from hsrpstate c where c.hsrp_stateid=a.hsrp_stateid) as HSRPStateName,(select HSRPStateShortName from hsrpstate d where d.hsrp_stateid=a.hsrp_stateid) as HSRPStateShortName, navembcode from hsrprecords a with(nolock) join Dealeraffixation b with(nolock) on a.affix_id=b.subdealerid where a.HSRP_StateID ='" + ddlStateName.SelectedValue + "'  and  NewPdfRunningNo is null and erpassigndate is not null  and a.Dealerid in(select dealerid from dealermaster where oemid='21') and OrderStatus='New Order' and    b.Navembcode not like '%CODO%' and b.Navembcode='" + Navembid + "'  order by  a.HSRP_StateID";
+                DataTable dtSE = Utils.Utils.GetDataTable(stateECQuery, CnnString);
+
+                if (dtSE.Rows.Count > 0)
                 {
-                    #region
-
-                    string HSRP_StateID = dr["HSRP_StateID"].ToString().Trim();
-                    string HSRPStateName = dr["HSRPStateName"].ToString().Trim();
-                    string HSRPStateShortName = dr["HSRPStateShortName"].ToString().Trim();
-                    //string RTOLocationID = dr["RTOLocationID"].ToString().Trim();
-                    //string RTOLocationName = dr["RTOLocationName"].ToString().Trim();
-                    //string NAVEMBID = dr["NAVEMBID"].ToString().Trim();
-                    string Navembcode = dr["Navembcode"].ToString().Trim();
-
-                    string dir = dirPath + DateTime.Now.ToString("yyyy-MM-dd") + "\\" + HSRPStateShortName + "\\";
-                    // string fileName = filePrefix + "-" + Navembcode + ".pdf";
-                    string fileName = "JCB" + "-" + filePrefix + "-" + Navembcode + ".pdf";
-                    string filePath = dir + fileName;
-
-                    StringBuilder html = new StringBuilder();
-
-                    Boolean findRecord = false;
-                    string strProductionSheetNo = string.Empty;
-
-                    /*
-                    *  Start body & HTMl Tag
-                    */
-                    #region
-                    html.Append(
-                        "<!DOCTYPE html>" +
-                        "<html>" +
-                        "<head>" +
-                            "<meta charset='UTF-8'><title>Title</title>" +
-                            "<style>" +
-                                "@page {" +
-                                    /* headers*/
-                                    "@top-left {" +
-                                        "content: 'Left header';" +
-                                    "}" +
-                                    "@top-right {" +
-                                        "content: 'Right header';" +
-                                    "}" +
-
-                                    /* footers */
-                                    "@bottom-left {" +
-                                        "content: 'Lorem ipsum';" +
-                                    "} " +
-                                    "@bottom-right {" +
-                                        "content: 'Page ' counter(page) ' of ' counter(pages);" +
-                                    "}" +
-                                    "@bottom-center  {" +
-                                        "content:element(footer);" +
-                                    "}" +
-                                "}" +
-                                 "#footer {" +
-                                    "position: running(footer);" +
-                                "}" +
-                                "table {" +
-                                  "border-collapse: collapse;" +
-                                "}" +
-
-                                "table, th, td {" +
-                                    "border: 1px solid black;" +
-                                    "text-align: left;" +
-                                    "vertical-align: top;" +
-                                    "padding:5px;" +
-                                "}" +
-                            "</style>" +
-                        "</head>" +
-                        "<body>");
-                    #endregion
-
-                    string oemDealerQuery = string.Empty;
-
-                    oemDealerQuery = "select distinct om.oemid as oemid, om.name as oemname, dm.dealerid, d.Subdealername as Dealername, dm.dealercode, d.Address,d.SubDealerId, dm.HSRP_StateID, " +
-                     "dm.RTOLocationID from oemmaster om " +
-                     "left join dealermaster dm on dm.oemid = om.oemid join DealerAffixation d on d.DealerID=dm.DealerId where dm.HSRP_StateID =" + HSRP_StateID + " and " +
-                      "d.RTOLocationID in (select RTOLocationID from rtolocation where Navembcode='" + Navembcode + "' ) and " +
-
-                     "dm.dealerid in (select distinct dealerid from hsrprecords where NewPdfRunningNo is null and erpassigndate is not null and OrderStatus='New Order' and  affix_id is not NULL ) and    OM.OEMid='21'";
-
-
-                    #region
-                    DataTable dtOD = Utils.Utils.GetDataTable(oemDealerQuery, CnnString);
-
-                    if (dtOD.Rows.Count > 0)
+                    foreach (DataRow dr in dtSE.Rows)
                     {
-                        foreach (DataRow drOD in dtOD.Rows)
-                        {
-
-                            string oemid = drOD["oemid"].ToString().Trim();
-                            string dealerid = drOD["dealerid"].ToString().Trim();
-                            string oemname = drOD["oemname"].ToString().Trim();
-                            string dealername = drOD["Dealername"].ToString().Trim();
-                            string Address = drOD["Address"].ToString().Trim();
-
-
-
-                            string strsubaffixid = drOD["SubDealerId"].ToString();
-
-                            //start sql query
-                            #region
-                            string productionQuery = string.Empty;
-
-                            DataTable dtProduction = new DataTable();
-
-                           
-
-                            SqlConnection con = new SqlConnection(CnnString);
-                            SqlCommand cmd = new SqlCommand("USP_JCBProductionSheet", con);
-                            cmd.CommandType = CommandType.StoredProcedure;
-                            con.Open();
-                            cmd.Parameters.AddWithValue("@navembid", Navembcode);
-                            cmd.Parameters.AddWithValue("@HSRP_StateID", HSRP_StateID);
-                            cmd.Parameters.AddWithValue("@Dealerid", dealerid);
-                            cmd.Parameters.AddWithValue("@Affix_Id", strsubaffixid);
-                            SqlDataAdapter da = new SqlDataAdapter(cmd);
-                            // dtProduction = new DataTable();
-                            da.Fill(dtProduction);
-                            con.Close();
-
-
-                            #endregion
-                            //end sql query
-
-                            #region
-                            // DataTable dtProduction = Utils.Utils.GetDataTable(productionQuery, CnnString);
-                            if (dtProduction.Rows.Count > 0)
-                            {
-
-                                findRecord = true;
-                                string strRunningNo = string.Empty;
-                                //string strSel = "select isnull(max(right(newProductionSheetRunningNo,7)),0000000) as maxSheetNo from EmbossingCentersNew where State_Id='" + HSRP_StateID + "' and Emb_Center_Id='" + NAVEMBID + "'";
-                                string strSel = "select isnull(max(right(newProductionSheetRunningNo,7)),0000000) from EmbossingCentersNew where State_Id='" + HSRP_StateID + "' and Emb_Center_Id='" + Navembcode + "' ";
-                                string strCom = Utils.Utils.getScalarValue(strSel, CnnString);
-                                //DataTable dtSheetNo = fillDataTable(strSel, CnnString);
-                                if (strCom.Equals(0) || strCom.Length == 0)
-                                {
-                                    strRunningNo = "0000001";
-                                }
-                                else
-                                {
-                                    strRunningNo = string.Format("{0:0000000}", Convert.ToInt32(strCom) + 1);
-                                }
-
-                                string strRequeNo = "select (prefixtext+right('00000'+ convert(varchar,Lastreqno+1),5)) as Reqno from prefix_Requisition  where hsrp_stateid='" + HSRP_StateID + "' and prefixfor='Req No'";
-                                ReqNum = Utils.Utils.getScalarValue(strRequeNo, CnnString);
-
-                                string strPRFIX = "select PrefixText from EmbossingCentersNew where State_Id='" + HSRP_StateID + "' and Emb_Center_Id='" + Navembcode + "'";
-                                string strPRFIXCom = Utils.Utils.getScalarValue(strPRFIX, CnnString);
-                                strProductionSheetNo = strPRFIXCom + strRunningNo;
-
-                                string RTOLocationName = dtProduction.Rows[0]["RTOLocationName"].ToString();
-
-
-                                #region
-
-                                html.Append("<div style='page-break-before: avoid;page-break-inside: avoid;page-break-after: always;'>" +
-                                        "<table style='width:100%;border: 0px;'>" +
-                                            "<tr style='border: 0px;'>" +
-                                                "<td colspan='3' style='border: 0px;'>" +
-                                                    "<div style='text-align:left'><b>Report Generation Date:</b> " + DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss") + "</div>" +
-                                                "</td>" +
-
-                                                 "<td colspan='3' style='border: 0px;'>" +
-                                                    "<div style='text-align:left'><b>ROSMERTA SAFETY SYSTEMS LIMITED</b> " + "</div>" +
-                                                "</td>" +
-
-
-                                                 "<td colspan='5' style='border: 0px;'>" +
-                                                    "<div style='float:left;width: 500px;word-wrap: break-word;'><b>Production Sheet No:</b> " + strRunningNo + " </div>" +
-                                                "</td>" +
-
-                                            "</tr>" +
-
-                                              "<tr style='border: 0px;'>" +
-                                                "<td colspan='3' style='border: 0px;'>" +
-                                                    "<div style='text-align:left'><b>State:</b> " + HSRPStateName + "</div>" +
-                                                "</td>" +
-
-                                                 "<td colspan='3' style='border: 0px;'>" +
-                                                    "<div style='text-align:left'><b>Production Sheet</b> " + "</div>" +
-                                                "</td>" +
-
-
-                                                 "<td colspan='5' style='border: 0px;'>" +
-                                                    "<div style='float:left;width: 500px;word-wrap: break-word;'><b>Dealer ID/Name:</b> " + dealerid + "/" + dealername + "/" + strsubaffixid + " </div>" +
-                                                "</td>" +
-
-                                            "</tr>" +
-
-                                                "<tr style='border: 0px;'>" +
-                                                "<td colspan='3' style='border: 0px;'>" +
-                                                    "<div style='text-align:left'><b>EC Location: </b> " + RTOLocationName + "</div>" +
-                                                "</td>" +
-
-                                                 "<td colspan='3' style='border: 0px;'>" +
-                                                    "<div style='style='text-align:left'><b>Oem :</b> " + oemname + "</div>" +
-                                                "</td>" +
-
-
-                                                 "<td colspan='5' style='border: 0px;'>" +
-                                                     "<div style='float:left;width: 500px;word-wrap: break-word;'><b>Dealer Address:</b> " + Address + " </div>" +
-                                                //"<div style='text-align:left'><b>Dealer Address:</b> " + Address + " </div>" +
-                                                "</td>" +
-
-                                            "</tr>" +
-
-
-                                             "<tr>" +
-                                                "<td style='text-align:center'>Sr. No.</td>" +
-                                                  "<td>Vehicle No.</td>" +
-                                                   "<td>Front Plate Size</td>" +
-                                                "<td>Front Laser No.</td>" +
-
-                                                "<td>Rear Plate Size</td>" +
-                                                "<td>Rear Laser No.</td>" +
-
-                                                "<td>H. S. Foil </td>" +
-                                                "<td>Caution Sticker</td>" +
-                                                "<td>Fuel Type</td>" +
-                                                "<td >VT</td>" +
-                                                "<td >VC</ td>" +
-
-                                            "</tr>");
-
-
-
-
-                                #endregion
-
-                                #region
-                                string strtvspono = "";
-                                foreach (DataRow drProduction in dtProduction.Rows)
-                                {
-                                    string HsrprecordID = drProduction["hsrprecordID"].ToString().Trim();
-                                    string SRNo = drProduction["SRNo"].ToString().Trim();
-                                    string ORD = "";// drProduction["ORD"].ToString().Trim();
-                                    string VC = drProduction["VehicleClass"].ToString().Trim();
-                                    string VehicleNo = drProduction["VehicleRegNo"].ToString().Trim();
-                                    string VT = drProduction["VehicleType"].ToString().Trim();
-                                    //string ChassisNo = drProduction["ChassisNo"].ToString().Trim();
-                                    //string EngineNo = drProduction["EngineNo"].ToString().Trim();
-                                    string FuelType = drProduction["FuelType"].ToString().Trim();
-                                    string FrontPSize = drProduction["FrontProductCode"].ToString().Trim();
-                                    string FrontLaserNo = drProduction["HSRP_Front_LaserCode"].ToString().Trim();
-                                    string RearPSize = drProduction["RearProductCode"].ToString().Trim();
-                                    string RearLaserNo = drProduction["HSRP_Rear_LaserCode"].ToString().Trim();
-                                    string Amount = drProduction["roundoff_netamount"].ToString().Trim();
-                                    //string OrderStatus = drProduction["OrderStatus"].ToString().Trim();
-                                    string stickerColor = drProduction["stickerColor"].ToString().Trim();
-                                    string HotStampingFoilColour = drProduction["HotStampingFoilColour"].ToString().Trim();
-
-                                    html.Append("<tr>" +
-                                       "<td style='text-align:center'>" + SRNo + "</td>" +
-                                           "<td style='text-align:center;font-size:20px;'>" + "<b>" + VehicleNo + "</b> </td>" +
-
-                                            "<td>" + FrontPSize + "</td>" +
-                                             "<td style='text-align:center;font-size:20px;'>" + "<b>" + FrontLaserNo + "</b> </td>" +
-                                               "<td>" + RearPSize + "</td>" +
-                                             "<td style='text-align:center;font-size:20px;'>" + "<b>" + RearLaserNo + "</b> </td>" +
-
-                                              "<td>" + HotStampingFoilColour + "</td>" +
-                                               "<td>" + stickerColor + "</td>" +
-                                                "<td>" + FuelType + "</td>" +
-                                                "<td>" + VT + "</td>" +
-                                                "<td>" + VC + "</td>" +
-
-                                   "</tr>");
-
-
-                                    //start updating hsrprecords 
-                                    string sqlUpdateHSRPRecords = "update hsrprecords set sendtoProductionStatus='Y', NAVPDFFlag='1', NewPdfRunningNo='" + strProductionSheetNo + "',  " +
-                                           "PdfDownloadDate=GetDate(), pdfFileName='" + fileName + "', PDFDownloadUserID='1' where hsrprecordID='" + HsrprecordID + "' ";
-                                    Utils.Utils.ExecNonQuery(sqlUpdateHSRPRecords, CnnString);   // uncomment after testing
-                                    //end 
-
-                                }
-
-
-
-                                #endregion
-                                html.Append("</table>");
-
-                                html.Append("</div>");
-
-                                string StrSqlUpdateECQuery = "update EmbossingCentersNew set NewProductionSheetRunningNo='" + strProductionSheetNo + "' " +
-                                 "where State_Id='" + HSRP_StateID + "' and Emb_Center_Id='" + Navembcode + "'";
-                                Utils.Utils.ExecNonQuery(StrSqlUpdateECQuery, CnnString); // uncomment after testing
-                            }
-
-                            #endregion
-
-                        }
-                    }// close oemDealerQuery
-                    #endregion
-
-                    //   #region "Req Generate"
-                    //   string strSqlQuery1 = "select CompanyName from hsrpstate where hsrp_stateid='" + HSRP_StateID + "'";
-                    //   strCompanyName = Utils.Utils.getScalarValue(strSqlQuery1, CnnString);
-
-                    //   string strEMBName = " select EmbCenterName from EmbossingCentersNew where  State_Id='" + HSRP_StateID + "' and Emb_Center_Id='" + Navembcode + "'";
-                    //   string strComNew = Utils.Utils.getScalarValue(strEMBName, CnnString);
-
-                    //   string strReqNo = "select (prefixtext+right('00000'+ convert(varchar,lastno+1),5)) as Reqno from prefix_Requisition  where hsrp_stateid='" + HSRP_StateID + "' and prefixfor='Req No'";
-                    //   string strReqNumber = Utils.Utils.getScalarValue(strReqNo, CnnString);
-
-                    //   SQLString = "Exec [laserreqSlip1DashBoard]  '" + HSRP_StateID + "','" + Navembcode + "' ,  '" + ReqNum + "'";
-                    //   DataTable dtResult = Utils.Utils.GetDataTable(SQLString, CnnString);
-                    //   string strQuery = string.Empty;
-                    //   string strRtoLocationName = string.Empty;
-                    //   int Itotal = 0;
-
-                    //   html.Append("<div style='width:100%;height:100%;'>" +
-                    //                       "<table style='width:100%'>" +
-
-                    //                           "<tr>" +
-                    //                               "<td colspan='12'>" +
-                    //                                   "<div style='text-align:center;padding:8px;'>" +
-                    //                                       "<b style='font-size:20px;margin-top:2px;margin-bottom:2px;'>" + strCompanyName + "</b>" +
-
-                    //                                       "<p style='margin-top:2px;margin-bottom:2px;'>" + " " + "</p>" +
-                    //                                        "<b style='font-size:20px;'>" + "MATERIAL REQUSITION NOTE" + "</b>" +
-
-                    //                                   "</div>" +
-                    //                               "</td>" +
-                    //                           "</tr>" +
-
-                    //                           "<tr>" +
-                    //                               "<td colspan='12'>" +
-                    //                                   "<div style='text-align:center;padding:8px;'>" +
-                    //                                       "<b style='font-size:20px;margin-top:2px;margin-bottom:2px;'>" + "Production Sheet Date :" + DateTime.Now.ToString("dd-MM-yyyy") + "</b>" +
-                    //                                       "<p style='margin-top:2px;margin-bottom:2px;'>" + " " + "</p>" +
-                    //                                        "<b style='font-size:20px;'>" + "" + "</b>" +
-                    //                                   "</div>" +
-                    //                               "</td>" +
-                    //                           "</tr>" +
-                    //                           "<tr>" +
-                    //                               "<td colspan='6'>" +
-                    //                                   "<div style='text-align:left;'>" +
-                    //                                       "<b style='font-size:20px;margin-top:2px;margin-bottom:2px;'>REQ.NO:-</b>" +
-                    //                                       "" + strReqNumber + "" +
-                    //                                   "</div>" +
-                    //                               "</td>" +
-                    //                               "<td colspan='6'>" +
-                    //                                   "<div style='text-align:left;'>" +
-                    //                                       "<b style='font-size:20px;margin-top:2px;margin-bottom:2px;'>Embossing Center:</b>" +
-                    //                                       "" + strComNew + "" +
-                    //                                   "</div>" +
-                    //                               "</td>" +
-                    //                           "</tr>" +
-                    //                           "<tr>" +
-                    //                               "<td colspan='12'>" +
-                    //                                   "<div style='text-align:left;padding:2px;'>" +
-                    //                                       "<b style='font-size:20px;margin-top:2px;margin-bottom:2px;'>" + "State:" + HSRPStateName + "</b>" +
-                    //                                       "<p style='margin-top:2px;margin-bottom:2px;'>" + " " + "</p>" +
-                    //                                        "<b style='font-size:20px;'>" + "" + "</b>" +
-                    //                                   "</div>" +
-                    //                               "</td>" +
-                    //                           "</tr>" +
-                    //                            "<tr>" +
-                    //                               "<td colspan='12'>" +
-                    //                                   "<div style='text-align:left;padding:8px;'>" +
-                    //                                       "<b style='font-size:20px;margin-top:2px;margin-bottom:2px;'>" + " " + "</b>" +
-                    //                                       "<p style='margin-top:2px;margin-bottom:2px;'>" + " " + "</p>" +
-                    //                                        "<b style='font-size:20px;'>" + "" + "</b>" +
-                    //                                   "</div>" +
-                    //                               "</td>" +
-                    //                           "</tr>" +
-
-                    //                           "<tr>" +
-                    //                               "<td colspan='1' style='text-align:center'>SR.N.</td>" +
-                    //                               "<td colspan='3'>Product Size</td>" +
-                    //                               "<td colspan='1'>Laser Count</td>" +
-                    //                               "<td colspan='1'>Start Laser No</td>" +
-                    //                               "<td colspan='1'>End Laser No</td>" +
-
-                    //                           "</tr>");
-
-
-                    //   if (dtResult.Rows.Count > 0)
-                    //   {
-                    //       for (int i = 0; i < dtResult.Rows.Count; i++)
-                    //       {
-                    //           string ID = dtResult.Rows[i]["ID"].ToString();
-                    //           string productcode = dtResult.Rows[i]["productcode"].ToString();
-                    //           string LaserCount = dtResult.Rows[i]["LaserCount"].ToString();
-                    //           Itotal = Convert.ToInt32(dtResult.Rows[i]["Total"].ToString());
-                    //           string BeginLaser = dtResult.Rows[i]["BeginLaser"].ToString();
-                    //           string EndLaser = dtResult.Rows[i]["EndLaser"].ToString();
-
-
-
-
-                    //           html.Append("<tr>" +
-                    //              "<td colspan='1' style='text-align:left'>" + ID + "</td>" +
-                    //              "<td colspan='3'>" + productcode + "</td>" +
-
-                    //              "<td colspan='1'>" + LaserCount + "</td>" +
-                    //              "<td colspan='1'>" + BeginLaser + "</td>" +
-                    //              "<td colspan='1'>" + EndLaser + "</td>" +
-
-                    //          "</tr>");
-                    //       }
-                    //   }
-                    //   html.Append("<tr>" +
-                    //            "<td colspan='1' style='text-align:center' > " + "<b>Grand Total:</b>" + "</td>" +
-                    //            "<td colspan='3'>" + "" + "</td>" +
-
-                    //            "<td colspan='1'>" + Itotal + "</td>" +
-                    //            "<td colspan='1'>" + " " + "</td>" +
-                    //            "<td colspan='1'>" + " " + "</td>" +
-
-                    //        "</tr>");
-
-
-
-
-                    //   html.Append("<tr>" +
-                    //    "<td colspan='2' > " + "<b>REQUESTED BY </b>" + "</td>" +
-                    //    "<td colspan='2'>" + "<b>AUTHORIZED BY </b>" + "</td>" +
-
-                    //    "<td colspan='2'>" + "<b>ISSUED BY </b>" + "</td>" +
-                    //    "<td colspan='2'>" + "<b>RECEIVED BY</b>" + "</td>" +
-
-
-                    //"</tr>");
-
-                    //   html.Append("<tr>" +
-                    //                             "<td colspan='12'>" +
-                    //                                 "<div style='text-align:left;padding:2px;'>" +
-                    //                                     "<b style='font-size:20px;margin-top:2px;margin-bottom:2px;'>" + "Name" + "</b>" +
-
-                    //                                 "</div>" +
-                    //                             "</td>" +
-                    //                         "</tr>");
-
-                    //   html.Append("<tr>" +
-                    //                            "<td colspan='12'>" +
-                    //                                "<div style='text-align:left;padding:2px;'>" +
-                    //                                    "<b style='font-size:20px;margin-top:2px;margin-bottom:2px;'>" + "Designation" + "</b>" +
-
-                    //                                "</div>" +
-                    //                            "</td>" +
-                    //                        "</tr>");
-
-                    //   html.Append("<tr>" +
-                    //                          "<td colspan='12'>" +
-                    //                              "<div style='text-align:right;padding:8px;'>" +
-                    //                                  "<b style='font-size:20px;margin-top:2px;margin-bottom:2px;'>" + "Download By: Admin " + "</b>" +
-
-                    //                              "</div>" +
-                    //                          "</td>" +
-                    //                      "</tr>");
-
-                    //   html.Append("<tr>" +
-                    //                         "<td colspan='12'>" +
-                    //                             "<div style='text-align:right;padding:8px;'>" +
-                    //                                 "<b style='font-size:20px;margin-top:2px;margin-bottom:2px;'>" + "Sheet Generated By :" + DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss") + "</b>" +
-
-                    //                             "</div>" +
-                    //                         "</td>" +
-                    //                     "</tr>");
-
-
-
-
-
-
-                    //   html.Append("</table>");
-
-                    //   html.Append("</div>");
-
-
-                    //   try
-                    //   {
-                    //       //start updating hsrprecords 
-                    //       string Query = "update prefix_Requisition set lastno=lastno+1,Lastreqno=Lastreqno+1 where hsrp_stateid='" + HSRP_StateID + "' and prefixfor='Req No'";
-                    //       Utils.Utils.ExecNonQuery(Query, CnnString);
-                    //   }
-                    //   catch (Exception ev)
-                    //   {
-                    //       Label1.Text = "prefix Requisition update error: " + ev.Message;
-                    //   }
-
-
-                    //   #endregion
-
-                    /*
-                     * Close body & HTMl Tag
-                     */
-                    html.Append("</body>" +
-                        "</html>");
-
-
-                    if (findRecord)
-                    {
-
-
-                        string strSaveSQlQuery = "insert into ProductionSheetAutoGenerated_List (HSRP_StateID, State_Code, RTO_ID, Emb_Center_Id, FileName, Productiondate, ProductionTime, OrderNo) values " +
-                                    "('" + HSRP_StateID + "', '" + HSRPStateShortName + "', '', '" + Navembcode + "', '" + fileName + "', '" + DateTime.Now.ToString("yyyy-MM-dd") + "', '" + DateTime.Now.ToString("HH:mm:ss") + "', '" + filePrefix + "') ";
-                        Utils.Utils.ExecNonQuery(strSaveSQlQuery, CnnString); // uncomment after testing
-                        Label1.Text = Label1.Text + "successfully created production sheet of State: " + HSRPStateShortName + ", , Emb_Center_Id: " + Navembcode + Environment.NewLine;
-
-                        //lblLog.Text = lblLog.Text + Environment.NewLine + "Start Production Query at:" + DateTime.Now;
-
+                        #region
+
+                        string HSRP_StateID = dr["HSRP_StateID"].ToString().Trim();
+                        string HSRPStateName = dr["HSRPStateName"].ToString().Trim();
+                        string HSRPStateShortName = dr["HSRPStateShortName"].ToString().Trim();
+                        //string RTOLocationID = dr["RTOLocationID"].ToString().Trim();
+                        //string RTOLocationName = dr["RTOLocationName"].ToString().Trim();
+                        //string NAVEMBID = dr["NAVEMBID"].ToString().Trim();
+                        string Navembcode = dr["Navembcode"].ToString().Trim();
+
+                        string dir = dirPath + DateTime.Now.ToString("yyyy-MM-dd") + "\\" + HSRPStateShortName + "\\";
+                        // string fileName = filePrefix + "-" + Navembcode + ".pdf";
+                        string fileName = "JCB" + "-" + filePrefix + "-" + Navembcode + ".pdf";
+                        string filePath = dir + fileName;
+
+                        StringBuilder html = new StringBuilder();
+
+                        Boolean findRecord = false;
+                        string strProductionSheetNo = string.Empty;
+
+                        /*
+                        *  Start body & HTMl Tag
+                        */
+                        #region
+                        html.Append(
+                            "<!DOCTYPE html>" +
+                            "<html>" +
+                            "<head>" +
+                                "<meta charset='UTF-8'><title>Title</title>" +
+                                "<style>" +
+                                    "@page {" +
+                                        /* headers*/
+                                        "@top-left {" +
+                                            "content: 'Left header';" +
+                                        "}" +
+                                        "@top-right {" +
+                                            "content: 'Right header';" +
+                                        "}" +
+
+                                        /* footers */
+                                        "@bottom-left {" +
+                                            "content: 'Lorem ipsum';" +
+                                        "} " +
+                                        "@bottom-right {" +
+                                            "content: 'Page ' counter(page) ' of ' counter(pages);" +
+                                        "}" +
+                                        "@bottom-center  {" +
+                                            "content:element(footer);" +
+                                        "}" +
+                                    "}" +
+                                     "#footer {" +
+                                        "position: running(footer);" +
+                                    "}" +
+                                    "table {" +
+                                      "border-collapse: collapse;" +
+                                    "}" +
+
+                                    "table, th, td {" +
+                                        "border: 1px solid black;" +
+                                        "text-align: left;" +
+                                        "vertical-align: top;" +
+                                        "padding:5px;" +
+                                    "}" +
+                                "</style>" +
+                            "</head>" +
+                            "<body>");
+                        #endregion
+
+                        string oemDealerQuery = string.Empty;
+
+                        oemDealerQuery = "select distinct om.oemid as oemid, om.name as oemname, dm.dealerid, d.Subdealername as Dealername, dm.dealercode, d.Address,d.SubDealerId, dm.HSRP_StateID, " +
+                         "dm.RTOLocationID from oemmaster om " +
+                         "left join dealermaster dm on dm.oemid = om.oemid join DealerAffixation d on d.DealerID=dm.DealerId where dm.HSRP_StateID =" + HSRP_StateID + " and " +
+                          "d.RTOLocationID in (select RTOLocationID from rtolocation where Navembcode='" + Navembcode + "' ) and " +
+
+                         "dm.dealerid in (select distinct dealerid from hsrprecords where NewPdfRunningNo is null and erpassigndate is not null and OrderStatus='New Order' and  affix_id is not NULL ) and    OM.OEMid='21'";
 
 
                         #region
-                        try
+                        DataTable dtOD = Utils.Utils.GetDataTable(oemDealerQuery, CnnString);
+
+                        if (dtOD.Rows.Count > 0)
                         {
-                            if (!Directory.Exists(dir))
+                            foreach (DataRow drOD in dtOD.Rows)
                             {
 
+                                string oemid = drOD["oemid"].ToString().Trim();
+                                string dealerid = drOD["dealerid"].ToString().Trim();
+                                string oemname = drOD["oemname"].ToString().Trim();
+                                string dealername = drOD["Dealername"].ToString().Trim();
+                                string Address = drOD["Address"].ToString().Trim();
 
-                                Directory.CreateDirectory(dir);
+
+
+                                string strsubaffixid = drOD["SubDealerId"].ToString();
+
+                                //start sql query
+                                #region
+                                string productionQuery = string.Empty;
+
+                                DataTable dtProduction = new DataTable();
+
+
+
+                                SqlConnection con = new SqlConnection(CnnString);
+                                SqlCommand cmd = new SqlCommand("USP_JCBProductionSheet", con);
+                                cmd.CommandType = CommandType.StoredProcedure;
+                                con.Open();
+                                cmd.Parameters.AddWithValue("@navembid", Navembcode);
+                                cmd.Parameters.AddWithValue("@HSRP_StateID", HSRP_StateID);
+                                cmd.Parameters.AddWithValue("@Dealerid", dealerid);
+                                cmd.Parameters.AddWithValue("@Affix_Id", strsubaffixid);
+                                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                                // dtProduction = new DataTable();
+                                da.Fill(dtProduction);
+                                con.Close();
+
+
+                                #endregion
+                                //end sql query
+
+                                #region
+                                // DataTable dtProduction = Utils.Utils.GetDataTable(productionQuery, CnnString);
+                                if (dtProduction.Rows.Count > 0)
+                                {
+
+                                    findRecord = true;
+                                    string strRunningNo = string.Empty;
+                                    //string strSel = "select isnull(max(right(newProductionSheetRunningNo,7)),0000000) as maxSheetNo from EmbossingCentersNew where State_Id='" + HSRP_StateID + "' and Emb_Center_Id='" + NAVEMBID + "'";
+                                    string strSel = "select isnull(max(right(newProductionSheetRunningNo,7)),0000000) from EmbossingCentersNew where State_Id='" + HSRP_StateID + "' and Emb_Center_Id='" + Navembcode + "' ";
+                                    string strCom = Utils.Utils.getScalarValue(strSel, CnnString);
+                                    //DataTable dtSheetNo = fillDataTable(strSel, CnnString);
+                                    if (strCom.Equals(0) || strCom.Length == 0)
+                                    {
+                                        strRunningNo = "0000001";
+                                    }
+                                    else
+                                    {
+                                        strRunningNo = string.Format("{0:0000000}", Convert.ToInt32(strCom) + 1);
+                                    }
+
+                                    string strRequeNo = "select (prefixtext+right('00000'+ convert(varchar,Lastreqno+1),5)) as Reqno from prefix_Requisition  where hsrp_stateid='" + HSRP_StateID + "' and prefixfor='Req No'";
+                                    ReqNum = Utils.Utils.getScalarValue(strRequeNo, CnnString);
+
+                                    string strPRFIX = "select PrefixText from EmbossingCentersNew where State_Id='" + HSRP_StateID + "' and Emb_Center_Id='" + Navembcode + "'";
+                                    string strPRFIXCom = Utils.Utils.getScalarValue(strPRFIX, CnnString);
+                                    strProductionSheetNo = strPRFIXCom + strRunningNo;
+
+                                    string RTOLocationName = dtProduction.Rows[0]["RTOLocationName"].ToString();
+
+
+                                    #region
+
+                                    html.Append("<div style='page-break-before: avoid;page-break-inside: avoid;page-break-after: always;'>" +
+                                            "<table style='width:100%;border: 0px;'>" +
+                                                "<tr style='border: 0px;'>" +
+                                                    "<td colspan='3' style='border: 0px;'>" +
+                                                        "<div style='text-align:left'><b>Report Generation Date:</b> " + DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss") + "</div>" +
+                                                    "</td>" +
+
+                                                     "<td colspan='3' style='border: 0px;'>" +
+                                                        "<div style='text-align:left'><b>ROSMERTA SAFETY SYSTEMS LIMITED</b> " + "</div>" +
+                                                    "</td>" +
+
+
+                                                     "<td colspan='5' style='border: 0px;'>" +
+                                                        "<div style='float:left;width: 500px;word-wrap: break-word;'><b>Production Sheet No:</b> " + strRunningNo + " </div>" +
+                                                    "</td>" +
+
+                                                "</tr>" +
+
+                                                  "<tr style='border: 0px;'>" +
+                                                    "<td colspan='3' style='border: 0px;'>" +
+                                                        "<div style='text-align:left'><b>State:</b> " + HSRPStateName + "</div>" +
+                                                    "</td>" +
+
+                                                     "<td colspan='3' style='border: 0px;'>" +
+                                                        "<div style='text-align:left'><b>Production Sheet</b> " + "</div>" +
+                                                    "</td>" +
+
+
+                                                     "<td colspan='5' style='border: 0px;'>" +
+                                                        "<div style='float:left;width: 500px;word-wrap: break-word;'><b>Dealer ID/Name:</b> " + dealerid + "/" + dealername + "/" + strsubaffixid + " </div>" +
+                                                    "</td>" +
+
+                                                "</tr>" +
+
+                                                    "<tr style='border: 0px;'>" +
+                                                    "<td colspan='3' style='border: 0px;'>" +
+                                                        "<div style='text-align:left'><b>EC Location: </b> " + RTOLocationName + "</div>" +
+                                                    "</td>" +
+
+                                                     "<td colspan='3' style='border: 0px;'>" +
+                                                        "<div style='style='text-align:left'><b>Oem :</b> " + oemname + "</div>" +
+                                                    "</td>" +
+
+
+                                                     "<td colspan='5' style='border: 0px;'>" +
+                                                         "<div style='float:left;width: 500px;word-wrap: break-word;'><b>Dealer Address:</b> " + Address + " </div>" +
+                                                    //"<div style='text-align:left'><b>Dealer Address:</b> " + Address + " </div>" +
+                                                    "</td>" +
+
+                                                "</tr>" +
+
+
+                                                 "<tr>" +
+                                                    "<td style='text-align:center'>Sr. No.</td>" +
+                                                      "<td>Vehicle No.</td>" +
+                                                       "<td>Front Plate Size</td>" +
+                                                    "<td>Front Laser No.</td>" +
+
+                                                    "<td>Rear Plate Size</td>" +
+                                                    "<td>Rear Laser No.</td>" +
+
+                                                    "<td>H. S. Foil </td>" +
+                                                    "<td>Caution Sticker</td>" +
+                                                    "<td>Fuel Type</td>" +
+                                                    "<td >VT</td>" +
+                                                    "<td >VC</ td>" +
+
+                                                "</tr>");
+
+
+
+
+                                    #endregion
+
+                                    #region
+                                    string strtvspono = "";
+                                    foreach (DataRow drProduction in dtProduction.Rows)
+                                    {
+                                        string HsrprecordID = drProduction["hsrprecordID"].ToString().Trim();
+                                        string SRNo = drProduction["SRNo"].ToString().Trim();
+                                        string ORD = "";// drProduction["ORD"].ToString().Trim();
+                                        string VC = drProduction["VehicleClass"].ToString().Trim();
+                                        string VehicleNo = drProduction["VehicleRegNo"].ToString().Trim();
+                                        string VT = drProduction["VehicleType"].ToString().Trim();
+                                        //string ChassisNo = drProduction["ChassisNo"].ToString().Trim();
+                                        //string EngineNo = drProduction["EngineNo"].ToString().Trim();
+                                        string FuelType = drProduction["FuelType"].ToString().Trim();
+                                        string FrontPSize = drProduction["FrontProductCode"].ToString().Trim();
+                                        string FrontLaserNo = drProduction["HSRP_Front_LaserCode"].ToString().Trim();
+                                        string RearPSize = drProduction["RearProductCode"].ToString().Trim();
+                                        string RearLaserNo = drProduction["HSRP_Rear_LaserCode"].ToString().Trim();
+                                        string Amount = drProduction["roundoff_netamount"].ToString().Trim();
+                                        //string OrderStatus = drProduction["OrderStatus"].ToString().Trim();
+                                        string stickerColor = drProduction["stickerColor"].ToString().Trim();
+                                        string HotStampingFoilColour = drProduction["HotStampingFoilColour"].ToString().Trim();
+
+                                        html.Append("<tr>" +
+                                           "<td style='text-align:center'>" + SRNo + "</td>" +
+                                               "<td style='text-align:center;font-size:20px;'>" + "<b>" + VehicleNo + "</b> </td>" +
+
+                                                "<td>" + FrontPSize + "</td>" +
+                                                 "<td style='text-align:center;font-size:20px;'>" + "<b>" + FrontLaserNo + "</b> </td>" +
+                                                   "<td>" + RearPSize + "</td>" +
+                                                 "<td style='text-align:center;font-size:20px;'>" + "<b>" + RearLaserNo + "</b> </td>" +
+
+                                                  "<td>" + HotStampingFoilColour + "</td>" +
+                                                   "<td>" + stickerColor + "</td>" +
+                                                    "<td>" + FuelType + "</td>" +
+                                                    "<td>" + VT + "</td>" +
+                                                    "<td>" + VC + "</td>" +
+
+                                       "</tr>");
+
+
+                                        //start updating hsrprecords 
+                                        string sqlUpdateHSRPRecords = "update hsrprecords set sendtoProductionStatus='Y', NAVPDFFlag='1', NewPdfRunningNo='" + strProductionSheetNo + "',  " +
+                                               "PdfDownloadDate=GetDate(), pdfFileName='" + fileName + "', PDFDownloadUserID='1' where hsrprecordID='" + HsrprecordID + "' ";
+                                        Utils.Utils.ExecNonQuery(sqlUpdateHSRPRecords, CnnString);   // uncomment after testing
+                                                                                                     //end 
+
+                                    }
+
+
+
+                                    #endregion
+                                    html.Append("</table>");
+
+                                    html.Append("</div>");
+
+                                    string StrSqlUpdateECQuery = "update EmbossingCentersNew set NewProductionSheetRunningNo='" + strProductionSheetNo + "' " +
+                                     "where State_Id='" + HSRP_StateID + "' and Emb_Center_Id='" + Navembcode + "'";
+                                    Utils.Utils.ExecNonQuery(StrSqlUpdateECQuery, CnnString); // uncomment after testing
+                                }
+
+                                #endregion
 
                             }
+                        }// close oemDealerQuery
+                        #endregion
 
-                        }
-                        catch (Exception ev)
+                        //   #region "Req Generate"
+                        //   string strSqlQuery1 = "select CompanyName from hsrpstate where hsrp_stateid='" + HSRP_StateID + "'";
+                        //   strCompanyName = Utils.Utils.getScalarValue(strSqlQuery1, CnnString);
+
+                        //   string strEMBName = " select EmbCenterName from EmbossingCentersNew where  State_Id='" + HSRP_StateID + "' and Emb_Center_Id='" + Navembcode + "'";
+                        //   string strComNew = Utils.Utils.getScalarValue(strEMBName, CnnString);
+
+                        //   string strReqNo = "select (prefixtext+right('00000'+ convert(varchar,lastno+1),5)) as Reqno from prefix_Requisition  where hsrp_stateid='" + HSRP_StateID + "' and prefixfor='Req No'";
+                        //   string strReqNumber = Utils.Utils.getScalarValue(strReqNo, CnnString);
+
+                        //   SQLString = "Exec [laserreqSlip1DashBoard]  '" + HSRP_StateID + "','" + Navembcode + "' ,  '" + ReqNum + "'";
+                        //   DataTable dtResult = Utils.Utils.GetDataTable(SQLString, CnnString);
+                        //   string strQuery = string.Empty;
+                        //   string strRtoLocationName = string.Empty;
+                        //   int Itotal = 0;
+
+                        //   html.Append("<div style='width:100%;height:100%;'>" +
+                        //                       "<table style='width:100%'>" +
+
+                        //                           "<tr>" +
+                        //                               "<td colspan='12'>" +
+                        //                                   "<div style='text-align:center;padding:8px;'>" +
+                        //                                       "<b style='font-size:20px;margin-top:2px;margin-bottom:2px;'>" + strCompanyName + "</b>" +
+
+                        //                                       "<p style='margin-top:2px;margin-bottom:2px;'>" + " " + "</p>" +
+                        //                                        "<b style='font-size:20px;'>" + "MATERIAL REQUSITION NOTE" + "</b>" +
+
+                        //                                   "</div>" +
+                        //                               "</td>" +
+                        //                           "</tr>" +
+
+                        //                           "<tr>" +
+                        //                               "<td colspan='12'>" +
+                        //                                   "<div style='text-align:center;padding:8px;'>" +
+                        //                                       "<b style='font-size:20px;margin-top:2px;margin-bottom:2px;'>" + "Production Sheet Date :" + DateTime.Now.ToString("dd-MM-yyyy") + "</b>" +
+                        //                                       "<p style='margin-top:2px;margin-bottom:2px;'>" + " " + "</p>" +
+                        //                                        "<b style='font-size:20px;'>" + "" + "</b>" +
+                        //                                   "</div>" +
+                        //                               "</td>" +
+                        //                           "</tr>" +
+                        //                           "<tr>" +
+                        //                               "<td colspan='6'>" +
+                        //                                   "<div style='text-align:left;'>" +
+                        //                                       "<b style='font-size:20px;margin-top:2px;margin-bottom:2px;'>REQ.NO:-</b>" +
+                        //                                       "" + strReqNumber + "" +
+                        //                                   "</div>" +
+                        //                               "</td>" +
+                        //                               "<td colspan='6'>" +
+                        //                                   "<div style='text-align:left;'>" +
+                        //                                       "<b style='font-size:20px;margin-top:2px;margin-bottom:2px;'>Embossing Center:</b>" +
+                        //                                       "" + strComNew + "" +
+                        //                                   "</div>" +
+                        //                               "</td>" +
+                        //                           "</tr>" +
+                        //                           "<tr>" +
+                        //                               "<td colspan='12'>" +
+                        //                                   "<div style='text-align:left;padding:2px;'>" +
+                        //                                       "<b style='font-size:20px;margin-top:2px;margin-bottom:2px;'>" + "State:" + HSRPStateName + "</b>" +
+                        //                                       "<p style='margin-top:2px;margin-bottom:2px;'>" + " " + "</p>" +
+                        //                                        "<b style='font-size:20px;'>" + "" + "</b>" +
+                        //                                   "</div>" +
+                        //                               "</td>" +
+                        //                           "</tr>" +
+                        //                            "<tr>" +
+                        //                               "<td colspan='12'>" +
+                        //                                   "<div style='text-align:left;padding:8px;'>" +
+                        //                                       "<b style='font-size:20px;margin-top:2px;margin-bottom:2px;'>" + " " + "</b>" +
+                        //                                       "<p style='margin-top:2px;margin-bottom:2px;'>" + " " + "</p>" +
+                        //                                        "<b style='font-size:20px;'>" + "" + "</b>" +
+                        //                                   "</div>" +
+                        //                               "</td>" +
+                        //                           "</tr>" +
+
+                        //                           "<tr>" +
+                        //                               "<td colspan='1' style='text-align:center'>SR.N.</td>" +
+                        //                               "<td colspan='3'>Product Size</td>" +
+                        //                               "<td colspan='1'>Laser Count</td>" +
+                        //                               "<td colspan='1'>Start Laser No</td>" +
+                        //                               "<td colspan='1'>End Laser No</td>" +
+
+                        //                           "</tr>");
+
+
+                        //   if (dtResult.Rows.Count > 0)
+                        //   {
+                        //       for (int i = 0; i < dtResult.Rows.Count; i++)
+                        //       {
+                        //           string ID = dtResult.Rows[i]["ID"].ToString();
+                        //           string productcode = dtResult.Rows[i]["productcode"].ToString();
+                        //           string LaserCount = dtResult.Rows[i]["LaserCount"].ToString();
+                        //           Itotal = Convert.ToInt32(dtResult.Rows[i]["Total"].ToString());
+                        //           string BeginLaser = dtResult.Rows[i]["BeginLaser"].ToString();
+                        //           string EndLaser = dtResult.Rows[i]["EndLaser"].ToString();
+
+
+
+
+                        //           html.Append("<tr>" +
+                        //              "<td colspan='1' style='text-align:left'>" + ID + "</td>" +
+                        //              "<td colspan='3'>" + productcode + "</td>" +
+
+                        //              "<td colspan='1'>" + LaserCount + "</td>" +
+                        //              "<td colspan='1'>" + BeginLaser + "</td>" +
+                        //              "<td colspan='1'>" + EndLaser + "</td>" +
+
+                        //          "</tr>");
+                        //       }
+                        //   }
+                        //   html.Append("<tr>" +
+                        //            "<td colspan='1' style='text-align:center' > " + "<b>Grand Total:</b>" + "</td>" +
+                        //            "<td colspan='3'>" + "" + "</td>" +
+
+                        //            "<td colspan='1'>" + Itotal + "</td>" +
+                        //            "<td colspan='1'>" + " " + "</td>" +
+                        //            "<td colspan='1'>" + " " + "</td>" +
+
+                        //        "</tr>");
+
+
+
+
+                        //   html.Append("<tr>" +
+                        //    "<td colspan='2' > " + "<b>REQUESTED BY </b>" + "</td>" +
+                        //    "<td colspan='2'>" + "<b>AUTHORIZED BY </b>" + "</td>" +
+
+                        //    "<td colspan='2'>" + "<b>ISSUED BY </b>" + "</td>" +
+                        //    "<td colspan='2'>" + "<b>RECEIVED BY</b>" + "</td>" +
+
+
+                        //"</tr>");
+
+                        //   html.Append("<tr>" +
+                        //                             "<td colspan='12'>" +
+                        //                                 "<div style='text-align:left;padding:2px;'>" +
+                        //                                     "<b style='font-size:20px;margin-top:2px;margin-bottom:2px;'>" + "Name" + "</b>" +
+
+                        //                                 "</div>" +
+                        //                             "</td>" +
+                        //                         "</tr>");
+
+                        //   html.Append("<tr>" +
+                        //                            "<td colspan='12'>" +
+                        //                                "<div style='text-align:left;padding:2px;'>" +
+                        //                                    "<b style='font-size:20px;margin-top:2px;margin-bottom:2px;'>" + "Designation" + "</b>" +
+
+                        //                                "</div>" +
+                        //                            "</td>" +
+                        //                        "</tr>");
+
+                        //   html.Append("<tr>" +
+                        //                          "<td colspan='12'>" +
+                        //                              "<div style='text-align:right;padding:8px;'>" +
+                        //                                  "<b style='font-size:20px;margin-top:2px;margin-bottom:2px;'>" + "Download By: Admin " + "</b>" +
+
+                        //                              "</div>" +
+                        //                          "</td>" +
+                        //                      "</tr>");
+
+                        //   html.Append("<tr>" +
+                        //                         "<td colspan='12'>" +
+                        //                             "<div style='text-align:right;padding:8px;'>" +
+                        //                                 "<b style='font-size:20px;margin-top:2px;margin-bottom:2px;'>" + "Sheet Generated By :" + DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss") + "</b>" +
+
+                        //                             "</div>" +
+                        //                         "</td>" +
+                        //                     "</tr>");
+
+
+
+
+
+
+                        //   html.Append("</table>");
+
+                        //   html.Append("</div>");
+
+
+                        //   try
+                        //   {
+                        //       //start updating hsrprecords 
+                        //       string Query = "update prefix_Requisition set lastno=lastno+1,Lastreqno=Lastreqno+1 where hsrp_stateid='" + HSRP_StateID + "' and prefixfor='Req No'";
+                        //       Utils.Utils.ExecNonQuery(Query, CnnString);
+                        //   }
+                        //   catch (Exception ev)
+                        //   {
+                        //       Label1.Text = "prefix Requisition update error: " + ev.Message;
+                        //   }
+
+
+                        //   #endregion
+
+                        /*
+                         * Close body & HTMl Tag
+                         */
+                        html.Append("</body>" +
+                            "</html>");
+
+
+                        if (findRecord)
                         {
-                            // Fail silently
-                            Label1.Text = ev.Message;
-                        }
 
-                        try
-                        {
-                            var pdf = Pdf
-                                    .From(html.ToString())
-                                    .OfSize(PaperSize.A4)
-                                    .WithTitle("Title")
-                                    .WithoutOutline()
-                                    .WithMargins(1.25.Centimeters())
-                                    .Landscape()
-                                    .Comressed()
-                                    .Content();
 
-                            FileStream readStream = File.Create(filePath);
-                            BinaryWriter binaryWriter = new BinaryWriter(readStream);
+                            string strSaveSQlQuery = "insert into ProductionSheetAutoGenerated_List (HSRP_StateID, State_Code, RTO_ID, Emb_Center_Id, FileName, Productiondate, ProductionTime, OrderNo) values " +
+                                        "('" + HSRP_StateID + "', '" + HSRPStateShortName + "', '', '" + Navembcode + "', '" + fileName + "', '" + DateTime.Now.ToString("yyyy-MM-dd") + "', '" + DateTime.Now.ToString("HH:mm:ss") + "', '" + filePrefix + "') ";
+                            Utils.Utils.ExecNonQuery(strSaveSQlQuery, CnnString); // uncomment after testing
+                            Label1.Text = Label1.Text + "successfully created production sheet of State: " + HSRPStateShortName + ", , Emb_Center_Id: " + Navembcode + Environment.NewLine;
 
-                            // Write the binary data to the file
-                            binaryWriter.Write(pdf);
-                            binaryWriter.Close();
-                            readStream.Close();
-                        }
-                        catch (Exception ev)
-                        {
-                            // Fail silently
-                            Label1.Text = ev.Message;
+                            //lblLog.Text = lblLog.Text + Environment.NewLine + "Start Production Query at:" + DateTime.Now;
+
+
+
+                            #region
+                            try
+                            {
+                                if (!Directory.Exists(dir))
+                                {
+
+
+                                    Directory.CreateDirectory(dir);
+
+                                }
+
+                            }
+                            catch (Exception ev)
+                            {
+                                // Fail silently
+                                Label1.Text = ev.Message;
+                            }
+
+                            try
+                            {
+                                var pdf = Pdf
+                                        .From(html.ToString())
+                                        .OfSize(PaperSize.A4)
+                                        .WithTitle("Title")
+                                        .WithoutOutline()
+                                        .WithMargins(1.25.Centimeters())
+                                        .Landscape()
+                                        .Comressed()
+                                        .Content();
+
+                                FileStream readStream = File.Create(filePath);
+                                BinaryWriter binaryWriter = new BinaryWriter(readStream);
+
+                                // Write the binary data to the file
+                                binaryWriter.Write(pdf);
+                                binaryWriter.Close();
+                                readStream.Close();
+                            }
+                            catch (Exception ev)
+                            {
+                                // Fail silently
+                                Label1.Text = ev.Message;
+                            }
+
+                            #endregion
                         }
 
                         #endregion
-                    }
 
-                    #endregion
-
-                }//close foreach stateEcQuery
+                    }//close foreach stateEcQuery
+                }
             }
+
+
         }
 
 
@@ -4115,7 +4070,7 @@ namespace ProductionSheetDashBoard
                     {
                         fileAppoinmentDate = dtmax.Rows[0]["MaxAppointmentdate"].ToString();
                     }
-                    fileName = "MHHSRP" + "-" + fileAppoinmentDate + "-" + filePrefix + "-" + Navembcode + ".pdf";
+                    fileName = "BookMyhsrp" + "-" + fileAppoinmentDate + "-" + filePrefix + "-" + Navembcode + ".pdf";
                     filePath = dir + fileName;
 
                     string oemDealerQuery = string.Empty;
@@ -4237,7 +4192,7 @@ namespace ProductionSheetDashBoard
                                              "</td>" +
 
                                               "<td colspan='3' style='border: 0px; '>" +
-                                                 "<div style='text-align:left;font-size:22px;''><b>MHHSRP (Dealer Delivery) </b> " + "</div>" +
+                                                 "<div style='text-align:left;font-size:22px;''><b>BookMyHSRP (Dealer Delivery) </b> " + "</div>" +
                                              "</td>" +
 
 
@@ -4332,7 +4287,7 @@ namespace ProductionSheetDashBoard
                                            "</td>" +
 
                                             "<td colspan='3' style='border: 0px; '>" +
-                                              "<div style='text-align:left;font-size:22px;''><b> MHHSRP (Dealer Delivery) </b> " + "</div>" + "</td>" +
+                                              "<div style='text-align:left;font-size:22px;''><b> BookMYHSRP (Dealer Delivery) </b> " + "</div>" + "</td>" +
 
 
                                             "<td colspan='6' style='border: 0px;'>" +
@@ -4881,14 +4836,7 @@ namespace ProductionSheetDashBoard
                 lblErrMess.Text = "Please select  State";
                 return;
             }
-            //if (ddlStateName.SelectedValue == "31")
-            //{
-
-            //    lblErrMess.Text = String.Empty;
-            //    lblErrMess.Text = "In DashBoard Uttar Pradesh state  is not allowed to generate Production sheet";
-            //    return;
-            //}
-
+           
             string sqlPrefixQuery = "select top 1 CONVERT(INT, isnull(OrderNo,'0')) + 1 as orderNo from ProductionSheetAutoGenerated_List order by id desc";
             DataTable dtPrefix = Utils.Utils.GetDataTable(sqlPrefixQuery, CnnString);
 
@@ -4916,581 +4864,588 @@ namespace ProductionSheetDashBoard
         {
             string stateECQuery = string.Empty;
             string ReqNum = string.Empty;
-
-            //string Navembid = Session["Navembid"].ToString();
             FillUserDetails();
-            stateECQuery = "select distinct a.HSRP_StateID, (select HSRPStateName from hsrpstate c where c.hsrp_stateid=a.hsrp_stateid) as HSRPStateName,(select HSRPStateShortName from hsrpstate d where d.hsrp_stateid=a.hsrp_stateid) as HSRPStateShortName, navembcode from hsrprecords a,rtolocation b where a.HSRP_StateID ='" + ddlStateName.SelectedValue + "' and   b.Navembcode not like '%CODO%' and a.dealerid in(select dealerid from dealermaster where oemid='433')    and a.rtolocationid=b.rtolocationid and NewPdfRunningNo is null and erpassigndate is not null and OrderStatus='New Order'  AND b.NAVEMBID='" + Navembid + "'   order by  a.HSRP_StateID";
+            string strExternal= "select HSRPrecordid from hsrprecords a with(nolock) ,rtolocation b  with(nolock) where a.HSRP_StateID ='" + ddlStateName.SelectedValue + "' and   b.Navembcode not like '%CODO%' and a.dealerid in(select dealerid from dealermaster where oemid='433')    and a.rtolocationid=b.rtolocationid and NewPdfRunningNo is null and erpassigndate is not null and OrderStatus='New Order'  AND b.NAVEMBID='" + Navembid + "'   order by  a.HSRP_StateID";
 
-
-            DataTable dtSE = Utils.Utils.GetDataTable(stateECQuery, CnnString);
-            if (dtSE.Rows.Count > 0)
+            DataTable dtsExternal = Utils.Utils.GetDataTable(strExternal, CnnString);
+            if (dtsExternal.Rows.Count > 0)
             {
-                foreach (DataRow dr in dtSE.Rows)
-                {
-                    #region
 
-                    string HSRP_StateID = dr["HSRP_StateID"].ToString().Trim();
-                    string HSRPStateName = dr["HSRPStateName"].ToString().Trim();
-                    string HSRPStateShortName = dr["HSRPStateShortName"].ToString().Trim();
-                    string Navembcode = dr["Navembcode"].ToString().Trim();
-
-                    string dir = dirPath + DateTime.Now.ToString("yyyy-MM-dd") + "\\" + HSRPStateShortName + "\\";
-                    //string dir = dirPath + "/" + DateTime.Now.ToString("yyyy-MM-dd") + "/" + HSRPStateShortName + "/";
-                    string fileName = "External" + "-" + filePrefix + "-" + Navembcode + ".pdf";
-                    string filePath = dir + fileName;
-
-                    //string folderpath = ConfigurationManager.AppSettings["InvoiceFolder"].ToString() + "/" + FinYear + "/" + oemid + "/" + HSRPStateID + "/";
-
-                    StringBuilder html = new StringBuilder();
-
-                    Boolean findRecord = false;
-                    string strProductionSheetNo = string.Empty;
-
-                    /*
-                     *  Start body & HTMl Tag
-                     */
-                    #region
-                    html.Append(
-                        "<!DOCTYPE html>" +
-                        "<html>" +
-                        "<head>" +
-                            "<meta charset='UTF-8'><title>Title</title>" +
-                            "<style>" +
-                                "@page {" +
-                                    /* headers*/
-                                    "@top-left {" +
-                                        "content: 'Left header';" +
-                                    "}" +
-                                    "@top-right {" +
-                                        "content: 'Right header';" +
-                                    "}" +
-
-                                    /* footers */
-                                    "@bottom-left {" +
-                                        "content: 'Lorem ipsum';" +
-                                    "} " +
-                                    "@bottom-right {" +
-                                        "content: 'Page ' counter(page) ' of ' counter(pages);" +
-                                    "}" +
-                                    "@bottom-center  {" +
-                                        "content:element(footer);" +
-                                    "}" +
-                                "}" +
-                                 "#footer {" +
-                                    "position: running(footer);" +
-                                "}" +
-                                "table {" +
-                                  "border-collapse: collapse;" +
-                                "}" +
-
-                                "table, th, td {" +
-                                    "border: 1px solid black;" +
-                                    "text-align: left;" +
-                                    "vertical-align: top;" +
-                                    "padding:5px;" +
-                                "}" +
-                            "</style>" +
-                        "</head>" +
-                        "<body>");
-                    #endregion
-
-                    string oemDealerQuery = string.Empty;
+                    stateECQuery = "select distinct a.HSRP_StateID, (select HSRPStateName from hsrpstate c where c.hsrp_stateid=a.hsrp_stateid) as HSRPStateName,(select HSRPStateShortName from hsrpstate d where d.hsrp_stateid=a.hsrp_stateid) as HSRPStateShortName, navembcode from hsrprecords a with(nolock) ,rtolocation b  with(nolock) where a.HSRP_StateID ='" + ddlStateName.SelectedValue + "' and   b.Navembcode not like '%CODO%' and a.dealerid in(select dealerid from dealermaster where oemid='433')    and a.rtolocationid=b.rtolocationid and NewPdfRunningNo is null and erpassigndate is not null and OrderStatus='New Order'  AND b.NAVEMBID='" + Navembid + "'   order by  a.HSRP_StateID";
 
 
-
-                    //oemDealerQuery = "select distinct om.oemid as oemid, om.name as oemname, dm.dealerid, dm.dealername, dm.dealercode, dm.Address, dm.HSRP_StateID, " +
-                    //    "dm.RTOLocationID from oemmaster om " +
-                    //    "left join dealermaster dm on dm.oemid = om.oemid where dm.HSRP_StateID =" + HSRP_StateID + " and " +
-                    //    "dm.RTOLocationID in (select RTOLocationID from rtolocation where Navembcode='" + Navembcode + "' ) and " +
-                    //    "dm.dealerid in (select distinct dealerid from hsrprecords where NewPdfRunningNo is null and erpassigndate is not null and OrderStatus='New Order'and HSRP_StateID =" + HSRP_StateID + ") and Om.OEMID not  in('21','40','12','20')";
-                    //"dm.dealerid in (select distinct dealerid from hsrprecords where isnull(NewPdfRunningNo,'') = '' and isnull(erpassigndate,'') != '' and HSRP_StateID =" + HSRP_StateID + ") and Om.OEMID not  in('21','40','12','20')";
-
-                    #region
-                    //DataTable dtOD = Utils.Utils.GetDataTable(oemDealerQuery, CnnString);
-                    DataTable dtOD;
-                    SqlConnection con = new SqlConnection(CnnString);
-                    SqlCommand cmd = new SqlCommand("USP_BindExternalDataDashBoard", con);
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    con.Open();
-                    cmd.Parameters.AddWithValue("@navembid", Navembcode);
-                    cmd.Parameters.AddWithValue("@HSRP_StateID", HSRP_StateID);
-                    //cmd.Parameters.AddWithValue("@Orderdate", orderDate);
-                    //cmd.Parameters.AddWithValue("@AuthProd", Authdate);
-                    SqlDataAdapter da = new SqlDataAdapter(cmd);
-                    dtOD = new DataTable();
-                    da.Fill(dtOD);
-                    con.Close();
-                    if (dtOD.Rows.Count > 0)
+                    DataTable dtSE = Utils.Utils.GetDataTable(stateECQuery, CnnString);
+                    if (dtSE.Rows.Count > 0)
                     {
-                        foreach (DataRow drOD in dtOD.Rows)
+                        foreach (DataRow dr in dtSE.Rows)
                         {
-
-                            //string oemid = drOD["oemid"].ToString().Trim();
-                            string Contact = drOD["Contact"].ToString().Trim();
-                            string oemname = drOD["OemName"].ToString().Trim();
-                            string dealername = drOD["DealerName"].ToString().Trim();
-                            string Address = drOD["Address"].ToString().Trim();
-                            string deliveryaddress = drOD["DeliveryAddress"].ToString();
-
-                            //start sql query
                             #region
-                            string productionQuery = string.Empty;
 
+                            string HSRP_StateID = dr["HSRP_StateID"].ToString().Trim();
+                            string HSRPStateName = dr["HSRPStateName"].ToString().Trim();
+                            string HSRPStateShortName = dr["HSRPStateShortName"].ToString().Trim();
+                            string Navembcode = dr["Navembcode"].ToString().Trim();
 
-                            DataTable dtProduction;
-                            SqlConnection con1 = new SqlConnection(CnnString);
-                            SqlCommand cmd1 = new SqlCommand("USP_BindExternalDataProductionsheetDashBoard", con1);
-                            cmd1.CommandType = CommandType.StoredProcedure;
-                            con1.Open();
-                            cmd1.Parameters.AddWithValue("@navembid", Navembcode);
-                            cmd1.Parameters.AddWithValue("@HSRP_StateID", HSRP_StateID);
-                            // cmd1.Parameters.AddWithValue("@Orderdate", orderDate);
-                            //cmd1.Parameters.AddWithValue("@AuthProd", Authdate);
-                            cmd1.Parameters.AddWithValue("@DeliveryAddress", deliveryaddress);
-                            SqlDataAdapter sda = new SqlDataAdapter(cmd1);
-                            dtProduction = new DataTable();
-                            sda.Fill(dtProduction);
-                            con1.Close();
+                            string dir = dirPath + DateTime.Now.ToString("yyyy-MM-dd") + "\\" + HSRPStateShortName + "\\";
+                            //string dir = dirPath + "/" + DateTime.Now.ToString("yyyy-MM-dd") + "/" + HSRPStateShortName + "/";
+                            string fileName = "External" + "-" + filePrefix + "-" + Navembcode + ".pdf";
+                            string filePath = dir + fileName;
 
-                           
+                            //string folderpath = ConfigurationManager.AppSettings["InvoiceFolder"].ToString() + "/" + FinYear + "/" + oemid + "/" + HSRPStateID + "/";
 
+                            StringBuilder html = new StringBuilder();
 
+                            Boolean findRecord = false;
+                            string strProductionSheetNo = string.Empty;
+
+                            /*
+                             *  Start body & HTMl Tag
+                             */
+                            #region
+                            html.Append(
+                                "<!DOCTYPE html>" +
+                                "<html>" +
+                                "<head>" +
+                                    "<meta charset='UTF-8'><title>Title</title>" +
+                                    "<style>" +
+                                        "@page {" +
+                                            /* headers*/
+                                            "@top-left {" +
+                                                "content: 'Left header';" +
+                                            "}" +
+                                            "@top-right {" +
+                                                "content: 'Right header';" +
+                                            "}" +
+
+                                            /* footers */
+                                            "@bottom-left {" +
+                                                "content: 'Lorem ipsum';" +
+                                            "} " +
+                                            "@bottom-right {" +
+                                                "content: 'Page ' counter(page) ' of ' counter(pages);" +
+                                            "}" +
+                                            "@bottom-center  {" +
+                                                "content:element(footer);" +
+                                            "}" +
+                                        "}" +
+                                         "#footer {" +
+                                            "position: running(footer);" +
+                                        "}" +
+                                        "table {" +
+                                          "border-collapse: collapse;" +
+                                        "}" +
+
+                                        "table, th, td {" +
+                                            "border: 1px solid black;" +
+                                            "text-align: left;" +
+                                            "vertical-align: top;" +
+                                            "padding:5px;" +
+                                        "}" +
+                                    "</style>" +
+                                "</head>" +
+                                "<body>");
                             #endregion
-                            //end sql query
+
+                            string oemDealerQuery = string.Empty;
+
+
+
+                            //oemDealerQuery = "select distinct om.oemid as oemid, om.name as oemname, dm.dealerid, dm.dealername, dm.dealercode, dm.Address, dm.HSRP_StateID, " +
+                            //    "dm.RTOLocationID from oemmaster om " +
+                            //    "left join dealermaster dm on dm.oemid = om.oemid where dm.HSRP_StateID =" + HSRP_StateID + " and " +
+                            //    "dm.RTOLocationID in (select RTOLocationID from rtolocation where Navembcode='" + Navembcode + "' ) and " +
+                            //    "dm.dealerid in (select distinct dealerid from hsrprecords where NewPdfRunningNo is null and erpassigndate is not null and OrderStatus='New Order'and HSRP_StateID =" + HSRP_StateID + ") and Om.OEMID not  in('21','40','12','20')";
+                            //"dm.dealerid in (select distinct dealerid from hsrprecords where isnull(NewPdfRunningNo,'') = '' and isnull(erpassigndate,'') != '' and HSRP_StateID =" + HSRP_StateID + ") and Om.OEMID not  in('21','40','12','20')";
 
                             #region
-                            //  dtProduction = Utils.Utils.GetDataTable(productionQuery, CnnString);
-                            if (dtProduction.Rows.Count > 0)
+                            //DataTable dtOD = Utils.Utils.GetDataTable(oemDealerQuery, CnnString);
+                            DataTable dtOD;
+                            SqlConnection con = new SqlConnection(CnnString);
+                            SqlCommand cmd = new SqlCommand("USP_BindExternalDataDashBoard", con);
+                            cmd.CommandType = CommandType.StoredProcedure;
+                            con.Open();
+                            cmd.Parameters.AddWithValue("@navembid", Navembcode);
+                            cmd.Parameters.AddWithValue("@HSRP_StateID", HSRP_StateID);
+                            //cmd.Parameters.AddWithValue("@Orderdate", orderDate);
+                            //cmd.Parameters.AddWithValue("@AuthProd", Authdate);
+                            SqlDataAdapter da = new SqlDataAdapter(cmd);
+                            dtOD = new DataTable();
+                            da.Fill(dtOD);
+                            con.Close();
+                            if (dtOD.Rows.Count > 0)
                             {
-
-                                findRecord = true;
-                                string strRunningNo = string.Empty;
-                                //string strSel = "select isnull(max(right(newProductionSheetRunningNo,7)),0000000) as maxSheetNo from EmbossingCentersNew where State_Id='" + HSRP_StateID + "' and Emb_Center_Id='" + NAVEMBID + "'";
-                                string strSel = "select isnull(max(right(newProductionSheetRunningNo,7)),0000000) from EmbossingCentersNew where State_Id='" + HSRP_StateID + "' and Emb_Center_Id='" + Navembcode + "'";
-                                string strCom = Utils.Utils.getScalarValue(strSel, CnnString);
-                                //DataTable dtSheetNo = fillDataTable(strSel, CnnString);
-                                if (strCom.Equals(0) || strCom.Length == 0)
+                                foreach (DataRow drOD in dtOD.Rows)
                                 {
-                                    strRunningNo = "0000001";
-                                }
-                                else
-                                {
-                                    strRunningNo = string.Format("{0:0000000}", Convert.ToInt32(strCom) + 1);
-                                }
-                                string strRequeNo = "select (prefixtext+right('00000'+ convert(varchar,Lastreqno+1),5)) as Reqno from prefix_Requisition  where hsrp_stateid='" + HSRP_StateID + "' and prefixfor='Req No'";
-                                ReqNum = Utils.Utils.getScalarValue(strRequeNo, CnnString);
-                                string strPRFIX = "select PrefixText from EmbossingCentersNew where State_Id='" + HSRP_StateID + "' and Emb_Center_Id='" + Navembcode + "'";
-                                string strPRFIXCom = Utils.Utils.getScalarValue(strPRFIX, CnnString);
-                                strProductionSheetNo = strPRFIXCom + strRunningNo;
 
-                                string RTOLocationName = dtProduction.Rows[0]["RTOLocationName"].ToString();
+                                    //string oemid = drOD["oemid"].ToString().Trim();
+                                    string Contact = drOD["Contact"].ToString().Trim();
+                                    string oemname = drOD["OemName"].ToString().Trim();
+                                    string dealername = drOD["DealerName"].ToString().Trim();
+                                    string Address = drOD["Address"].ToString().Trim();
+                                    string deliveryaddress = drOD["DeliveryAddress"].ToString();
 
-                                #region
-
-                                html.Append("<div style='page-break-before: avoid;page-break-inside: avoid;page-break-after: always;'>" +
-                                        "<table style='width:100%;border: 0px;'>" +
-                                            "<tr style='border: 0px;'>" +
-                                                "<td colspan='3' style='border: 0px;'>" +
-                                                    "<div style='text-align:left'><b>Report Generation Date:</b> " + DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss") + "</div>" +
-                                                "</td>" +
-
-                                                 "<td colspan='3' style='border: 0px;'>" +
-                                                    "<div style='text-align:left'><b>ROSMERTA SAFETY SYSTEMS LIMITED</b> " + "</div>" +
-                                                "</td>" +
+                                    //start sql query
+                                    #region
+                                    string productionQuery = string.Empty;
 
 
-                                                 "<td colspan='5' style='border: 0px;'>" +
-                                                    "<div style='float:left;width: 500px;word-wrap: break-word;'><b>Production Sheet No:</b> " + strRunningNo + " </div>" +
-                                                "</td>" +
-
-                                            "</tr>" +
-
-                                              "<tr style='border: 0px;'>" +
-                                                "<td colspan='3' style='border: 0px;'>" +
-                                                    "<div style='text-align:left'><b>State:</b> " + HSRPStateName + "</div>" +
-                                                "</td>" +
-
-                                                 "<td colspan='3' style='border: 0px;'>" +
-                                                    "<div style='text-align:left'><b>Production Sheet</b> " + "</div>" +
-                                                "</td>" +
-
-
-                                                 "<td colspan='5' style='border: 0px;'>" +
-                                                    "<div style='float:left;width: 500px;word-wrap: break-word;'><b>Contact Details:</b> " + Contact +  " </div>" +
-                                                "</td>" +
-
-                                            "</tr>" +
-
-                                                "<tr style='border: 0px;'>" +
-                                                "<td colspan='3' style='border: 0px;'>" +
-                                                    "<div style='text-align:left'><b>EC Location: </b> " + RTOLocationName + "</div>" +
-                                                "</td>" +
-
-                                                 "<td colspan='3' style='border: 0px;'>" +
-                                                    "<div style='style='text-align:left'><b>Oem :</b> " + oemname + "</div>" +
-                                                "</td>" +
+                                    DataTable dtProduction;
+                                    SqlConnection con1 = new SqlConnection(CnnString);
+                                    SqlCommand cmd1 = new SqlCommand("USP_BindExternalDataProductionsheetDashBoard", con1);
+                                    cmd1.CommandType = CommandType.StoredProcedure;
+                                    con1.Open();
+                                    cmd1.Parameters.AddWithValue("@navembid", Navembcode);
+                                    cmd1.Parameters.AddWithValue("@HSRP_StateID", HSRP_StateID);
+                                    // cmd1.Parameters.AddWithValue("@Orderdate", orderDate);
+                                    //cmd1.Parameters.AddWithValue("@AuthProd", Authdate);
+                                    cmd1.Parameters.AddWithValue("@DeliveryAddress", deliveryaddress);
+                                    SqlDataAdapter sda = new SqlDataAdapter(cmd1);
+                                    dtProduction = new DataTable();
+                                    sda.Fill(dtProduction);
+                                    con1.Close();
 
 
-                                                 "<td colspan='5' style='border: 0px;'>" +
-                                                     "<div style='float:left;width: 500px;word-wrap: break-word;'><b>Dealer Address:</b> " + Address + " </div>" +
-                                                //"<div style='text-align:left'><b>Dealer Address:</b> " + Address + " </div>" +
-                                                "</td>" +
-
-                                            "</tr>" +
 
 
-  "<tr>" +
-                                                "<td style='text-align:center'>Sr. No.</td>" +
-                                                  "<td>Vehicle No.</td>" +
-                                                   "<td>Front Plate Size</td>" +
-                                                "<td>Front Laser No.</td>" +
+                                    #endregion
+                                    //end sql query
 
-                                                "<td>Rear Plate Size</td>" +
-                                                "<td>Rear Laser No.</td>" +
+                                    #region
+                                    //  dtProduction = Utils.Utils.GetDataTable(productionQuery, CnnString);
+                                    if (dtProduction.Rows.Count > 0)
+                                    {
 
-                                                "<td>H. S. Foil </td>" +
-                                                "<td>Caution Sticker</td>" +
-                                                "<td>Fuel Type</td>" +
-                                                "<td >VT</td>" +
-                                                "<td >VC</ td>" +
+                                        findRecord = true;
+                                        string strRunningNo = string.Empty;
+                                        //string strSel = "select isnull(max(right(newProductionSheetRunningNo,7)),0000000) as maxSheetNo from EmbossingCentersNew where State_Id='" + HSRP_StateID + "' and Emb_Center_Id='" + NAVEMBID + "'";
+                                        string strSel = "select isnull(max(right(newProductionSheetRunningNo,7)),0000000) from EmbossingCentersNew where State_Id='" + HSRP_StateID + "' and Emb_Center_Id='" + Navembcode + "'";
+                                        string strCom = Utils.Utils.getScalarValue(strSel, CnnString);
+                                        //DataTable dtSheetNo = fillDataTable(strSel, CnnString);
+                                        if (strCom.Equals(0) || strCom.Length == 0)
+                                        {
+                                            strRunningNo = "0000001";
+                                        }
+                                        else
+                                        {
+                                            strRunningNo = string.Format("{0:0000000}", Convert.ToInt32(strCom) + 1);
+                                        }
+                                        string strRequeNo = "select (prefixtext+right('00000'+ convert(varchar,Lastreqno+1),5)) as Reqno from prefix_Requisition  where hsrp_stateid='" + HSRP_StateID + "' and prefixfor='Req No'";
+                                        ReqNum = Utils.Utils.getScalarValue(strRequeNo, CnnString);
+                                        string strPRFIX = "select PrefixText from EmbossingCentersNew where State_Id='" + HSRP_StateID + "' and Emb_Center_Id='" + Navembcode + "'";
+                                        string strPRFIXCom = Utils.Utils.getScalarValue(strPRFIX, CnnString);
+                                        strProductionSheetNo = strPRFIXCom + strRunningNo;
 
+                                        string RTOLocationName = dtProduction.Rows[0]["RTOLocationName"].ToString();
+
+                                        #region
+
+                                        html.Append("<div style='page-break-before: avoid;page-break-inside: avoid;page-break-after: always;'>" +
+                                                "<table style='width:100%;border: 0px;'>" +
+                                                    "<tr style='border: 0px;'>" +
+                                                        "<td colspan='3' style='border: 0px;'>" +
+                                                            "<div style='text-align:left'><b>Report Generation Date:</b> " + DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss") + "</div>" +
+                                                        "</td>" +
+
+                                                         "<td colspan='3' style='border: 0px;'>" +
+                                                            "<div style='text-align:left'><b>ROSMERTA SAFETY SYSTEMS LIMITED</b> " + "</div>" +
+                                                        "</td>" +
+
+
+                                                         "<td colspan='5' style='border: 0px;'>" +
+                                                            "<div style='float:left;width: 500px;word-wrap: break-word;'><b>Production Sheet No:</b> " + strRunningNo + " </div>" +
+                                                        "</td>" +
+
+                                                    "</tr>" +
+
+                                                      "<tr style='border: 0px;'>" +
+                                                        "<td colspan='3' style='border: 0px;'>" +
+                                                            "<div style='text-align:left'><b>State:</b> " + HSRPStateName + "</div>" +
+                                                        "</td>" +
+
+                                                         "<td colspan='3' style='border: 0px;'>" +
+                                                            "<div style='text-align:left'><b>Production Sheet</b> " + "</div>" +
+                                                        "</td>" +
+
+
+                                                         "<td colspan='5' style='border: 0px;'>" +
+                                                            "<div style='float:left;width: 500px;word-wrap: break-word;'><b>Contact Details:</b> " + Contact + " </div>" +
+                                                        "</td>" +
+
+                                                    "</tr>" +
+
+                                                        "<tr style='border: 0px;'>" +
+                                                        "<td colspan='3' style='border: 0px;'>" +
+                                                            "<div style='text-align:left'><b>EC Location: </b> " + RTOLocationName + "</div>" +
+                                                        "</td>" +
+
+                                                         "<td colspan='3' style='border: 0px;'>" +
+                                                            "<div style='style='text-align:left'><b>Oem :</b> " + oemname + "</div>" +
+                                                        "</td>" +
+
+
+                                                         "<td colspan='5' style='border: 0px;'>" +
+                                                             "<div style='float:left;width: 500px;word-wrap: break-word;'><b>Dealer Address:</b> " + Address + " </div>" +
+                                                        //"<div style='text-align:left'><b>Dealer Address:</b> " + Address + " </div>" +
+                                                        "</td>" +
+
+                                                    "</tr>" +
+
+
+          "<tr>" +
+                                                        "<td style='text-align:center'>Sr. No.</td>" +
+                                                          "<td>Vehicle No.</td>" +
+                                                           "<td>Front Plate Size</td>" +
+                                                        "<td>Front Laser No.</td>" +
+
+                                                        "<td>Rear Plate Size</td>" +
+                                                        "<td>Rear Laser No.</td>" +
+
+                                                        "<td>H. S. Foil </td>" +
+                                                        "<td>Caution Sticker</td>" +
+                                                        "<td>Fuel Type</td>" +
+                                                        "<td >VT</td>" +
+                                                        "<td >VC</ td>" +
+
+                                                    "</tr>");
+
+                                        #endregion
+
+                                        #region
+                                        foreach (DataRow drProduction in dtProduction.Rows)
+                                        {
+                                            string HsrprecordID = drProduction["hsrprecordID"].ToString().Trim();
+                                            string SRNo = drProduction["SRNo"].ToString().Trim();
+                                            string ORD = "";// drProduction["ORD"].ToString().Trim();
+                                            string VC = drProduction["VehicleClass"].ToString().Trim();
+                                            string VehicleNo = drProduction["VehicleRegNo"].ToString().Trim();
+                                            string VT = drProduction["VehicleType"].ToString().Trim();
+                                            //string ChassisNo = drProduction["ChassisNo"].ToString().Trim();
+                                            //string EngineNo = drProduction["EngineNo"].ToString().Trim();
+                                            string FuelType = drProduction["FuelType"].ToString().Trim();
+                                            string FrontPSize = drProduction["FrontProductCode"].ToString().Trim();
+                                            string FrontLaserNo = drProduction["HSRP_Front_LaserCode"].ToString().Trim();
+                                            string RearPSize = drProduction["RearProductCode"].ToString().Trim();
+                                            string RearLaserNo = drProduction["HSRP_Rear_LaserCode"].ToString().Trim();
+                                            string Amount = drProduction["roundoff_netamount"].ToString().Trim();
+                                            // string OrderStatus = drProduction["OrderStatus"].ToString().Trim();
+                                            string stickerColor = drProduction["stickerColor"].ToString().Trim();
+                                            string HotStampingFoilColour = drProduction["HotStampingFoilColour"].ToString().Trim();
+
+                                            html.Append("<tr>" +
+                                                "<td style='text-align:center'>" + SRNo + "</td>" +
+                                                    "<td style='text-align:center;font-size:20px;'>" + "<b>" + VehicleNo + "</b> </td>" +
+
+                                                     "<td>" + FrontPSize + "</td>" +
+                                                      "<td style='text-align:center;font-size:20px;'>" + "<b>" + FrontLaserNo + "</b> </td>" +
+                                                        "<td>" + RearPSize + "</td>" +
+                                                      "<td style='text-align:center;font-size:20px;'>" + "<b>" + RearLaserNo + "</b> </td>" +
+
+                                                       "<td>" + HotStampingFoilColour + "</td>" +
+                                                        "<td>" + stickerColor + "</td>" +
+                                                         "<td>" + FuelType + "</td>" +
+                                                         "<td>" + VT + "</td>" +
+                                                         "<td>" + VC + "</td>" +
                                             "</tr>");
 
-                                #endregion
+                                            try
+                                            {
+                                                //start updating hsrprecords 
+                                                string sqlUpdateHSRPRecords = "update hsrprecords set sendtoProductionStatus='Y', NAVPDFFlag='1', NewPdfRunningNo='" + strProductionSheetNo + "', Requisitionsheetno='" + ReqNum + "',  " +
+                                                      "PdfDownloadDate=GetDate(), pdfFileName='" + fileName + "', PDFDownloadUserID='1' where hsrprecordID='" + HsrprecordID + "' ";
 
-                                #region
-                                foreach (DataRow drProduction in dtProduction.Rows)
+                                                Utils.Utils.ExecNonQuery(sqlUpdateHSRPRecords, CnnString);   // uncomment after testing
+                                            }
+                                            catch (Exception ev)
+                                            {
+                                                Label1.Text = "hsrprecords update error: " + ev.Message;
+                                            }
+                                            //end 
+
+                                        }
+                                        #endregion
+                                        html.Append("</table>");
+
+                                        html.Append("</div>");
+
+                                        try
+                                        {
+                                            string StrSqlUpdateECQuery = "update EmbossingCentersNew set NewProductionSheetRunningNo='" + strProductionSheetNo + "' " +
+                                             "where State_Id='" + HSRP_StateID + "' and Emb_Center_Id='" + Navembcode + "'";
+                                            Utils.Utils.ExecNonQuery(StrSqlUpdateECQuery, CnnString); // uncomment after testing
+                                        }
+                                        catch (Exception ev)
+                                        {
+                                            Label1.Text = "EmbossingCentersNew update error: " + ev.Message;
+                                        }
+                                    }
+
+                                    #endregion
+
+                                }
+                            }// close oemDealerQuery
+                            #endregion
+
+                            #region "Req Generate"
+                            string strSqlQuery1 = "select CompanyName from hsrpstate where hsrp_stateid='" + HSRP_StateID + "'";
+                            strCompanyName = Utils.Utils.getScalarValue(strSqlQuery1, CnnString);
+
+                            string strEMBName = " select EmbCenterName from EmbossingCentersNew where  State_Id='" + HSRP_StateID + "' and Emb_Center_Id='" + Navembcode + "'";
+                            string strComNew = Utils.Utils.getScalarValue(strEMBName, CnnString);
+
+                            string strReqNo = "select (prefixtext+right('00000'+ convert(varchar,lastno+1),5)) as Reqno from prefix_Requisition  where hsrp_stateid='" + HSRP_StateID + "' and prefixfor='Req No'";
+                            string strReqNumber = Utils.Utils.getScalarValue(strReqNo, CnnString);
+
+                            SQLString = "Exec [laserreqSlip1DashBoard]  '" + HSRP_StateID + "','" + Navembcode + "' ,  '" + ReqNum + "'";
+                            DataTable dtResult = Utils.Utils.GetDataTable(SQLString, CnnString);
+                            string strQuery = string.Empty;
+                            string strRtoLocationName = string.Empty;
+                            int Itotal = 0;
+
+                            html.Append("<div style='width:100%;height:100%;'>" +
+                                                "<table style='width:100%'>" +
+
+                                                    "<tr>" +
+                                                        "<td colspan='12'>" +
+                                                            "<div style='text-align:center;padding:8px;'>" +
+                                                                "<b style='font-size:20px;margin-top:2px;margin-bottom:2px;'>" + strCompanyName + "</b>" +
+
+                                                                "<p style='margin-top:2px;margin-bottom:2px;'>" + " " + "</p>" +
+                                                                 "<b style='font-size:20px;'>" + "MATERIAL REQUSITION NOTE" + "</b>" +
+
+                                                            "</div>" +
+                                                        "</td>" +
+                                                    "</tr>" +
+
+                                                    "<tr>" +
+                                                        "<td colspan='12'>" +
+                                                            "<div style='text-align:center;padding:8px;'>" +
+                                                                "<b style='font-size:20px;margin-top:2px;margin-bottom:2px;'>" + "Production Sheet Date :" + DateTime.Now.ToString("dd-MM-yyyy") + "</b>" +
+                                                                "<p style='margin-top:2px;margin-bottom:2px;'>" + " " + "</p>" +
+                                                                 "<b style='font-size:20px;'>" + "" + "</b>" +
+                                                            "</div>" +
+                                                        "</td>" +
+                                                    "</tr>" +
+                                                    "<tr>" +
+                                                        "<td colspan='6'>" +
+                                                            "<div style='text-align:left;'>" +
+                                                                "<b style='font-size:20px;margin-top:2px;margin-bottom:2px;'>REQ.NO:-</b>" +
+                                                                "" + strReqNumber + "" +
+                                                            "</div>" +
+                                                        "</td>" +
+                                                        "<td colspan='6'>" +
+                                                            "<div style='text-align:left;'>" +
+                                                                "<b style='font-size:20px;margin-top:2px;margin-bottom:2px;'>Embossing Center:</b>" +
+                                                                "" + strComNew + "" +
+                                                            "</div>" +
+                                                        "</td>" +
+                                                    "</tr>" +
+                                                    "<tr>" +
+                                                        "<td colspan='12'>" +
+                                                            "<div style='text-align:left;padding:2px;'>" +
+                                                                "<b style='font-size:20px;margin-top:2px;margin-bottom:2px;'>" + "State:" + HSRPStateName + "</b>" +
+                                                                "<p style='margin-top:2px;margin-bottom:2px;'>" + " " + "</p>" +
+                                                                 "<b style='font-size:20px;'>" + "" + "</b>" +
+                                                            "</div>" +
+                                                        "</td>" +
+                                                    "</tr>" +
+                                                     "<tr>" +
+                                                        "<td colspan='12'>" +
+                                                            "<div style='text-align:left;padding:8px;'>" +
+                                                                "<b style='font-size:20px;margin-top:2px;margin-bottom:2px;'>" + " " + "</b>" +
+                                                                "<p style='margin-top:2px;margin-bottom:2px;'>" + " " + "</p>" +
+                                                                 "<b style='font-size:20px;'>" + "" + "</b>" +
+                                                            "</div>" +
+                                                        "</td>" +
+                                                    "</tr>" +
+
+                                                    "<tr>" +
+                                                        "<td colspan='1' style='text-align:center'>SR.N.</td>" +
+                                                        "<td colspan='3'>Product Size</td>" +
+                                                        "<td colspan='1'>Laser Count</td>" +
+                                                        "<td colspan='1'>Start Laser No</td>" +
+                                                        "<td colspan='1'>End Laser No</td>" +
+
+                                                    "</tr>");
+
+
+                            if (dtResult.Rows.Count > 0)
+                            {
+                                for (int i = 0; i < dtResult.Rows.Count; i++)
                                 {
-                                    string HsrprecordID = drProduction["hsrprecordID"].ToString().Trim();
-                                    string SRNo = drProduction["SRNo"].ToString().Trim();
-                                    string ORD = "";// drProduction["ORD"].ToString().Trim();
-                                    string VC = drProduction["VehicleClass"].ToString().Trim();
-                                    string VehicleNo = drProduction["VehicleRegNo"].ToString().Trim();
-                                    string VT = drProduction["VehicleType"].ToString().Trim();
-                                    //string ChassisNo = drProduction["ChassisNo"].ToString().Trim();
-                                    //string EngineNo = drProduction["EngineNo"].ToString().Trim();
-                                    string FuelType = drProduction["FuelType"].ToString().Trim();
-                                    string FrontPSize = drProduction["FrontProductCode"].ToString().Trim();
-                                    string FrontLaserNo = drProduction["HSRP_Front_LaserCode"].ToString().Trim();
-                                    string RearPSize = drProduction["RearProductCode"].ToString().Trim();
-                                    string RearLaserNo = drProduction["HSRP_Rear_LaserCode"].ToString().Trim();
-                                    string Amount = drProduction["roundoff_netamount"].ToString().Trim();
-                                   // string OrderStatus = drProduction["OrderStatus"].ToString().Trim();
-                                    string stickerColor = drProduction["stickerColor"].ToString().Trim();
-                                    string HotStampingFoilColour = drProduction["HotStampingFoilColour"].ToString().Trim();
+                                    string ID = dtResult.Rows[i]["ID"].ToString();
+                                    string productcode = dtResult.Rows[i]["productcode"].ToString();
+                                    string LaserCount = dtResult.Rows[i]["LaserCount"].ToString();
+                                    Itotal = Convert.ToInt32(dtResult.Rows[i]["Total"].ToString());
+                                    string BeginLaser = dtResult.Rows[i]["BeginLaser"].ToString();
+                                    string EndLaser = dtResult.Rows[i]["EndLaser"].ToString();
+
+
+
 
                                     html.Append("<tr>" +
-                                        "<td style='text-align:center'>" + SRNo + "</td>" +
-                                            "<td style='text-align:center;font-size:20px;'>" + "<b>" + VehicleNo + "</b> </td>" +
+                                       "<td colspan='1' style='text-align:left'>" + ID + "</td>" +
+                                       "<td colspan='3'>" + productcode + "</td>" +
 
-                                             "<td>" + FrontPSize + "</td>" +
-                                              "<td style='text-align:center;font-size:20px;'>" + "<b>" + FrontLaserNo + "</b> </td>" +
-                                                "<td>" + RearPSize + "</td>" +
-                                              "<td style='text-align:center;font-size:20px;'>" + "<b>" + RearLaserNo + "</b> </td>" +
+                                       "<td colspan='1'>" + LaserCount + "</td>" +
+                                       "<td colspan='1'>" + BeginLaser + "</td>" +
+                                       "<td colspan='1'>" + EndLaser + "</td>" +
 
-                                               "<td>" + HotStampingFoilColour + "</td>" +
-                                                "<td>" + stickerColor + "</td>" +
-                                                 "<td>" + FuelType + "</td>" +
-                                                 "<td>" + VT + "</td>" +
-                                                 "<td>" + VC + "</td>" +
-                                    "</tr>");
-
-                                    try
-                                    {
-                                        //start updating hsrprecords 
-                                        string sqlUpdateHSRPRecords = "update hsrprecords set sendtoProductionStatus='Y', NAVPDFFlag='1', NewPdfRunningNo='" + strProductionSheetNo + "', Requisitionsheetno='" + ReqNum + "',  " +
-                                              "PdfDownloadDate=GetDate(), pdfFileName='" + fileName + "', PDFDownloadUserID='1' where hsrprecordID='" + HsrprecordID + "' ";
-
-                                        Utils.Utils.ExecNonQuery(sqlUpdateHSRPRecords, CnnString);   // uncomment after testing
-                                    }
-                                    catch (Exception ev)
-                                    {
-                                        Label1.Text = "hsrprecords update error: " + ev.Message;
-                                    }
-                                    //end 
-
-                                }
-                                #endregion
-                                html.Append("</table>");
-
-                                html.Append("</div>");
-
-                                try
-                                {
-                                    string StrSqlUpdateECQuery = "update EmbossingCentersNew set NewProductionSheetRunningNo='" + strProductionSheetNo + "' " +
-                                     "where State_Id='" + HSRP_StateID + "' and Emb_Center_Id='" + Navembcode + "'";
-                                    Utils.Utils.ExecNonQuery(StrSqlUpdateECQuery, CnnString); // uncomment after testing
-                                }
-                                catch (Exception ev)
-                                {
-                                    Label1.Text = "EmbossingCentersNew update error: " + ev.Message;
+                                   "</tr>");
                                 }
                             }
+                            html.Append("<tr>" +
+                                     "<td colspan='1' style='text-align:center' > " + "<b>Grand Total:</b>" + "</td>" +
+                                     "<td colspan='3'>" + "" + "</td>" +
 
-                            #endregion
+                                     "<td colspan='1'>" + Itotal + "</td>" +
+                                     "<td colspan='1'>" + " " + "</td>" +
+                                     "<td colspan='1'>" + " " + "</td>" +
 
-                        }
-                    }// close oemDealerQuery
-                    #endregion
-
-                    #region "Req Generate"
-                    string strSqlQuery1 = "select CompanyName from hsrpstate where hsrp_stateid='" + HSRP_StateID + "'";
-                    strCompanyName = Utils.Utils.getScalarValue(strSqlQuery1, CnnString);
-
-                    string strEMBName = " select EmbCenterName from EmbossingCentersNew where  State_Id='" + HSRP_StateID + "' and Emb_Center_Id='" + Navembcode + "'";
-                    string strComNew = Utils.Utils.getScalarValue(strEMBName, CnnString);
-
-                    string strReqNo = "select (prefixtext+right('00000'+ convert(varchar,lastno+1),5)) as Reqno from prefix_Requisition  where hsrp_stateid='" + HSRP_StateID + "' and prefixfor='Req No'";
-                    string strReqNumber = Utils.Utils.getScalarValue(strReqNo, CnnString);
-
-                    SQLString = "Exec [laserreqSlip1DashBoard]  '" + HSRP_StateID + "','" + Navembcode + "' ,  '" + ReqNum + "'";
-                    DataTable dtResult = Utils.Utils.GetDataTable(SQLString, CnnString);
-                    string strQuery = string.Empty;
-                    string strRtoLocationName = string.Empty;
-                    int Itotal = 0;
-
-                    html.Append("<div style='width:100%;height:100%;'>" +
-                                        "<table style='width:100%'>" +
-
-                                            "<tr>" +
-                                                "<td colspan='12'>" +
-                                                    "<div style='text-align:center;padding:8px;'>" +
-                                                        "<b style='font-size:20px;margin-top:2px;margin-bottom:2px;'>" + strCompanyName + "</b>" +
-
-                                                        "<p style='margin-top:2px;margin-bottom:2px;'>" + " " + "</p>" +
-                                                         "<b style='font-size:20px;'>" + "MATERIAL REQUSITION NOTE" + "</b>" +
-
-                                                    "</div>" +
-                                                "</td>" +
-                                            "</tr>" +
-
-                                            "<tr>" +
-                                                "<td colspan='12'>" +
-                                                    "<div style='text-align:center;padding:8px;'>" +
-                                                        "<b style='font-size:20px;margin-top:2px;margin-bottom:2px;'>" + "Production Sheet Date :" + DateTime.Now.ToString("dd-MM-yyyy") + "</b>" +
-                                                        "<p style='margin-top:2px;margin-bottom:2px;'>" + " " + "</p>" +
-                                                         "<b style='font-size:20px;'>" + "" + "</b>" +
-                                                    "</div>" +
-                                                "</td>" +
-                                            "</tr>" +
-                                            "<tr>" +
-                                                "<td colspan='6'>" +
-                                                    "<div style='text-align:left;'>" +
-                                                        "<b style='font-size:20px;margin-top:2px;margin-bottom:2px;'>REQ.NO:-</b>" +
-                                                        "" + strReqNumber + "" +
-                                                    "</div>" +
-                                                "</td>" +
-                                                "<td colspan='6'>" +
-                                                    "<div style='text-align:left;'>" +
-                                                        "<b style='font-size:20px;margin-top:2px;margin-bottom:2px;'>Embossing Center:</b>" +
-                                                        "" + strComNew + "" +
-                                                    "</div>" +
-                                                "</td>" +
-                                            "</tr>" +
-                                            "<tr>" +
-                                                "<td colspan='12'>" +
-                                                    "<div style='text-align:left;padding:2px;'>" +
-                                                        "<b style='font-size:20px;margin-top:2px;margin-bottom:2px;'>" + "State:" + HSRPStateName + "</b>" +
-                                                        "<p style='margin-top:2px;margin-bottom:2px;'>" + " " + "</p>" +
-                                                         "<b style='font-size:20px;'>" + "" + "</b>" +
-                                                    "</div>" +
-                                                "</td>" +
-                                            "</tr>" +
-                                             "<tr>" +
-                                                "<td colspan='12'>" +
-                                                    "<div style='text-align:left;padding:8px;'>" +
-                                                        "<b style='font-size:20px;margin-top:2px;margin-bottom:2px;'>" + " " + "</b>" +
-                                                        "<p style='margin-top:2px;margin-bottom:2px;'>" + " " + "</p>" +
-                                                         "<b style='font-size:20px;'>" + "" + "</b>" +
-                                                    "</div>" +
-                                                "</td>" +
-                                            "</tr>" +
-
-                                            "<tr>" +
-                                                "<td colspan='1' style='text-align:center'>SR.N.</td>" +
-                                                "<td colspan='3'>Product Size</td>" +
-                                                "<td colspan='1'>Laser Count</td>" +
-                                                "<td colspan='1'>Start Laser No</td>" +
-                                                "<td colspan='1'>End Laser No</td>" +
-
-                                            "</tr>");
-
-
-                    if (dtResult.Rows.Count > 0)
-                    {
-                        for (int i = 0; i < dtResult.Rows.Count; i++)
-                        {
-                            string ID = dtResult.Rows[i]["ID"].ToString();
-                            string productcode = dtResult.Rows[i]["productcode"].ToString();
-                            string LaserCount = dtResult.Rows[i]["LaserCount"].ToString();
-                            Itotal = Convert.ToInt32(dtResult.Rows[i]["Total"].ToString());
-                            string BeginLaser = dtResult.Rows[i]["BeginLaser"].ToString();
-                            string EndLaser = dtResult.Rows[i]["EndLaser"].ToString();
+                                 "</tr>");
 
 
 
 
                             html.Append("<tr>" +
-                               "<td colspan='1' style='text-align:left'>" + ID + "</td>" +
-                               "<td colspan='3'>" + productcode + "</td>" +
+                             "<td colspan='2' > " + "<b>REQUESTED BY </b>" + "</td>" +
+                             "<td colspan='2'>" + "<b>AUTHORIZED BY </b>" + "</td>" +
 
-                               "<td colspan='1'>" + LaserCount + "</td>" +
-                               "<td colspan='1'>" + BeginLaser + "</td>" +
-                               "<td colspan='1'>" + EndLaser + "</td>" +
+                             "<td colspan='2'>" + "<b>ISSUED BY </b>" + "</td>" +
+                             "<td colspan='2'>" + "<b>RECEIVED BY</b>" + "</td>" +
 
-                           "</tr>");
-                        }
-                    }
-                    html.Append("<tr>" +
-                             "<td colspan='1' style='text-align:center' > " + "<b>Grand Total:</b>" + "</td>" +
-                             "<td colspan='3'>" + "" + "</td>" +
-
-                             "<td colspan='1'>" + Itotal + "</td>" +
-                             "<td colspan='1'>" + " " + "</td>" +
-                             "<td colspan='1'>" + " " + "</td>" +
 
                          "</tr>");
 
+                            html.Append("<tr>" +
+                                                      "<td colspan='12'>" +
+                                                          "<div style='text-align:left;padding:2px;'>" +
+                                                              "<b style='font-size:20px;margin-top:2px;margin-bottom:2px;'>" + "Name" + "</b>" +
 
+                                                          "</div>" +
+                                                      "</td>" +
+                                                  "</tr>");
 
+                            html.Append("<tr>" +
+                                                     "<td colspan='12'>" +
+                                                         "<div style='text-align:left;padding:2px;'>" +
+                                                             "<b style='font-size:20px;margin-top:2px;margin-bottom:2px;'>" + "Designation" + "</b>" +
 
-                    html.Append("<tr>" +
-                     "<td colspan='2' > " + "<b>REQUESTED BY </b>" + "</td>" +
-                     "<td colspan='2'>" + "<b>AUTHORIZED BY </b>" + "</td>" +
+                                                         "</div>" +
+                                                     "</td>" +
+                                                 "</tr>");
 
-                     "<td colspan='2'>" + "<b>ISSUED BY </b>" + "</td>" +
-                     "<td colspan='2'>" + "<b>RECEIVED BY</b>" + "</td>" +
+                            html.Append("<tr>" +
+                                                   "<td colspan='12'>" +
+                                                       "<div style='text-align:right;padding:8px;'>" +
+                                                           "<b style='font-size:20px;margin-top:2px;margin-bottom:2px;'>" + "Download By: Admin " + "</b>" +
 
+                                                       "</div>" +
+                                                   "</td>" +
+                                               "</tr>");
 
-                 "</tr>");
+                            html.Append("<tr>" +
+                                                  "<td colspan='12'>" +
+                                                      "<div style='text-align:right;padding:8px;'>" +
+                                                          "<b style='font-size:20px;margin-top:2px;margin-bottom:2px;'>" + "Sheet Generated By :" + DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss") + "</b>" +
 
-                    html.Append("<tr>" +
-                                              "<td colspan='12'>" +
-                                                  "<div style='text-align:left;padding:2px;'>" +
-                                                      "<b style='font-size:20px;margin-top:2px;margin-bottom:2px;'>" + "Name" + "</b>" +
-
-                                                  "</div>" +
-                                              "</td>" +
-                                          "</tr>");
-
-                    html.Append("<tr>" +
-                                             "<td colspan='12'>" +
-                                                 "<div style='text-align:left;padding:2px;'>" +
-                                                     "<b style='font-size:20px;margin-top:2px;margin-bottom:2px;'>" + "Designation" + "</b>" +
-
-                                                 "</div>" +
-                                             "</td>" +
-                                         "</tr>");
-
-                    html.Append("<tr>" +
-                                           "<td colspan='12'>" +
-                                               "<div style='text-align:right;padding:8px;'>" +
-                                                   "<b style='font-size:20px;margin-top:2px;margin-bottom:2px;'>" + "Download By: Admin " + "</b>" +
-
-                                               "</div>" +
-                                           "</td>" +
-                                       "</tr>");
-
-                    html.Append("<tr>" +
-                                          "<td colspan='12'>" +
-                                              "<div style='text-align:right;padding:8px;'>" +
-                                                  "<b style='font-size:20px;margin-top:2px;margin-bottom:2px;'>" + "Sheet Generated By :" + DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss") + "</b>" +
-
-                                              "</div>" +
-                                          "</td>" +
-                                      "</tr>");
+                                                      "</div>" +
+                                                  "</td>" +
+                                              "</tr>");
 
 
 
 
 
 
-                    html.Append("</table>");
+                            html.Append("</table>");
 
-                    html.Append("</div>");
+                            html.Append("</div>");
 
-                    try
-                    {
-                        //start updating hsrprecords 
-                        string Query = "update prefix_Requisition set lastno=lastno+1,Lastreqno=Lastreqno+1 where hsrp_stateid='" + HSRP_StateID + "' and prefixfor='Req No'";
-                        Utils.Utils.ExecNonQuery(Query, CnnString);
-                    }
-                    catch (Exception ev)
-                    {
-                        Label1.Text = "prefix Requisition update error: " + ev.Message;
-                    }
-
-
-                    #endregion
-
-                    /*
-                     * Close body & HTMl Tag
-                     */
-                    html.Append("</body>" +
-                        "</html>");
-
-
-                    if (findRecord)
-                    {
-
-                        string strSaveSQlQuery = "insert into ProductionSheetAutoGenerated_List (HSRP_StateID, State_Code, RTO_ID, Emb_Center_Id, FileName, Productiondate, ProductionTime, OrderNo) values " +
-                                    "('" + HSRP_StateID + "', '" + HSRPStateShortName + "', '', '" + Navembcode + "', '" + fileName + "', '" + DateTime.Now.ToString("yyyy-MM-dd") + "', '" + DateTime.Now.ToString("HH:mm:ss") + "', '" + filePrefix + "') ";
-                        Utils.Utils.ExecNonQuery(strSaveSQlQuery, CnnString); // uncomment after testing
-                        Label1.Text = Label1.Text + "successfully created production sheet of State: " + HSRPStateShortName + ", , Emb_Center_Id: " + Navembcode + Environment.NewLine;
-
-                        //lblLog.Text = lblLog.Text + Environment.NewLine + "Start Production Query at:" + DateTime.Now;
-                        #region
-                        try
-                        {
-                            if (!Directory.Exists(dir))
+                            try
                             {
-
-
-                                Directory.CreateDirectory(dir);
-
+                                //start updating hsrprecords 
+                                string Query = "update prefix_Requisition set lastno=lastno+1,Lastreqno=Lastreqno+1 where hsrp_stateid='" + HSRP_StateID + "' and prefixfor='Req No'";
+                                Utils.Utils.ExecNonQuery(Query, CnnString);
+                            }
+                            catch (Exception ev)
+                            {
+                                Label1.Text = "prefix Requisition update error: " + ev.Message;
                             }
 
-                        }
-                        catch (Exception ev)
-                        {
-                            // Fail silently
-                            Label1.Text = ev.Message;
-                        }
 
-                        try
-                        {
-                            var pdf = Pdf
-                                    .From(html.ToString())
-                                    .OfSize(PaperSize.A4)
-                                    .WithTitle("Title")
-                                    .WithoutOutline()
-                                    .WithMargins(1.25.Centimeters())
-                                     .Landscape()
-                                    .Comressed()
-                                    .Content();
+                            #endregion
 
-                            FileStream readStream = File.Create(filePath);
-                            BinaryWriter binaryWriter = new BinaryWriter(readStream);
+                            /*
+                             * Close body & HTMl Tag
+                             */
+                            html.Append("</body>" +
+                                "</html>");
 
-                            // Write the binary data to the file
-                            binaryWriter.Write(pdf);
-                            binaryWriter.Close();
-                            readStream.Close();
-                        }
-                        catch (Exception ev)
-                        {
-                            // Fail silently
-                            Label1.Text = ev.Message;
-                        }
 
-                        #endregion
+                            if (findRecord)
+                            {
+
+                                string strSaveSQlQuery = "insert into ProductionSheetAutoGenerated_List (HSRP_StateID, State_Code, RTO_ID, Emb_Center_Id, FileName, Productiondate, ProductionTime, OrderNo) values " +
+                                            "('" + HSRP_StateID + "', '" + HSRPStateShortName + "', '', '" + Navembcode + "', '" + fileName + "', '" + DateTime.Now.ToString("yyyy-MM-dd") + "', '" + DateTime.Now.ToString("HH:mm:ss") + "', '" + filePrefix + "') ";
+                                Utils.Utils.ExecNonQuery(strSaveSQlQuery, CnnString); // uncomment after testing
+                                Label1.Text = Label1.Text + "successfully created production sheet of State: " + HSRPStateShortName + ", , Emb_Center_Id: " + Navembcode + Environment.NewLine;
+
+                                //lblLog.Text = lblLog.Text + Environment.NewLine + "Start Production Query at:" + DateTime.Now;
+                                #region
+                                try
+                                {
+                                    if (!Directory.Exists(dir))
+                                    {
+
+
+                                        Directory.CreateDirectory(dir);
+
+                                    }
+
+                                }
+                                catch (Exception ev)
+                                {
+                                    // Fail silently
+                                    Label1.Text = ev.Message;
+                                }
+
+                                try
+                                {
+                                    var pdf = Pdf
+                                            .From(html.ToString())
+                                            .OfSize(PaperSize.A4)
+                                            .WithTitle("Title")
+                                            .WithoutOutline()
+                                            .WithMargins(1.25.Centimeters())
+                                             .Landscape()
+                                            .Comressed()
+                                            .Content();
+
+                                    FileStream readStream = File.Create(filePath);
+                                    BinaryWriter binaryWriter = new BinaryWriter(readStream);
+
+                                    // Write the binary data to the file
+                                    binaryWriter.Write(pdf);
+                                    binaryWriter.Close();
+                                    readStream.Close();
+                                }
+                                catch (Exception ev)
+                                {
+                                    // Fail silently
+                                    Label1.Text = ev.Message;
+                                }
+
+                                #endregion
+                            }
+
+                            #endregion
+
+                        }//close foreach stateEcQuery
                     }
-
-                    #endregion
-
-                }//close foreach stateEcQuery
+                }
             }
-        }
+
+
 
         protected void btnHero_Click(object sender, EventArgs e)
         {
@@ -6416,7 +6371,7 @@ namespace ProductionSheetDashBoard
 
                                             "<td colspan='3' style='border: 0px; '>" +
                                                //"<div style='text-align:left'><b>Book My HSRP (Home Delivery) </b> " + "</div>" +
-                                               "<div style='text-align:left;font-size:22px;''><b> MHHSRP (Home Delivery) </b> " + "</div>" +
+                                               "<div style='text-align:left;font-size:22px;''><b> BookMyHSRP (Home Delivery) </b> " + "</div>" +
                                            "</td>" +
 
 
@@ -6513,7 +6468,7 @@ namespace ProductionSheetDashBoard
                                          "</td>" +
 
                                           "<td colspan='3' style='border: 0px; '>" +
-                                               "<div style='text-align:left;font-size:22px;''><b> MHHSRP (Home Delivery) </b> " + "</div>" +
+                                               "<div style='text-align:left;font-size:22px;''><b> BooKMyHSRP (Home Delivery) </b> " + "</div>" +
                                          "</td>" +
 
 
@@ -9959,7 +9914,7 @@ namespace ProductionSheetDashBoard
 
                                              "<td colspan='3' style='border: 0px; '>" +
                                                                                                //"<div style='text-align:left'><b>Book My HSRP (Home Delivery) </b> " + "</div>" +
-                                   "<div style='text-align:left;font-size:22px;''><b> MHHSRP (Home Delivery) </b> " + "</div>" +
+                                   "<div style='text-align:left;font-size:22px;''><b> BookMyHSRP (Home Delivery) </b> " + "</div>" +
                              "</td>" +
 
 
@@ -10054,7 +10009,7 @@ namespace ProductionSheetDashBoard
 
                                        "<td colspan='3' style='border: 0px; '>" +
                                                                                          //"<div style='text-align:left'><b>Book My HSRP (Home Delivery) </b> " + "</div>" +
-                       "<div style='text-align:left;font-size:22px;''><b> MHHSRP (Home Delivery) </b> " + "</div>" +
+                       "<div style='text-align:left;font-size:22px;''><b> BookMyHSRP (Home Delivery) </b> " + "</div>" +
                      "</td>" +
 
 
@@ -11874,10 +11829,7 @@ namespace ProductionSheetDashBoard
                     string HSRP_StateID = dr["HSRP_StateID"].ToString().Trim();
                     string HSRPStateName = dr["HSRPStateName"].ToString().Trim();
                     string HSRPStateShortName = dr["HSRPStateShortName"].ToString().Trim();
-                    //string RTOLocationID = dr["RTOLocationID"].ToString().Trim();
-                    //string RTOLocationName = dr["RTOLocationName"].ToString().Trim();
-                    //string NAVEMBID = dr["NAVEMBID"].ToString().Trim();
-                    string Navembcode = dr["Navembcode"].ToString().Trim();
+                       string Navembcode = dr["Navembcode"].ToString().Trim();
 
                     string dir = dirPath + DateTime.Now.ToString("yyyy-MM-dd") + "\\" + HSRPStateShortName + "\\";
 
@@ -11994,19 +11946,35 @@ namespace ProductionSheetDashBoard
                         "<body>");
                     #endregion
 
-                    //string oemDealerQuery = string.Empty;
+                    DataTable dtOD = new DataTable();
+
+
+                    SqlConnection con1 = new SqlConnection(CnnString);
+                    SqlCommand cmd1 = new SqlCommand("USP_BindOLADealerForProduction", con1);
+                    cmd1.CommandType = CommandType.StoredProcedure;
+                    con1.Open();
+
+                    cmd1.Parameters.AddWithValue("@HSRP_StateID", HSRP_StateID);
+                    cmd1.Parameters.AddWithValue("@navembid", Navembcode);
+
+
+                    SqlDataAdapter daOla = new SqlDataAdapter(cmd1);
+                    // dtOD = new DataTable();
+                    cmd1.CommandTimeout = 400;
+                    daOla.Fill(dtOD);
+                    con1.Close();
 
 
 
-                    oemDealerQuery = "select distinct om.oemid as oemid, om.name as oemname, dm.dealerid, dm.dealername, dm.dealercode, d.[OLA HUB Address]+' '+ d.City + ' '+Convert(Varchar(10),[Pin Code] ) as Address, dm.HSRP_StateID, " +
-                        "dm.RTOLocationID from oemmaster om " +
-                        "left join dealermaster dm on dm.oemid = om.oemid JOIN  OlaHubsMaster d ON dm.dealerid=d.HSRPDealerID      where dm.HSRP_StateID =" + HSRP_StateID + " and " +
+                    //oemDealerQuery = "select distinct om.oemid as oemid, om.name as oemname, dm.dealerid, dm.dealername, dm.dealercode, d.[OLA HUB Address]+' '+ d.City + ' '+Convert(Varchar(10),[Pin Code] ) as Address, dm.HSRP_StateID, " +
+                    //    "dm.RTOLocationID from oemmaster om " +
+                    //    "left join dealermaster dm on dm.oemid = om.oemid JOIN  OlaHubsMaster d ON dm.dealerid=d.HSRPDealerID      where dm.HSRP_StateID =" + HSRP_StateID + " and " +
 
-                        "dm.dealerid in (select distinct dealerid from hsrprecords  with(nolock) where NavembId='" + Navembcode + "' and  NewPdfRunningNo is null and erpassigndate is not null and  Vahanstatus='Y' and  OrderStatus='New Order'and HSRP_StateID =" + HSRP_StateID + ") and Om.OEMID   in('1275')";
-                    //"dm.dealerid in (select distinct dealerid from hsrprecords where isnull(NewPdfRunningNo,'') = '' and isnull(erpassigndate,'') != '' and HSRP_StateID =" + HSRP_StateID + ") and Om.OEMID not  in('21','40','12','20')";
+                    //    "dm.dealerid in (select distinct dealerid from hsrprecords  with(nolock) where NavembId='" + Navembcode + "' and  NewPdfRunningNo is null and erpassigndate is not null and  Vahanstatus='Y' and  OrderStatus='New Order'and HSRP_StateID =" + HSRP_StateID + ") and Om.OEMID   in('1275')";
+
 
                     #region
-                    DataTable dtOD = Utils.Utils.GetDataTable(oemDealerQuery, CnnString);
+                    //DataTable dtOD = Utils.Utils.GetDataTable(oemDealerQuery, CnnString);
                     if (dtOD.Rows.Count > 0)
                     {
                         foreach (DataRow drOD in dtOD.Rows)
@@ -12017,6 +11985,7 @@ namespace ProductionSheetDashBoard
                             string oemname = drOD["oemname"].ToString().Trim();
                             string dealername = drOD["dealername"].ToString().Trim();
                             string Address = drOD["Address"].ToString().Trim();
+                            string sdcLocation = drOD["SDCLocation"].ToString().Trim();
 
                             //start sql query
                             #region
@@ -12027,13 +11996,13 @@ namespace ProductionSheetDashBoard
 
 
                             SqlConnection con = new SqlConnection(CnnString);
-                            SqlCommand cmd = new SqlCommand("[USP_AllOEMProductionSheetOLA]", con);
+                            SqlCommand cmd = new SqlCommand("USP_AllOEMProductionSheetOLAHO", con);
                             cmd.CommandType = CommandType.StoredProcedure;
                             con.Open();
                             cmd.Parameters.AddWithValue("@navembid", Navembcode);
                             cmd.Parameters.AddWithValue("@HSRP_StateID", HSRP_StateID);
                             cmd.Parameters.AddWithValue("@Dealerid", dealerid);
-                            //cmd.Parameters.AddWithValue("@Affix_Id", strsubaffixid);
+                            cmd.Parameters.AddWithValue("@SDCLocation", sdcLocation);
                             SqlDataAdapter da = new SqlDataAdapter(cmd);
                             // dtProduction = new DataTable();
                             da.Fill(dtProduction);
@@ -12087,7 +12056,7 @@ namespace ProductionSheetDashBoard
 
 
                                                  "<td colspan='5' style='border: 0px;'>" +
-                                                    "<div style='float:left;width: 500px;word-wrap: break-word;'><b>Production Sheet No:</b> " + strRunningNo + " </div>" +
+                                                    "<div style='float:left;width: 500px;word-wrap: break-word;'><b>Production Sheet No:</b> " + strProductionSheetNo + " </div>" +
                                                 "</td>" +
 
                                             "</tr>" +
