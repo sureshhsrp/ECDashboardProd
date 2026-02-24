@@ -24,15 +24,6 @@ namespace ProductionSheetDashBoard
         protected global::System.Web.UI.HtmlControls.HtmlForm form1;
 
         /// <summary>
-        /// Label2 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label2;
-
-        /// <summary>
         /// ddlStateName control.
         /// </summary>
         /// <remarks>
@@ -69,24 +60,6 @@ namespace ProductionSheetDashBoard
         protected global::System.Web.UI.WebControls.Button btnHero;
 
         /// <summary>
-        /// btnBMHSRPPSSheet control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnBMHSRPPSSheet;
-
-        /// <summary>
-        /// btnDelivery control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnDelivery;
-
-        /// <summary>
         /// BtnMulti control.
         /// </summary>
         /// <remarks>
@@ -103,15 +76,6 @@ namespace ProductionSheetDashBoard
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnHRPS;
-
-        /// <summary>
-        /// btnDeliveryWFrame control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnDeliveryWFrame;
 
         /// <summary>
         /// btnOLA control.
@@ -139,6 +103,33 @@ namespace ProductionSheetDashBoard
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnPCA;
+
+        /// <summary>
+        /// btnBMHSRPPSSheet control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnBMHSRPPSSheet;
+
+        /// <summary>
+        /// btnDelivery control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnDelivery;
+
+        /// <summary>
+        /// btnDeliveryWFrame control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnDeliveryWFrame;
 
         /// <summary>
         /// Label1 control.

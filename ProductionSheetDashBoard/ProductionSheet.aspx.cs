@@ -38,7 +38,7 @@ namespace ProductionSheetDashBoard
 
             //if (Request.QueryString["UID"] == null)
             //{
-            //    userId = "81875";
+            //    userId = "81842";
 
 
             //}
@@ -1043,6 +1043,8 @@ namespace ProductionSheetDashBoard
                                 #endregion
 
                                 #region
+                                  string hsrpRecordIds = "";
+                                string sqlUpdateHSRPRecords = "";
                                 foreach (DataRow drProduction in dtProduction.Rows)
                                 {
                                     string HsrprecordID = drProduction["hsrprecordID"].ToString().Trim();
@@ -1087,10 +1089,12 @@ namespace ProductionSheetDashBoard
                                     try
                                     {
                                         //start updating hsrprecords 
-                                        string sqlUpdateHSRPRecords = "update hsrprecords set sendtoProductionStatus='Y', NAVPDFFlag='1', NewPdfRunningNo='" + strProductionSheetNo + "', Requisitionsheetno='" + ReqNum + "',  " +
-                                              "PdfDownloadDate=GetDate(), pdfFileName='" + fileName + "', PDFDownloadUserID='1' where hsrprecordID='" + HsrprecordID + "' ";
+                                        //string sqlUpdateHSRPRecords = "update hsrprecords set sendtoProductionStatus='Y', NAVPDFFlag='1', NewPdfRunningNo='" + strProductionSheetNo + "', Requisitionsheetno='" + ReqNum + "',  " +
+                                        //"PdfDownloadDate=GetDate(), pdfFileName='" + fileName + "', PDFDownloadUserID='1' where hsrprecordID='" + HsrprecordID + "' ";
+                                        hsrpRecordIds += HsrprecordID + ",";
+                                 
 
-                                        Utils.Utils.ExecNonQuery(sqlUpdateHSRPRecords, CnnString);   // uncomment after testing
+                                        //Utils.Utils.ExecNonQuery(sqlUpdateHSRPRecords, CnnString);   // uncomment after testing
                                     }
                                     catch (Exception ev)
                                     {
@@ -1106,6 +1110,10 @@ namespace ProductionSheetDashBoard
 
                                 try
                                 {
+                                    hsrpRecordIds = hsrpRecordIds.TrimEnd(',');
+                                    sqlUpdateHSRPRecords = "update hsrprecords set sendtoProductionStatus = 'Y', NAVPDFFlag = '1', NewPdfRunningNo = '" + strProductionSheetNo + "', Requisitionsheetno = '" + ReqNum + "', PdfDownloadDate = GetDate(), pdfFileName = '" + fileName + "', PDFDownloadUserID = '" + userId + "' where hsrprecordID IN("+hsrpRecordIds+")";
+                                    Utils.Utils.ExecNonQuery(sqlUpdateHSRPRecords, CnnString);
+
                                     string StrSqlUpdateECQuery = "update EmbossingCentersNew set NewProductionSheetRunningNo='" + strProductionSheetNo + "' " +
                                      "where State_Id='" + HSRP_StateID + "' and Emb_Center_Id='" + Navembcode + "'";
                                     Utils.Utils.ExecNonQuery(StrSqlUpdateECQuery, CnnString); // uncomment after testing
